@@ -61,6 +61,7 @@ project-name/
 - **Shivaun Bartoo** - Former professional animator, current BCIT student with a interdiciplinary creative and technical skillset and an enthusiasm to learn.
 - **Kiril Tchepichev** - BCIT CST Student, interest in creating new things, and passionate about becoming a game developer.
 - **Teammate Name** - BCIT CST Student, Frontend enthusiast with a knack for creative design. Fun fact: Has a collection of over 50 houseplants.
+- **Luis Saberon** - BCIT CST Student. programmer, bad with money. 
 
 ---
 

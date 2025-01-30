@@ -60,7 +60,7 @@ project-name/
 ## Contributors
 - **Shivaun Bartoo** - Former professional animator, current BCIT student with a interdiciplinary creative and technical skillset and an enthusiasm to learn.
 - **Kiril Tchepichev** - BCIT CST Student, interest in creating new things, and passionate about becoming a game developer. And also other things.
-- **Luis Saberon** - BCIT CST Student. programmer, bad with money. 
+- **Luis Saberon** - BCIT CST student, spends an unfortunate amount of money on games, both board and video. 
 
 ---
 

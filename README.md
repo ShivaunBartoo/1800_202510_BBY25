@@ -12,7 +12,8 @@ Developed for the [Course Name] course, applying User-Centred Design practices, 
 ### Please cause a conflict
 
 
-### It needs to happen
+Adding text here to create a git conflict!
+---
 
 
 Example:

@@ -9,10 +9,12 @@ Example:
 This client-side JavaScript web application provides real-time weather updates for cities worldwide. It simplifies accessing weather information through an intuitive mobile-first interface, allowing users to input a city name and receive data on temperature, humidity, and conditions.
 
 Developed for the [Course Name] course, applying User-Centred Design practices, agile project management processes, integrating a weather API, and Firebase backend services.
+### Please cause a conflict
 
+
+Adding text here to create a git conflict!
 ---
 
-## Features
 
 Example:
 - Real-time weather updates for any city.
@@ -59,8 +61,8 @@ project-name/
 
 ## Contributors
 - **Shivaun Bartoo** - Former professional animator, current BCIT student with a interdiciplinary creative and technical skillset and an enthusiasm to learn.
-- **Kiril Tchepichev** - BCIT CST Student, interest in creating new things, and passionate about becoming a game developer.
-- **Luis Saberon** - BCIT CST Student. programmer, bad with money. 
+- **Kiril Tchepichev** - BCIT CST Student, interest in creating new things, and passionate about becoming a game developer. And also other things.
+- **Luis Saberon** - BCIT CST student, spends an unfortunate amount of money on games, both
 
 ---
 

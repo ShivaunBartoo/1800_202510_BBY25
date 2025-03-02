@@ -1,0 +1,70 @@
+html{
+  margin: 0 auto;
+
+}
+@font-face {
+  font-family: "Varela Round", serif;
+  font-weight: 400;
+  font-style: normal;
+  src: 
+  url(../fonts/VarelaRound-Regular.ttf) format("truetype");
+}
+
+body{
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  font-family: "Varela Round", serif;
+  background-color: #f9fdff;
+
+}
+
+/* #region HEADER */
+
+header{
+  background-color: #e2f5fe;
+  height: 12vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+header > #group-header{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  padding: 1em;
+  margin-top: 8%;
+}
+
+#group-header > #group-title{
+  font-size: 1.5em;
+}
+
+#profile-picture{
+  width: 12%;
+  aspect-ratio: 1/1;
+  position:absolute;
+  right: 0;
+  top: 0;
+  margin: 4%;
+}
+
+#profile-picture > img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* #endregion HEADER */
+
+footer{
+  text-align: center;
+  color: #c1c6c9;
+}
+
+
+
+
+

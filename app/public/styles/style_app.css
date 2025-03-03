@@ -16,7 +16,28 @@ body{
   margin: 0;
   font-family: "Varela Round", serif;
   background-color: #f9fdff;
+  display: flex;
+  flex-direction: column;
 
+}
+.page-header{
+  font-size: 1.6em;
+  font-weight:bolder;
+  text-align: center;
+
+}
+
+.section-header{
+  font-size: 1.3em;
+  margin: 10px;
+  text-align: center;
+}
+
+.card{
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+  padding: 15px;
 }
 
 /* #region HEADER */
@@ -30,25 +51,21 @@ header{
   position: relative;
 }
 
-header > #group-header{
+header #group-header{
   display: flex;
   justify-content:center;
   align-items: center;
   padding: 1em;
-  margin-top: 8%;
-}
-
-#group-header > #group-title{
-  font-size: 1.5em;
+  margin-top: 30px;
 }
 
 #profile-picture{
-  width: 12%;
+  width: 40px;
   aspect-ratio: 1/1;
   position:absolute;
   right: 0;
   top: 0;
-  margin: 4%;
+  margin: 20px;
 }
 
 #profile-picture > img{
@@ -58,6 +75,54 @@ header > #group-header{
 }
 
 /* #endregion HEADER */
+
+/* #region MAIN */
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+  flex-grow: 1;
+}
+
+/* #endregion MAIN */
+
+/* #region MATCH_CARD */
+
+.match-card{
+  width: 70vw;
+  display: flex;
+  justify-content:space-evenly;
+
+  align-items: center;
+}
+
+.match-card .match-card-image{
+  height: 65px;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.match-card .match-card-header{
+  display: flex;
+  justify-content:space-between;
+  margin-bottom: 10px;
+}
+
+.match-card .match-card-name{
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.match-card .match-card-info{
+  font-size: 0.8em;
+  color: #384e59;
+  margin-bottom: 5px;
+}
+
+/* #endregion MATCH_CARD */
 
 footer{
   text-align: center;

@@ -1,0 +1,77 @@
+/* #region MATCH_PROGRESS_BAR */
+
+.match-progress-bar-header{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.match-progress-bar-title{
+    font-size: 1.3em;
+}
+
+.match-progress-bar{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.match-progress-bar-base {
+    width: 100%; 
+    height: 25px;
+    background-color: #bbd3de; 
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  
+.match-progress-bar-fill {
+    height: 100%; 
+    background-color: #384e59; 
+    transition: width 0.3s ease; /* Smooth transition for width changes */
+
+    width: 40%; /* edit this property to adjust the progress bar */
+  }
+  
+/* #endregion MATCH_PROGRESS_BAR */
+
+/* #region SURVEY_CARD */
+.survey-card-container{
+    flex-grow: 1;
+}
+.survey-card{
+    min-height: 220px;
+    height: 75%;
+    width: 70vw;
+    margin: 40px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.survey-card .survey-card-header{
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.survey-card .survey-card-topic{
+    font-weight: bolder;
+}
+
+.survey-card .survey-response-container{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-evenly;
+    flex-grow: 0.75;
+    gap: 20px;
+}
+
+.survey-card .survey-response{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.survey-card .survey-response .response-label{
+    font-weight: bold;
+}
+
+/* #endregion SURVEY_CARD */

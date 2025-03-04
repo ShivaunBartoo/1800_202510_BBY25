@@ -10,7 +10,12 @@ html{
   url(../fonts/VarelaRound-Regular.ttf) format("truetype");
 }
 
+.material-icons.small { font-size: 1.2em; }
+.material-icons.medium { font-size: 1.6em; }
+.material-icons.large { font-size: 2em; }
+
 body{
+
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -102,7 +107,6 @@ main{
   height: 65px;
   aspect-ratio: 1/1;
   border-radius: 10px;
-  margin-right: 20px;
 }
 
 .match-card .match-card-header{
@@ -114,6 +118,10 @@ main{
 .match-card .match-card-name{
   font-size: 1.5em;
   font-weight: bold;
+}
+
+.match-card .match-card-percent{
+  color: #748187;
 }
 
 .match-card .match-card-info{

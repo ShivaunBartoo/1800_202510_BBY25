@@ -48,6 +48,7 @@
         rgba(0,0,0,0) 90%);
 }
 
+
 .survey-card-gallery > :not(:first-child) {
     transform: scale(0.9); 
     transform-origin: center; 

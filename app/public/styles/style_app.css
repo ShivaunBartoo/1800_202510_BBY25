@@ -15,7 +15,6 @@ html{
 .material-icons.large { font-size: 2em; }
 
 body{
-
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -23,8 +22,21 @@ body{
   background-color: #f9fdff;
   display: flex;
   flex-direction: column;
-
 }
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+  flex-grow: 1;
+}
+
+footer{
+  text-align: center;
+  color: #c1c6c9;
+}
+
 .page-header{
   font-size: 1.6em;
   font-weight:bolder;
@@ -48,15 +60,25 @@ body{
 /* #region HEADER */
 
 header{
+  height: 100px;
+  width: 100vw;
   background-color: #e2f5fe;
-  height: 12vh;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: 100px;
+  grid-template-columns: 10vw 80vw 10vw;
   align-items: center;
   position: relative;
 }
 
+header .header-back-button{
+  grid-column: 1;
+  font-size: 3em;
+  color: #384e59;
+  margin-top: 30px;
+}
+
 header #group-header{
+  grid-column: 2;
   display: flex;
   justify-content:center;
   align-items: center;
@@ -65,12 +87,11 @@ header #group-header{
 }
 
 #profile-picture{
+  position: absolute;
   width: 40px;
   aspect-ratio: 1/1;
-  position:absolute;
-  right: 0;
-  top: 0;
-  margin: 20px;
+  right: 20px;
+  top: 20px;
 }
 
 #profile-picture > img{
@@ -81,19 +102,11 @@ header #group-header{
 
 /* #endregion HEADER */
 
-/* #region MAIN */
-
-main{
-  display: flex;
-  flex-direction: column;
-  justify-content:flex-start;
-  align-items: center;
-  flex-grow: 1;
-}
-
-/* #endregion MAIN */
-
 /* #region MATCH_CARD */
+
+.match-card-container{
+  min-height: 110px;
+}
 
 .match-card{
   width: 70vw;
@@ -131,12 +144,6 @@ main{
 }
 
 /* #endregion MATCH_CARD */
-
-footer{
-  text-align: center;
-  color: #c1c6c9;
-}
-
 
 
 

@@ -50,8 +50,14 @@
     </main>
     <script type="module">
         import { loadContent } from '../public/scripts/load_content.js';
+        import { listen } from '../public/scripts/getDataTest.js';
         loadContent('.match-card-container', './components/match_card.html');
-        loadContent('.survey-card-container', './components/survey_card.html');
+        const x = await loadContent('.survey-card-container', './components/survey_card.html');
+        // listen();
+        
+            // listen();
+        
+        console.log(x);
     </script>
 </body>
 </html>

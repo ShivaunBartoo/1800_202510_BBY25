@@ -1,20 +1,24 @@
-html{
+html {
   margin: 0 auto;
-
 }
 @font-face {
   font-family: "Varela Round", serif;
   font-weight: 400;
   font-style: normal;
-  src: 
-  url(../fonts/VarelaRound-Regular.ttf) format("truetype");
+  src: url(../fonts/VarelaRound-Regular.ttf) format("truetype");
 }
 
-.material-icons.small { font-size: 1.2em; }
-.material-icons.medium { font-size: 1.6em; }
-.material-icons.large { font-size: 2em; }
+.material-icons.small {
+  font-size: 1.2em;
+}
+.material-icons.medium {
+  font-size: 1.6em;
+}
+.material-icons.large {
+  font-size: 2em;
+}
 
-body{
+body {
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -24,42 +28,41 @@ body{
   flex-direction: column;
 }
 
-main{
+main {
   display: flex;
   flex-direction: column;
-  justify-content:flex-start;
+  justify-content: flex-start;
   align-items: center;
   flex-grow: 1;
 }
 
-footer{
+footer {
   text-align: center;
   color: #c1c6c9;
 }
 
-.page-header{
+.page-header {
   font-size: 1.6em;
-  font-weight:bolder;
+  font-weight: bolder;
   text-align: center;
-
 }
 
-.section-header{
+.section-header {
   font-size: 1.3em;
   margin: 10px;
   text-align: center;
 }
 
-.card{
+.card {
   background-color: #fff;
   border-radius: 20px;
-  box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
   padding: 15px;
 }
 
 /* #region HEADER */
 
-header{
+header {
   height: 100px;
   width: 100vw;
   background-color: #e2f5fe;
@@ -67,26 +70,27 @@ header{
   grid-template-rows: 100px;
   grid-template-columns: 10vw 80vw 10vw;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 
-header .header-back-button{
+header .header-back-button {
   grid-column: 1;
   font-size: 3em;
   color: #384e59;
   margin-top: 30px;
 }
 
-header #group-header{
+header #group-header {
   grid-column: 2;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   padding: 1em;
   margin-top: 30px;
 }
 
-#profile-picture{
+#profile-picture {
   position: absolute;
   width: 40px;
   aspect-ratio: 1/1;
@@ -94,7 +98,7 @@ header #group-header{
   top: 20px;
 }
 
-#profile-picture > img{
+#profile-picture > img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -104,40 +108,40 @@ header #group-header{
 
 /* #region MATCH_CARD */
 
-.match-card-container{
+.match-card-container {
   min-height: 110px;
 }
 
-.match-card{
+.match-card {
   width: 70vw;
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
 
   align-items: center;
 }
 
-.match-card .match-card-image{
+.match-card .match-card-image {
   height: 65px;
   aspect-ratio: 1/1;
   border-radius: 10px;
 }
 
-.match-card .match-card-header{
+.match-card .match-card-header {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.match-card .match-card-name{
+.match-card .match-card-name {
   font-size: 1.5em;
   font-weight: bold;
 }
 
-.match-card .match-card-percent{
+.match-card .match-card-percent {
   color: #748187;
 }
 
-.match-card .match-card-info{
+.match-card .match-card-info {
   font-size: 0.8em;
   color: #384e59;
   margin-bottom: 5px;
@@ -145,6 +149,44 @@ header #group-header{
 
 /* #endregion MATCH_CARD */
 
+/* #region COLLAPSIBLE */
 
+/* source: https://www.w3schools.com/howto/howto_js_collapsible.asp */
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: #f9fdff;
+  border: 1px solid #384e59;
+  color: #384e59;
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  outline: none;
+  font-size: 1.2em;
+}
 
+.active,
+.collapsible:hover {
+  background-color: #eef7fb;
+}
 
+.collapsible:after {
+  content: "\002B";
+  color: #384e59;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+/* #endregion COLLAPSIBLE */

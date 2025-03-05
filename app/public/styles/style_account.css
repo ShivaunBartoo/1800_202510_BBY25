@@ -1,0 +1,64 @@
+#profile-picture {
+  display: none;
+}
+
+.settings-username {
+  margin-top: 20px;
+  font-size: 1.6em;
+  font-weight: bold;
+  text-align: center;
+}
+#profile-picture-large {
+  width: 150px;
+  aspect-ratio: 1/1;
+  right: 20px;
+  top: 20px;
+  border-radius: 50%;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  margin: 0 auto;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px;
+  overflow-y: auto;
+}
+
+.collapsible {
+  margin: 2.5px;
+}
+
+body {
+  overflow-y: auto;
+  height: 100%;
+}
+table {
+  width: 100%;
+  border-collapse: collapse; /* Removes any space between table cells */
+  margin-top: 20px;
+}
+
+td {
+  padding-right: 20px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+strong {
+  font-weight: bold;
+}
+
+/* Style the edit icon */
+.material-icons {
+  cursor: pointer;
+  color: #384e59; /* Default icon color */
+  font-size: 1.5em;
+}
+
+/* Optional: Add hover effect for the edit icon */
+.material-icons:hover {
+  color: #007bff; /* Blue color when hovered */
+}

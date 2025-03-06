@@ -1,0 +1,42 @@
+header .header-group-arrow{ visibility: hidden; }
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#group-info{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    margin: 10px;
+    font-size: 0.9em;
+}
+
+#group-info #switch-group-link{
+    color: #384e59;
+    text-decoration: none;
+    font-weight:900;
+}
+
+#group-info #group-share-link{
+    font-style: italic;
+    color: #384e59;
+}
+
+#group-matches{
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+.match-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    max-height: calc(100vh - 120px);
+}
+
+.group-matches {
+    border: 1px solid red;
+}

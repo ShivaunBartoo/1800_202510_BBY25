@@ -1,112 +1,124 @@
-header .header-back-button{ display: none; }
+header .header-back-button {
+    display: none;
+}
 
 /* #region MATCH_PROGRESS_BAR */
 
-.match-progress-bar-header{
+.match-progress-bar-header {
     margin-top: 20px;
     margin-bottom: 10px;
     text-align: center;
 }
 
-.match-progress-bar-title{
+.match-progress-bar-title {
     font-size: 1.3em;
 }
 
-.match-progress-bar-label{
+.match-progress-bar-label {
     color: #384e59;
 }
 
-.match-progress-bar{
+.match-progress-bar {
     width: 90%;
     margin: 0 auto;
 }
 
 .match-progress-bar-base {
-    width: 100%; 
+    width: 100%;
     height: 25px;
-    background-color: #bbd3de; 
+    background-color: #bbd3de;
     border-radius: 15px;
     overflow: hidden;
-  }
-  
+}
+
 .match-progress-bar-fill {
-    height: 100%; 
-    background-color: #384e59; 
+    height: 100%;
+    background-color: #384e59;
     width: 40%; /* edit this property to adjust the progress bar */
     transition: width 0.3s ease; /* Smooth transition for width changes */
-  }
-  
+}
+
 /* #endregion MATCH_PROGRESS_BAR */
 
 /* #region SURVEY_CARD */
-.survey-card-gallery{
-    display: grid;
-    grid-template-columns: minmax(120px, auto);
-    grid-auto-rows: 1;
-    overflow: hidden;
-    max-height: calc(100vh - 380px);
+.survey-card-gallery {
+    position: relative; /* Ensure this is relative so absolute children position relative to it */
+    height: calc(100vh - 380px); /* Set explicit height */
+    width: 100%;
     margin-top: 20px;
-    -webkit-mask-image: linear-gradient(to bottom, 
-        rgba(0,0,0,1) 70%, 
-        rgba(0,0,0,0) 90%);
-    mask-image: linear-gradient(to bottom, 
-        rgba(0,0,0,1) 70%, 
-        rgba(0,0,0,0) 90%);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 90%);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 90%);
 }
 
-
-.survey-card-gallery > :not(:first-child) {
-    transform: scale(0.9); 
-    transform-origin: center; 
-    opacity: 0.5; 
+.survey-card-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px; /* Give explicit width */
+    height: 140px; /* Add explicit height to match the card */
+    transition: transform 0.6s ease, opacity 1s ease;
 }
 
-.survey-card{
-    height: 120px;
-    width: 70vw;
-    margin: 10px;
-    padding-left: 20px;
+.survey-card-gallery > :nth-child(1) {
+    transform: translate(-50%, -50%) translateY(70px) scale(1); /* Combine translate and scale */
+    opacity: 1;
+    z-index: 3;
+}
+
+.survey-card-gallery > :nth-child(2) {
+    transform: translate(-50%, -50%) translateY(220px) scale(0.9); /* Combine translate and scale */
+    opacity: 0.5;
+    z-index: 2;
+}
+
+.survey-card-gallery > :nth-child(3) {
+    transform: translate(-50%, -50%) translateY(360px) scale(0.8); /* Combine translate and scale */
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.survey-card {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.survey-card .survey-card-header{
+.survey-card .survey-card-header {
     font-size: 1.2em;
 }
 
-.survey-card .survey-card-question{
+.survey-card .survey-card-question {
     font-size: 0.85em;
     text-align: center;
-
 }
 
-.survey-card .survey-card-topic{
+.survey-card .survey-card-topic {
     font-weight: bolder;
     text-align: center;
 }
 
-.survey-card .survey-response-container{
+.survey-card .survey-response-container {
     display: flex;
     flex-direction: row;
-    justify-content:space-evenly;
+    justify-content: space-evenly;
     flex-grow: 0.75;
     gap: 20px;
 }
 
-.survey-card .survey-response{
+.survey-card .survey-response {
     display: flex;
     align-items: center;
     gap: 15px;
     color: #384e59;
 }
 
-.survey-card .survey-response-labels{
+.survey-card .survey-response-labels {
     display: flex;
     justify-content: space-between;
 }
 
-.survey-card .response-label{
+.survey-card .response-label {
     font-size: 0.8em;
     color: #b4bdc2;
     display: flex;

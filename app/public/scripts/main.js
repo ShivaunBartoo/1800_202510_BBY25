@@ -15,7 +15,8 @@ async function initialize() {
 
             // Check if the clicked element is the first child of the survey card gallery
             if (surveyCardGallery.firstElementChild === surveyCard) {
-                console.log("Survey response clicked:", element.getAttribute("data-value"));
+                let dataValue = element.getAttribute("data-value");
+                console.log("Survey response clicked:" + dataValue);
                 surveyCardGallery.appendChild(surveyCard);
 
                 // Set opacity to zero

@@ -73,11 +73,11 @@ function initialize() {
                 contactMethod: document.getElementById("contact1").value,
                 contactInfo: document.getElementById("contact2").value,
                 profilePhoto: document.getElementById("profile-photo").src,
+                hasProfile: true,
             };
             try {
                 await db.collection("users").doc(user.uid).set(formData, { merge: true });
                 console.log("Form data saved successfully!");
-                // Redirect or show success message
             } catch (error) {
                 console.error("Error saving form data:", error);
             }

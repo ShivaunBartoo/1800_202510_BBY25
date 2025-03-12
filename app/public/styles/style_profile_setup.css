@@ -79,6 +79,8 @@ p {
 textarea {
     resize: none;
     overflow: hidden;
+    font-size: 1.4em;
+    color: blue;
 }
 
 .text-group {

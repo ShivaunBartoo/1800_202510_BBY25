@@ -1,0 +1,15 @@
+header {
+    display: flex;
+    justify-content: center;
+}
+
+header h1 {
+    height: 70%;
+    color: #384e59;
+    font-size: 2.5em;
+    height: 1em;
+}
+
+#firebaseui-auth-container {
+    margin-top: 50px;
+}

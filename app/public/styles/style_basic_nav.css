@@ -1,0 +1,22 @@
+body {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 85% 5%;
+}
+
+header {
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+}
+
+header h1 {
+    height: 70%;
+    color: #384e59;
+    font-size: 2.5em;
+    height: 1em;
+}
+
+header a {
+    text-decoration: none;
+}

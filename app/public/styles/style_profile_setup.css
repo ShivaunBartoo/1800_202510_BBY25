@@ -1,0 +1,134 @@
+.form-page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    width: 80vw;
+    max-width: 800px;
+    height: 70vh;
+    border-radius: 30px;
+    background-color: #e2f5fe;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: opacity 0.25s ease-out;
+}
+
+.nav-buttons {
+    position: absolute;
+    top: calc(55% + 35vh + 15px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+}
+
+.form-group {
+    height: 80%;
+    grid-column: 1;
+    grid-row: 1;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-self: center;
+    gap: 20px;
+}
+
+.button-group {
+    height: 10%;
+    grid-column: 1;
+    grid-row: 2;
+    padding: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: white;
+    color: #384e59;
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    border-width: 0px;
+    text-align: center;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #efefef;
+}
+
+h2,
+h4,
+p {
+    text-align: center;
+}
+
+p {
+    font-size: 0.9em;
+}
+textarea {
+    resize: none;
+    overflow: hidden;
+}
+
+.text-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: min(50vh, 350px);
+}
+
+.text-group-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-input {
+    border-radius: 10px;
+    border: none;
+    height: 2em;
+    text-align: center;
+    font-style: bold;
+    margin: 3px;
+}
+
+label {
+    font-size: min(1.2em, 3vw);
+    color: #384e59;
+}
+
+.photo-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#profile-photo {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+}
+
+#profile-photo-input {
+    width: 90%;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    color: transparent;
+}

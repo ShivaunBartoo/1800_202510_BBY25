@@ -14,7 +14,6 @@ function writeGroups(max) {
   }
 }
 
-
 function fetcher() {
   fetch("./hobbies.json")
     .then(response => response.json())

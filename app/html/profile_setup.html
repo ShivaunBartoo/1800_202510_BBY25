@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Likemind</title>
+        <!------------------------------------------>
+        <!-- Bootstrap Library CSS JS CDN go here -->
+        <!------------------------------------------>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- ------------------------------------------------------>
+        <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+        <!-------------------------------------------------------->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+        <link
+            type="text/css"
+            rel="stylesheet"
+            href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+        />
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+        <!-------------------------------------------->
+        <!-- Other libraries and styles of your own -->
+        <!-------------------------------------------->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="../public/styles/style_app.css" />
+        <link rel="stylesheet" href="../public/styles/style_profile_setup.css" />
+        <link rel="stylesheet" href="../public/styles/style_basic_nav.css" />
+
+        <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+        <script src="../public/scripts/firebaseAPI_BBY25.js"></script>
+        <script defer src="../public/scripts/profile_setup.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html"><h1>Likemind</h1></a>
+        </header>
+        <main>
+            <form class="paged-form">
+                <fieldset class="form-page">
+                    <div class="form-group">
+                        <div>
+                            <h2>Profile Setup</h2>
+                            <h4>To get started, please write a short bio for your public profile.</h4>
+                        </div>
+                        <textarea
+                            id="bio"
+                            class="form-control"
+                            rows="8"
+                            placeholder="Tell us a little about yourself"
+                        ></textarea>
+                    </div>
+                    <div class="button-group">
+                        <div></div>
+                        <button type="button" class="next-button">Next</button>
+                    </div>
+                </fieldset>
+                <fieldset class="form-page">
+                    <div class="form-group">
+                        <h4>Next, tell us a few of your interests and values.</h4>
+                        <div class="text-group">
+                            <div class="text-group-item">
+                                <label for="interest1">What are you passionate about?</label>
+                                <input
+                                    type="text"
+                                    id="interest1"
+                                    class="text-input noun-input"
+                                    pattern="[A-Za-z\s]+"
+                                    title="Letters only, no numbers or punctuation"
+                                />
+                            </div>
+                            <div class="text-group-item">
+                                <label for="interest2">What recreational activity do you enjoy?</label>
+                                <input
+                                    type="text"
+                                    id="interest2"
+                                    class="text-input noun-input"
+                                    pattern="[A-Za-z\s]+"
+                                    title="Letters only, no numbers or punctuation"
+                                />
+                            </div>
+                            <div class="text-group-item">
+                                <label for="interest3">What do you like to do with your friends?</label>
+                                <input
+                                    type="text"
+                                    id="interest3"
+                                    class="text-input noun-input"
+                                    pattern="[A-Za-z\s]+"
+                                    title="Letters only, no numbers or punctuation"
+                                />
+                            </div>
+                            <div class="text-group-item">
+                                <label for="value1">What's a social issue that matters a lot to you?</label>
+                                <input
+                                    type="text"
+                                    id="value1"
+                                    class="text-input noun-input"
+                                    pattern="[A-Za-z\s]+"
+                                    title="Letters only, no numbers or punctuation"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="prev-button">Previous</button>
+                        <button type="button" class="next-button">Next</button>
+                    </div>
+                </fieldset>
+                <fieldset class="form-page">
+                    <div class="form-group">
+                        <h4>Upload a Profile Photo</h4>
+                        <div class="photo-group">
+                            <img id="profile-photo" src="../public/images/user.png" alt="Profile Photo" />
+                            <input type="file" id="profile-photo-input" accept="image/*" style="display: none" />
+                            <button type="button" id="upload-button">Upload Photo</button>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="prev-button">Previous</button>
+                        <button type="button" class="next-button">Next</button>
+                    </div>
+                </fieldset>
+                <fieldset class="form-page">
+                    <div class="form-group">
+                        <div class="text">
+                            <div>
+                                <h4>
+                                    Almost Done! <br />
+                                    How would you like to be contacted by matches?
+                                </h4>
+                                <p>(We won't share this without your permission.)</p>
+                            </div>
+                            <div class="text-group-item">
+                                <label for="contact1">Contact Method (eg. discord, sms)</label>
+                                <input type="text" id="contact1" class="text-input" />
+                            </div>
+                            <div class="text-group-item">
+                                <label for="contact2">Contact Info (eg. username, phone number)</label>
+                                <input type="text" id="contact2" class="text-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="prev-button">Previous</button>
+                        <button type="submit" class="submit-button">Submit</button>
+                    </div>
+                </fieldset>
+                <div class="nav-buttons">
+                    <button type="button" class="material-icons nav-button">radio_button_checked</button>
+                    <button type="button" class="material-icons nav-button">radio_button_unchecked</button>
+                    <button type="button" class="material-icons nav-button">radio_button_unchecked</button>
+                    <button type="button" class="material-icons nav-button">radio_button_unchecked</button>
+                </div>
+            </form>
+        </main>
+    </body>
+</html>

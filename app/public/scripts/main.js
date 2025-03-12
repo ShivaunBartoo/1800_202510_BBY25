@@ -16,6 +16,9 @@ async function initialize() {
             // Check if the clicked element is the first child of the survey card gallery
             if (surveyCardGallery.firstElementChild === surveyCard) {
                 let dataValue = element.getAttribute("data-value");
+                let surveyTopicElement = surveyCard.querySelector(".survey-card-topic");
+                surveyTopicElement.textContent = "Food";
+                console.log("Survey topic:" + surveyTopicElement.textContent);
                 console.log("Survey response clicked:" + dataValue);
                 surveyCardGallery.appendChild(surveyCard);
 

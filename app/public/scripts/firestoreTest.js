@@ -43,9 +43,9 @@ function testing() {
   .then(doc => {
     doc.forEach(eachGroup => {
       var groupUsers = db.collection("groups/"+eachGroup.id+"/users");
-      // groupUsers.add({
-      //   users: [],
-      // })
+      groupUsers.add({
+        users: [],
+      })
     })
     // aDoc = doc.doc();
   });

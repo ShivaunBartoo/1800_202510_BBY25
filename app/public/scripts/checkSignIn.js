@@ -19,7 +19,12 @@ function getPerson(person) {
     users.forEach(eachUser => {
       if (person == eachUser.id)
         {
-          console.log(eachUser.data());
+          const UD = eachUser.data()
+          document.getElementById("bigName").innerText = UD.name;
+          document.getElementById("name").innerText = UD.name;
+          document.getElementById("email").innerText = UD.email;
+          document.getElementById("contact-info").innerText = UD.contactInfo;
+          document.getElementById("contact-method").innerText = UD.contactMethod;
           return eachUser.data();
         }
       })

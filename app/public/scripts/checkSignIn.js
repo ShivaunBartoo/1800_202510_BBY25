@@ -1,13 +1,32 @@
 function accountPage() {
-  firebase.auth().onAuthStateChanged(user => {
-    if(user) {
-      document.getElementById("name").innerText = user.name;
-      document.getElementById("email").innerText = user.email;
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      console.log(user.uid);
+      const x = getPerson(user.uid);
+      console.log(x);
     }
-
     else {
-      console.log("No one is signed in");
+      console.log("loser");
     }
   });
 }
+
+
+function getPerson(person) {
+  console.log(person);
+  db.collection("users").get()
+  .then(users => {
+    users.forEach(eachUser => {
+      if (person == eachUser.id)
+        {
+          console.log(eachUser.data());
+          return eachUser.data();
+        }
+      })
+    })
+}
+
+accountPage();
+
+
 

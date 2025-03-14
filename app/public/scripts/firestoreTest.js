@@ -21,18 +21,29 @@ function fetcher() {
     .catch(err => console.log("Ruh roh"));
 }
 
+function writeHobbies(json) {
+  db.collection("testUsers").get()
+  .then(doc => {
+
+  });
+
+}
+
 function writePeople(max, json) {
-  var people = db.collection("users");
+  var people = db.collection("testUsers");
   for(i=1; i<=max;i++)
   {
-    const hobbies = [];
+    const hobbies = {};
     for(j=0; j<=randInt(5); j++) {
-      hobbies.push(json[randInt(117)]);
+      hobbies[json[randInt(117)]] = randInt(5);
     }
     people.add({
-      firstName: "fName " + i,
-      lastName: "lName " + i,
-      hobbies: hobbies,
+      bio: "testBio" + i,
+      contactInfo: i,
+      contactMethod: "method" + i,
+      profilePhoto: "http://127.0.0.1:5500/app/public/images/user.png",
+      hasProfile: true,
+      name: 'fName ' + 'lastName ' + i, 
     })
   }
 }

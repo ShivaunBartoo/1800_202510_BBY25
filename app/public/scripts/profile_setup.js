@@ -64,12 +64,18 @@ function initialize() {
         event.preventDefault();
         const user = auth.currentUser;
         if (user) {
+            const int1 = document.getElementById("interest1").value;
+            const int2 = document.getElementById("interest2").value;
+            const int3 = document.getElementById("interest3").value;
+            const val1 = document.getElementById("value1").value;
+            const interests = {}
+            const values = {}
+            interests[int1] = 5;
+            interests[int2] = 5;
+            interests[int3] = 5;
+            values[val1] = 5;
             const formData = {
                 bio: document.getElementById("bio").value,
-                interest1: document.getElementById("interest1").value,
-                interest2: document.getElementById("interest2").value,
-                interest3: document.getElementById("interest3").value,
-                value1: document.getElementById("value1").value,
                 contactMethod: document.getElementById("contact1").value,
                 contactInfo: document.getElementById("contact2").value,
                 profilePhoto: document.getElementById("profile-photo").src,
@@ -77,6 +83,8 @@ function initialize() {
             };
             try {
                 await db.collection("users").doc(user.uid).set(formData, { merge: true });
+                await db.collection('users/' + user.uid + '/interests').doc("interests").set(interests);
+                await db.collection('users/' +user.uid + '/values').doc('values').set(values);
                 console.log("Form data saved successfully!");
             } catch (error) {
                 console.error("Error saving form data:", error);

@@ -2,6 +2,8 @@ import { loadContent } from "../scripts/load_content.js";
 
 initialize();
 
+// This function initializes the page by loading HTML content into specified elements
+// and setting up event listeners for survey responses.
 async function initialize() {
     await loadContent(".header-authenticated", "./components/header_authenticated.html");
     await loadContent(".match-card-container", "./components/match_card.html");
@@ -17,7 +19,7 @@ async function initialize() {
             if (surveyCardGallery.firstElementChild === surveyCard) {
                 let dataValue = element.getAttribute("data-value");
                 let surveyTopicElement = surveyCard.querySelector(".survey-card-topic");
-                surveyTopicElement.textContent = "Food";
+                surveyTopicElement.textContent = "Food"; // Example topic, replace with actual logic
                 console.log("Survey topic:" + surveyTopicElement.textContent);
                 console.log("Survey response clicked:" + dataValue);
                 surveyCardGallery.appendChild(surveyCard);
@@ -25,7 +27,8 @@ async function initialize() {
                 // Set opacity to zero
                 surveyCard.style.opacity = "0";
 
-                // Wait for one second before moving the card and removing the inline style
+                // After a short delay, set opacity back to normal 
+                // CSS adds a transition effect 
                 setTimeout(() => {
                     surveyCard.style.opacity = "";
                 }, 100);

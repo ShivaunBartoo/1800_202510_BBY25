@@ -1,39 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Likemind</title>
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../public/styles/style_app.css">
-    <link rel="stylesheet" href="../public/styles/style_group.css">
-</head>
-<body>
-    <header class="header-authenticated"></header>
-    <div id="group-info">
-        <span><span id="member-count">8</span> Group Members | <a id="switch-group-link" href="#switchgroup">Switch Group</a></span>
-        <span id="group-share-link">copy share link</span>
-    </div>
-    <div id="group-matches">
-        <div class="section-header">New Matches</div>
-        <div class = "match-container">
-            <div class="match-card-container"></div>
-            <div class="match-card-container"></div>
+    <head>
+        <title>Likemind</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="requires-auth" content="true" />
+        <meta name="requires-setup" content="true" />
+        <!-- Stylesheets -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="../public/styles/style_app.css" />
+        <link rel="stylesheet" href="../public/styles/style_group.css" />
+        <!-- Scripts -->
+        <script type="module" src="../public/scripts/app.js"></script>
+        <script type="module">
+            import { loadContent, loadHeader } from "../public/scripts/load_content.js";
+            loadHeader(true, true, true);
+            loadContent(".match-card-container", "./components/match_card.html");
+        </script>
+    </head>
+    <body>
+        <header></header>
+        <div id="group-info">
+            <span
+                ><span id="member-count">8</span> Group Members |
+                <a id="switch-group-link" href="#switchgroup">Switch Group</a></span
+            >
+            <span id="group-share-link">copy share link</span>
         </div>
-        <div class="section-header">Other Members</div>
-        <div class = "match-container">
-            <div class="match-card-container"></div>
-            <div class="match-card-container"></div>
-            <div class="match-card-container"></div>
-            <div class="match-card-container"></div>
+        <div id="group-matches">
+            <div class="section-header">New Matches</div>
+            <div class="match-container">
+                <div class="match-card-container"></div>
+                <div class="match-card-container"></div>
+            </div>
+            <div class="section-header">Other Members</div>
+            <div class="match-container">
+                <div class="match-card-container"></div>
+                <div class="match-card-container"></div>
+                <div class="match-card-container"></div>
+                <div class="match-card-container"></div>
+            </div>
         </div>
-    </div>
-
-    <script type="module">
-        import { loadContent } from '../public/scripts/load_content.js';
-        loadContent('.header-authenticated', './components/header_authenticated.html');
-        loadContent('.match-card-container', './components/match_card.html');
-    </script>
-</body>
+    </body>
 </html>

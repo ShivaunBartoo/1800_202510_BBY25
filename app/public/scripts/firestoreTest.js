@@ -1,5 +1,5 @@
+import { app, auth, db, user } from "./app.js";
 // const fs = require('fs');
-
 function randInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -24,19 +24,22 @@ function fetcher() {
 function writeHobbies(json) {
   db.collection("testUsers").get()
   .then(doc => {
+    doc.forEach(eachUser => {
+      const hobbies = {};
+      for(j=0; j<=randInt(5); j++) {
+        hobbies[json[randInt(117)]] = randInt(5);
+      }
 
+      var userinterests = db.collection('users/' + eachUser.id + "/interests").doc("interests").set(hobbies);
+    });
   });
 
 }
 
-function writePeople(max, json) {
+function writePeople(max) {
   var people = db.collection("testUsers");
   for(i=1; i<=max;i++)
   {
-    const hobbies = {};
-    for(j=0; j<=randInt(5); j++) {
-      hobbies[json[randInt(117)]] = randInt(5);
-    }
     people.add({
       bio: "testBio" + i,
       contactInfo: i,
@@ -62,6 +65,5 @@ function testing() {
 }
 
 function reSeed() {
-  fetcher();
-  writeGroups(5);
+  writePeople(20);
 }

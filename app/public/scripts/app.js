@@ -19,3 +19,8 @@ auth.onAuthStateChanged((currentUser) => {
         user = null;
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    let requiresAuth = document.body.getAttribute("requires-auth");
+    let requiresSetup = document.body.getAttribute("requires-setup");
+});

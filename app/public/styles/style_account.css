@@ -54,7 +54,7 @@ strong {
 }
 
 /* Style the edit icon */
-.material-icons {
+main .material-icons {
   cursor: pointer;
   color: #384e59; /* Default icon color */
   font-size: 1.5em;

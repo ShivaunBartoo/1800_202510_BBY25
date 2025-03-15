@@ -17,11 +17,13 @@
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
         <script type="module" src="../public/scripts/authentication.js"></script>
+        <script type="module">
+            import { loadHeader } from "../public/scripts/load_content.js";
+            loadHeader(false, false, true);
+        </script>
     </head>
     <body>
-        <header>
-            <a href="index.html"><h1>Likemind</h1></a>
-        </header>
+        <header></header>
         <main>
             <div id="firebaseui-auth-container"></div>
             <div id="loader">Loading...</div>

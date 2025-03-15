@@ -4,6 +4,7 @@
         <title>Likemind</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="requires-auth" content="true" />
         <!-- Stylesheets -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <link rel="stylesheet" href="../public/styles/style_app.css" />
@@ -11,58 +12,59 @@
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
         <script type="module">
-            import { loadContent } from "../public/scripts/load_content.js";
-            loadContent(".header-authenticated", "./components/header_authenticated.html");
+            import { loadContent, loadHeader } from "../public/scripts/load_content.js";
+            loadHeader(true, true, false);
             loadContent(".match-card-container", "./components/match_card.html");
         </script>
+        <script src="../public/scripts/collapsible.js" defer></script>
     </head>
     <body>
-        <header class="header-authenticated"></header>
+        <header></header>
+        <main>
+            <div class="settings-username" id="bigName">George</div>
 
-        <div class="settings-username" id="bigName">George</div>
+            <img id="profile-picture-large" src="../public/images/headshot5.jpeg" alt="Profile Picture" />
+            <!-- TODO: populate dynamically -->
 
-        <img id="profile-picture-large" src="../public/images/headshot5.jpeg" alt="Profile Picture" />
-        <!-- TODO: populate dynamically -->
-
-        <div class="setting-group">
-            <button type="button" class="collapsible">Profile</button>
-            <div class="content">
-                <table>
-                    <tr>
-                        <td><strong>Name:</strong></td>
-                        <td id="name">George A.</td>
-                        <td><span class="material-icons">edit</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Email:</strong></td>
-                        <td id="email">george@george.com</td>
-                        <td><span class="material-icons">edit</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Contact Method:</strong></td>
-                        <td id="contact-method">discord</td>
-                        <td><span class="material-icons">edit</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Contact Info:</strong></td>
-                        <td id="contact-info">Georgygeorge</td>
-                        <td><span class="material-icons">edit</span></td>
-                    </tr>
-                </table>
+            <div class="setting-group">
+                <button type="button" class="collapsible">Profile</button>
+                <div class="content">
+                    <table>
+                        <tr>
+                            <td><strong>Name:</strong></td>
+                            <td id="name">George A.</td>
+                            <td><span class="material-icons">edit</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email:</strong></td>
+                            <td id="email">george@george.com</td>
+                            <td><span class="material-icons">edit</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contact Method:</strong></td>
+                            <td id="contact-method">discord</td>
+                            <td><span class="material-icons">edit</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contact Info:</strong></td>
+                            <td id="contact-info">Georgygeorge</td>
+                            <td><span class="material-icons">edit</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <button type="button" class="collapsible">Account</button>
+                <div class="content">
+                    <p>Lorem ipsum...</p>
+                </div>
+                <button type="button" class="collapsible">Surveys</button>
+                <div class="content">
+                    <p>Lorem ipsum...</p>
+                </div>
+                <button type="button" class="collapsible">Admin</button>
+                <div class="content">
+                    <p>Lorem ipsum...</p>
+                </div>
             </div>
-            <button type="button" class="collapsible">Account</button>
-            <div class="content">
-                <p>Lorem ipsum...</p>
-            </div>
-            <button type="button" class="collapsible">Surveys</button>
-            <div class="content">
-                <p>Lorem ipsum...</p>
-            </div>
-            <button type="button" class="collapsible">Admin</button>
-            <div class="content">
-                <p>Lorem ipsum...</p>
-            </div>
-        </div>
-        <script src="../public/scripts/collapsible.js"></script>
+        </main>
     </body>
 </html>

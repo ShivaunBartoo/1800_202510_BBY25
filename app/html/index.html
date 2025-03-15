@@ -7,17 +7,17 @@
         <!-- Stylesheets -->
         <link rel="stylesheet" href="../public/styles/style_app.css" />
         <link rel="stylesheet" href="../public/styles/style_index.css" />
-        <link rel="stylesheet" href="../public/styles/style_basic_nav.css" />
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
+        <script type="module">
+            import { loadHeader } from "../public/scripts/load_content.js";
+            loadHeader(false, false, true);
+        </script>
     </head>
 
     <body>
-        <header>
-            <h1>Likemind</h1>
-            <a href="login.html?mode=login" id="header-button">Log In</a>
-        </header>
-
+        <header></header>
+        <a href="login.html?mode=login" id="header-button">Log In</a>
         <main>
             <img id="hero-image" src="../public/images/hero.png" alt="hero" />
             <p id="hero-text">

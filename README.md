@@ -65,7 +65,7 @@ Example:
 - Weather data sourced from [OpenWeatherMap](https://openweathermap.org/).
 - Code snippets for ___ algoirthm were adapted from resources such as [Stack Overflow](https://stackoverflow.com/) and [MDN Web Docs](https://developer.mozilla.org/).
 - Icons sourced from [FontAwesome](https://fontawesome.com/) and images from [Unsplash](https://unsplash.com/).
-
+- Copilot and ChatGPT used for problem solving and debugging
 ---
 
 ## Limitations and Future Work

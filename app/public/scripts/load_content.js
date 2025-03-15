@@ -1,3 +1,5 @@
+// This function loads HTML content from a specified file path 
+// and inserts it into elements matching a given selector.
 export async function loadContent(selector, filePath) {
     const elements = document.querySelectorAll(selector);
     for (const element of elements) {
@@ -13,13 +15,3 @@ export async function loadContent(selector, filePath) {
         }
     }
 }
-
-// function getDataTest(html) {
-//     const el = document.querySelectorAll('[data-value]');
-//     console.log(el);
-//     el.forEach( (currentValue, currentIndex) => {
-//         currentValue.addEventListener("click", () => {
-//             console.log("");
-//         });
-//     });
-// }

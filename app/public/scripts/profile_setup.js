@@ -44,6 +44,7 @@ function initialize() {
     // Add event listeners to the text inputs to restrict input to letters and spaces only
     document.querySelectorAll(".noun-input").forEach((input) => {
         input.addEventListener("input", function (event) {
+            // Copilot used to generate this regex
             this.value = this.value.replace(/[^a-zA-Z\s]/g, ""); // Allow only letters and spaces
         });
     });

@@ -1,3 +1,5 @@
+import "https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js";
+
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
@@ -67,7 +69,6 @@ ui.start("#firebaseui-auth-container", uiConfig);
 function insertCustomMessage() {
     const mode = new URLSearchParams(window.location.search).get("mode");
     let uiTitle = document.querySelector(".firebaseui-title");
-    console.log(uiTitle);
     if (mode === "signup") {
         uiTitle.innerText = "Sign up with email";
     } else {

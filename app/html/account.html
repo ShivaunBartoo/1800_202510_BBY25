@@ -1,81 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Likemind</title>
+    <head>
+        <title>Likemind</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Stylesheets -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="../public/styles/style_app.css" />
+        <link rel="stylesheet" href="../public/styles/style_account.css" />
+        <!-- Scripts -->
+        <script type="module" src="../public/scripts/app.js"></script>
+        <script type="module">
+            import { loadContent } from "../public/scripts/load_content.js";
+            loadContent(".header-authenticated", "./components/header_authenticated.html");
+            loadContent(".match-card-container", "./components/match_card.html");
+        </script>
+    </head>
+    <body>
+        <header class="header-authenticated"></header>
 
-    <!--Firebase Scripts  --> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firestore.js"></script>
-    <!-- End -->
+        <div class="settings-username" id="bigName">George</div>
 
-    <script src="../public/scripts/firebaseAPI_BBY25.js"></script>
+        <img id="profile-picture-large" src="../public/images/headshot5.jpeg" alt="Profile Picture" />
+        <!-- TODO: populate dynamically -->
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link rel="stylesheet" href="../public/styles/style_app.css" />
-    <link rel="stylesheet" href="../public/styles/style_account.css" />
-  </head>
-  <body>
-    <header class="header-authenticated"></header>
-
-    <div class="settings-username" id="bigName">George</div>
-
-    <img id="profile-picture-large" src="../public/images/headshot5.jpeg" alt="Profile Picture" />
-    <!-- TODO: populate dynamically -->
-
-    <div class="setting-group">
-      <button type="button" class="collapsible">Profile</button>
-      <div class="content">
-        <table>
-          <tr>
-            <td><strong>Name:</strong></td>
-            <td id="name">George A.</td>
-            <td><span class="material-icons">edit</span></td>
-          </tr>
-          <tr>
-            <td><strong>Email:</strong></td>
-            <td id="email">george@george.com</td>
-            <td><span class="material-icons">edit</span></td>
-          </tr>
-          <tr>
-            <td><strong>Contact Method:</strong></td>
-            <td id="contact-method">discord</td>
-            <td><span class="material-icons">edit</span></td>
-          </tr>
-          <tr>
-            <td><strong>Contact Info:</strong></td>
-            <td id="contact-info">Georgygeorge</td>
-            <td><span class="material-icons">edit</span></td>
-          </tr>
-        </table>        
-      </div>
-      <button type="button" class="collapsible">Account</button>
-      <div class="content">
-        <p>Lorem ipsum...</p>
-      </div>
-      <button type="button" class="collapsible">Surveys</button>
-      <div class="content">
-        <p>Lorem ipsum...</p>
-      </div>
-      <button type="button" class="collapsible">Admin</button>
-      <div class="content">
-        <p>Lorem ipsum...</p>
-      </div>
-    </div>
-
-    <script type="module">
-      import { loadContent } from "../public/scripts/load_content.js";
-      loadContent(".header-authenticated", "./components/header_authenticated.html");
-      loadContent(".match-card-container", "./components/match_card.html");
-    </script>
-    <script src="../public/scripts/collapsible.js"></script>
-    <script src="../public/scripts/checkSignIn.js"></script>
-  </body>
+        <div class="setting-group">
+            <button type="button" class="collapsible">Profile</button>
+            <div class="content">
+                <table>
+                    <tr>
+                        <td><strong>Name:</strong></td>
+                        <td id="name">George A.</td>
+                        <td><span class="material-icons">edit</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email:</strong></td>
+                        <td id="email">george@george.com</td>
+                        <td><span class="material-icons">edit</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contact Method:</strong></td>
+                        <td id="contact-method">discord</td>
+                        <td><span class="material-icons">edit</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contact Info:</strong></td>
+                        <td id="contact-info">Georgygeorge</td>
+                        <td><span class="material-icons">edit</span></td>
+                    </tr>
+                </table>
+            </div>
+            <button type="button" class="collapsible">Account</button>
+            <div class="content">
+                <p>Lorem ipsum...</p>
+            </div>
+            <button type="button" class="collapsible">Surveys</button>
+            <div class="content">
+                <p>Lorem ipsum...</p>
+            </div>
+            <button type="button" class="collapsible">Admin</button>
+            <div class="content">
+                <p>Lorem ipsum...</p>
+            </div>
+        </div>
+        <script src="../public/scripts/collapsible.js"></script>
+    </body>
 </html>

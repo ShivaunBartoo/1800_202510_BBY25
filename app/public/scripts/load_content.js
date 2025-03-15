@@ -1,4 +1,4 @@
-// This function loads HTML content from a specified file path 
+// This function loads HTML content from a specified file path
 // and inserts it into elements matching a given selector.
 export async function loadContent(selector, filePath) {
     const elements = document.querySelectorAll(selector);

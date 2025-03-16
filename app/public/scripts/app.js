@@ -7,16 +7,27 @@ import { firebaseConfig } from "../scripts/firebaseAPI_BBY25.js";
 export const app = firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 export const auth = firebase.auth();
-export let user = null;
+
+// copilot helped me with this function
+// Retrieves the current Firebase user or waits for auth state changes.
+export async function getUser() {
+    if (auth.currentUser) {
+        return auth.currentUser;
+    } else {
+        return new Promise((resolve) => {
+            auth.onAuthStateChanged((user) => {
+                resolve(user);
+            });
+        });
+    }
+}
 
 // Monitor authentication state
-auth.onAuthStateChanged((currentUser) => {
-    if (currentUser) {
-        user = currentUser;
+auth.onAuthStateChanged((user) => {
+    if (user) {
         console.log("User logged in:", user.uid);
     } else {
-        console.log("User logged out:", user.uid);
-        user = null;
+        console.log("User logged out");
     }
 });
 

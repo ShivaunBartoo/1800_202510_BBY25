@@ -98,6 +98,30 @@ header a {
     margin-left: 10px;
 }
 
+#header-buttons {
+    position: absolute;
+    right: 2%;
+    bottom: 10%;
+    width: 60px;
+    height: 30px;
+}
+
+#header-buttons button {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    color: #384e59;
+    border-radius: 20px;
+    border-width: 0px;
+    text-align: center;
+    text-decoration: none;
+    line-height: 30px;
+}
+
+#header-buttons button:hover {
+    background-color: #efefef;
+}
+
 #group-header,
 #title-header {
     grid-column: 2;

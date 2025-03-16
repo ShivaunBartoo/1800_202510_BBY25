@@ -13,8 +13,13 @@
         <script type="module" src="../public/scripts/app.js"></script>
         <script type="module">
             import { loadContent, loadHeader } from "../public/scripts/load_content.js";
-            loadHeader(true, true, false);
             loadContent(".match-card-container", "./components/match_card.html");
+            loadHeader(
+                false, // show back button
+                false, // show group
+                false, // show profile image
+                true //   show login/logout button
+            );
         </script>
         <script src="../public/scripts/collapsible.js" defer></script>
     </head>

@@ -4,30 +4,26 @@
         <title>Likemind</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="requires-auth" content="true" />
+        <meta name="requires-setup" content="true" />
         <!-- Stylesheets -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <link rel="stylesheet" href="../public/styles/style_app.css" />
-        <link rel="stylesheet" href="../public/styles/style_login.css" />
-        <link rel="stylesheet" href="../public/styles/style_basic_nav.css" />
-        <link
-            type="text/css"
-            rel="stylesheet"
-            href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
-        />
+        <link rel="stylesheet" href="../public/styles/style_profile.css" />
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
-        <script type="module" src="../public/scripts/authentication.js"></script>
         <script type="module">
             import { loadHeader } from "../public/scripts/load_content.js";
-            // loads the header without a back button or group, but a profile image if logged in
-            loadHeader(false, false, true);
+            // loads the header with a back button, group, and profile image
+            loadHeader(true, true, true);
         </script>
     </head>
     <body>
         <header></header>
         <main>
-            <div id="firebaseui-auth-container"></div>
-            <div id="loader">Loading...</div>
+            <div class="page-header" id="user-name">Jimmy</div>
+            <img id="user-picture" src="../public/images/headshot1.jpeg" alt="Profile Picture" />
+            <button id="message-button">Send Message</button>
         </main>
     </body>
 </html>

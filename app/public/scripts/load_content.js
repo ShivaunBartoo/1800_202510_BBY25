@@ -1,4 +1,4 @@
-import { user } from "../scripts/app.js";
+import { getUser, auth } from "../scripts/app.js";
 
 // This function loads HTML content from a specified file path
 // and inserts it into elements matching a given selector.
@@ -19,14 +19,16 @@ export async function loadContent(selector, filePath) {
 }
 
 // loads the header component into the page, and confures its elements
-export async function loadHeader(showBackButton, showGroup = false, showAvatar = true) {
+export async function loadHeader(showBackButton = false, showGroup = false, showAvatar = true, showButton = false) {
     await loadContent("header", "./components/header.html");
     let header = document.querySelector("header");
+    let user = await getUser();
     if (header) {
         let backButton = header.querySelector(".header-back-button");
         let titleHeader = header.querySelector("#title-header");
         let groupHeader = header.querySelector("#group-header");
         let avatar = header.querySelector("#profile-picture");
+        let headerButtons = header.querySelector("#header-buttons");
 
         if (backButton) {
             backButton.style.display = showBackButton ? "block" : "none";
@@ -36,9 +38,49 @@ export async function loadHeader(showBackButton, showGroup = false, showAvatar =
             groupHeader.style.display = showGroup ? "flex" : "none";
             titleHeader.style.display = showGroup ? "none" : "flex";
         }
-        if (avatar && user) {
-            avatar.style.display = showAvatar ? "block" : "none";
-            //TODO: Set the avatar image source
+        if (avatar) {
+            if (user) {
+                //TODO: Set the avatar image source
+                avatar.style.display = showAvatar ? "block" : "none";
+            } else {
+                avatar.style.display = "none";
+            }
+        }
+        if (headerButtons) {
+            // Because the avatar and header buttons are in the same spot, only one
+            // should be shown at a time. If both are set to true, the avatar will be shown
+            headerButtons.style.display = !showAvatar && showButton ? "block" : "none";
+            if (!showAvatar && showButton) {
+                headerButtons.style.display = "block";
+                let loginButton = headerButtons.querySelector("#login-button");
+                let logoutButton = headerButtons.querySelector("#logout-button");
+                // Check if the user is logged in, and show the logout button if they are
+                if (user) {
+                    console.log("User is logged in");
+                    loginButton.style.display = "none";
+                    logoutButton.style.display = "block";
+                    logoutButton.addEventListener("click", () => {
+                        auth.signOut()
+                            .then(() => {
+                                window.location.href = "./index.html";
+                            })
+                            .catch((error) => {
+                                console.error("Error signing out: ", error);
+                            });
+                    });
+                }
+                // If the user is not logged in, show the login button
+                else {
+                    console.log("User is logged out");
+                    loginButton.style.display = "block";
+                    logoutButton.style.display = "none";
+                    loginButton.addEventListener("click", () => {
+                        window.location.href = "./login.html?mode=login";
+                    });
+                }
+            } else {
+                headerButtons.style.display = "none";
+            }
         }
     }
 }

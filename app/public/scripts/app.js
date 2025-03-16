@@ -8,7 +8,7 @@ export const app = firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-// copilot helped me with this function
+// copilot helped me get the Promise working with this function
 // Retrieves the current Firebase user or waits for auth state changes.
 export async function getUser() {
     if (auth.currentUser) {

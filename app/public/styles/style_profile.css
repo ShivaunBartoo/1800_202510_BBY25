@@ -1,5 +1,61 @@
+html,
+body,
+main {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#user-name {
+    margin-bottom: 10px;
+}
+#profile-container-top {
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 5px;
+    align-items: center;
+}
+
+#profile-container {
+    width: 100%;
+    height: 60%;
+    background-color: #e2f5fe;
+    box-sizing: border-box;
+    padding: 20px;
+}
 #user-picture {
     width: 200px;
+    max-width: 40%;
     aspect-ratio: 1/1;
     border-radius: 50%;
+}
+
+#message-button {
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #384e59;
+    color: white;
+    border-radius: 15px;
+    border-width: 0px;
+}
+
+#message-button:hover {
+    background-color: #2a3d46;
+}
+
+.noun-header {
+    font-size: 1.5em;
+    font-weight: bold;
 }

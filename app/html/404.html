@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Likemind</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="requires-auth" content="true" />
+        <!-- Stylesheets -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="../public/styles/style_app.css" />
+        <!-- Scripts -->
+        <script type="module" src="../public/scripts/app.js"></script>
+        <script type="module">
+            import { loadContent, loadHeader } from "../public/scripts/load_content.js";
+            loadContent(".match-card-container", "./components/match_card.html");
+            loadHeader(
+                true, // show back button
+                true, // show group
+                true, // show profile image
+                false // show login/logout button
+            );
+        </script>
+    </head>
+    <body>
+        <header></header>
+        <main>
+            <div class="page-header">404: Page Not Found</div>
+        </main>
+    </body>
+</html>

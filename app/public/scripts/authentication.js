@@ -1,3 +1,5 @@
+import { db } from "../scripts/app.js";
+
 import "https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js";
 
 // Initialize the FirebaseUI Widget using Firebase.
@@ -22,7 +24,7 @@ var uiConfig = {
                     })
                     .then(function () {
                         console.log("New user added to firestore");
-                        window.location.href("./profile_setup.html");
+                        window.location.href = "./profile_setup.html";
                     })
                     .catch(function (error) {
                         console.log("Error adding new user: " + error);

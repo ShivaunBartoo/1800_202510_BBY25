@@ -1,5 +1,5 @@
+import { app, auth, db, user } from "./app.js";
 // const fs = require('fs');
-
 function randInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -21,18 +21,32 @@ function fetcher() {
     .catch(err => console.log("Ruh roh"));
 }
 
-function writePeople(max, json) {
-  var people = db.collection("users");
+function writeHobbies(json) {
+  db.collection("testUsers").get()
+  .then(doc => {
+    doc.forEach(eachUser => {
+      const hobbies = {};
+      for(j=0; j<=randInt(5); j++) {
+        hobbies[json[randInt(117)]] = randInt(5);
+      }
+
+      var userinterests = db.collection('users/' + eachUser.id + "/interests").doc("interests").set(hobbies);
+    });
+  });
+
+}
+
+function writePeople(max) {
+  var people = db.collection("testUsers");
   for(i=1; i<=max;i++)
   {
-    const hobbies = [];
-    for(j=0; j<=randInt(5); j++) {
-      hobbies.push(json[randInt(117)]);
-    }
     people.add({
-      firstName: "fName " + i,
-      lastName: "lName " + i,
-      hobbies: hobbies,
+      bio: "testBio" + i,
+      contactInfo: i,
+      contactMethod: "method" + i,
+      profilePhoto: "http://127.0.0.1:5500/app/public/images/user.png",
+      hasProfile: true,
+      name: 'fName ' + 'lastName ' + i, 
     })
   }
 }
@@ -51,6 +65,5 @@ function testing() {
 }
 
 function reSeed() {
-  fetcher();
-  writeGroups(5);
+  writePeople(20);
 }

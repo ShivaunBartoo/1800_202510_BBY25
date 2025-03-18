@@ -1,24 +1,26 @@
-import { app, auth, db, user } from "./app.js";
-// const fs = require('fs');
+import {db } from "./app.js";
+// import("./app.js");
+
+
 function randInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-function writeGroups(max) {
+export function writeGroups(max) {
   var groups = db.collection("groups");
-  for(i = 1; i<= max; i++){
+  for(let i = 1; i<= max; i++){
     groups.add({
-      groupName: i
-      
+      groupName: i,
+      users: [],
     })
   }
 }
 
 function fetcher() {
-  fetch("./hobbies.json")
+  fetch("../files/hobbies.json")
     .then(response => response.json())
-    .then(jsonResponse => writePeople(12, jsonResponse))
-    .catch(err => console.log("Ruh roh"));
+    .then(jsonResponse => writeHobbies(jsonResponse))
+    .catch(err => console.log(err));
 }
 
 function writeHobbies(json) {
@@ -26,11 +28,13 @@ function writeHobbies(json) {
   .then(doc => {
     doc.forEach(eachUser => {
       const hobbies = {};
-      for(j=0; j<=randInt(5); j++) {
+      for(let j=0; j<=randInt(5); j++) {
         hobbies[json[randInt(117)]] = randInt(5);
       }
-
-      var userinterests = db.collection('users/' + eachUser.id + "/interests").doc("interests").set(hobbies);
+      var userInterests = db.collection('testUsers').doc(eachUser.id).set({
+        hobbies,
+        values: {}
+        }, {merge:true})
     });
   });
 
@@ -38,7 +42,7 @@ function writeHobbies(json) {
 
 function writePeople(max) {
   var people = db.collection("testUsers");
-  for(i=1; i<=max;i++)
+  for(let i=1; i<=max;i++)
   {
     people.add({
       bio: "testBio" + i,
@@ -51,19 +55,10 @@ function writePeople(max) {
   }
 }
 
-function testing() {
-  db.collection("groups").get()
-  .then(doc => {
-    doc.forEach(eachGroup => {
-      var groupUsers = db.collection("groups/"+eachGroup.id+"/users");
-      groupUsers.add({
-        users: [],
-      })
-    })
-    // aDoc = doc.doc();
-  });
+function reSeed() {
+  // console.log("this is working");
+  // writePeople(20);
+  writeGroups(5);
 }
 
-function reSeed() {
-  writePeople(20);
-}
+// reSeed();

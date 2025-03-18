@@ -5,7 +5,7 @@ function randInt(max) {
 }
 
 //Using a group ID and userID, adds the userID to the groups user array.
-function addToGroup(groupID, userID, test) {
+export function addToGroup(groupID, userID, test) {
   //test is a boolean, this can be removed when we no longer need test users. 
   if (test) {
     const collection = 'testUsers';
@@ -23,7 +23,7 @@ function addToGroup(groupID, userID, test) {
 }
 
 // returns a promise of group users in the specified group. 
-function viewGroupPromise(groupID) {
+export function viewGroupPromise(groupID) {
   return new Promise((res, rej) => {
     const group = db.collection('groups').doc(groupID);
     group.get().then((doc) => {

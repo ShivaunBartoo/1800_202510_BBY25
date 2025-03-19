@@ -6,7 +6,7 @@ initialize();
 async function initialize() {
     let params = new URLSearchParams(window.location.search);
     let user = null;
-    // Check if the URL contains a "uid" parameter, 
+    // Check if the URL contains a "uid" parameter,
     // and if not, default to the current user's UID
     let uid = params.get("uid") || (await getUser()).uid;
     if (uid) {

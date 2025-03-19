@@ -1,4 +1,6 @@
-import { getUser, auth } from "../scripts/app.js";
+import { getUser, auth, db } from "./app.js";
+
+let matchcard;
 
 // This function loads HTML content from a specified file path
 // and inserts it into elements matching a given selector.
@@ -82,5 +84,32 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
                 headerButtons.style.display = "none";
             }
         }
+    }
+}
+
+export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
+    let container = document.querySelector(containerSelector);
+    if (!container) {
+        throw new Error(`Container does not exist`);
+    }
+
+    let user = await db.collection("users").doc(uid).get();
+    if (!user.exists) {
+        throw new Error(`No user found with the given ID: ${uid}`);
+    }
+
+    let userData = user.data();
+
+    let tempDiv = document.createElement("div");
+    tempDiv.innerHTML = matchCardHTML;
+
+    let card = tempDiv.firstElementChild;
+    if (card) {
+        card.querySelector(".match-card-name").textContent = userData.name || "Unknown";
+
+        container.appendChild(card);
+        card.addEventListener("click", () => {
+            window.location.href = `profile.html?uid=${uid}`;
+        });
     }
 }

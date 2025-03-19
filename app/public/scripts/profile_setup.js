@@ -1,4 +1,4 @@
-import { auth, db } from "../scripts/app.js";
+import { auth, db } from "./app.js";
 
 let currentPage = 0;
 let pages = [];

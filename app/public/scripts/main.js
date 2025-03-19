@@ -1,4 +1,4 @@
-import { loadContent } from "../scripts/load_content.js";
+import { loadContent } from "../scripts/loadContent.js";
 
 initialize();
 

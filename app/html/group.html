@@ -12,12 +12,7 @@
         <link rel="stylesheet" href="../public/styles/style_group.css" />
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
-        <script type="module">
-            import { loadContent, loadHeader } from "../public/scripts/load_content.js";
-            // loads the header with a back button, group, and profile image
-            loadHeader(true, true, true);
-            loadContent(".match-card-container", "./components/match_card.html");
-        </script>
+        <script type="module" src="../public/scripts/group.js"></script>
     </head>
     <body>
         <header></header>
@@ -30,17 +25,9 @@
         </div>
         <div id="group-matches">
             <div class="section-header">New Matches</div>
-            <div class="match-container">
-                <div class="match-card-container"></div>
-                <div class="match-card-container"></div>
-            </div>
+            <div class="match-container"></div>
             <div class="section-header">Other Members</div>
-            <div class="match-container">
-                <div class="match-card-container"></div>
-                <div class="match-card-container"></div>
-                <div class="match-card-container"></div>
-                <div class="match-card-container"></div>
-            </div>
+            <div id="member-list" class="match-container"></div>
         </div>
     </body>
 </html>

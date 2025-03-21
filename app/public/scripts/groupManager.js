@@ -4,6 +4,10 @@ function randInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+window.getCompatibility = getCompatibility;
+window.getNouns = getNouns;
+window.testViewGroupUsers = testViewGroupUsers;
+window.testGroupMemberPromise = testGroupMemberPromise;
 //Using a group ID and userID, adds the userID to the groups user array.
 export function addToGroup(groupID, userID) {
     const group = db.collection("groups").doc(groupID);
@@ -15,7 +19,7 @@ export function addToGroup(groupID, userID) {
     });
 }
 
-// returns a promise of group users in the specified group.
+// returns a promise of group user ids in the specified group.
 export function getGroupMemberIDs(groupID) {
     return new Promise((res, rej) => {
         const group = db.collection("groups").doc(groupID);
@@ -27,6 +31,85 @@ export function getGroupMemberIDs(groupID) {
             }
         });
     });
+}
+
+
+export function getGroupMembersPromise(groupMemberIDs) {
+    return new Promise((res, rej) => {
+        // console.log(groupMemberIDs);
+        let users = [];
+        db.collection('users').get()
+        .then((doc) => {
+            doc.forEach((eachUser) => {
+                if (groupMemberIDs.includes(eachUser.id)) {
+                    users.push(eachUser);
+                }
+            });
+            if (users.length > 0) {
+                res(users)
+            }
+            else {
+                rej("No users in list, or something broke.")
+            }
+            });
+    });
+}
+export async function getNouns(groupID) {
+    getGroupMemberIDs(groupID)
+    .then((idList) => getGroupMembersPromise(idList))
+    .then((usersList) => {
+        let nouns = [];
+        usersList.forEach((user) => {
+            let data = user.data()
+            
+            for(const key in data.values) {
+                nouns.push(key);
+            }
+            for(const key in data.interests) {
+                nouns.push(key)
+            }
+
+        })
+        return nouns;
+    })
+    .catch((err) => console.log(err));
+}
+
+export async function getCompatibility(currentUserID, currentGroupID) { 
+    let users = await getGroupMembers(currentGroupID)
+    let currentUser = await db.collection("users").doc(currentUserID).get();
+    let compat = {};
+    users.forEach((user) => {
+        // console.log(user.data().interests);
+        let currentUserInterests = currentUser.data().interests;
+        console.log(currentUserInterests)
+        for(key in currentUserInterests) {
+            console.log(key)
+        }
+        // let userInterests = user.data().interests;
+        // let difference = 0;
+        // let max = 0;
+        // for(key in currentUserInterests) {
+        //     max += 5;
+        //     if(key in userInterests) {
+        //         const i = currentUserInterests[key];
+        //         const j = userInterests[key]
+        //         difference += Math.abs(i-j);
+        //     }
+        //     const percent = (difference/max)*100;
+        //     console.log(percent)
+        //     compat[currentUserID+ ", " + user.id] = percent;
+        // }
+
+
+    });
+
+    // console.log(compat)
+    //get list of users from group
+    //go through each user
+    //compares values and interests between the 2, calculates the "compatibility"
+    //
+    //return a list of users and compatibility in relation to the currentUser
 }
 
 // returns a promise of group users in the specified group.
@@ -61,4 +144,10 @@ function testAddToGroup() {
 async function testViewGroupUsers() {
     const result = await getGroupMemberIDs("OVWSdIxoOVFbOTcOjRRN");
     console.log(await result);
+}
+
+async function testGroupMemberPromise(groupID) {
+    const a = await getGroupMemberIDs("OVWSdIxoOVFbOTcOjRRN");
+    const b = await getGroupMembersPromise(a);
+    console.log(await b);
 }

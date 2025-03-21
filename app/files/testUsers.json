@@ -1,193 +1,212 @@
 [
-    {
-      "bio": "Just a tech enthusiast exploring the world.",
-      "contactInfo": "coolUser123",
-      "contactMethod": "discord",
-      "email": "cooluser123@example.com",
-      "hasProfile": true,
-      "interests": {
-        "coding": 5,
-        "music": 5,
-        "chess": 5,
-        "food": 3,
-        "jogging": 1
-      },
-      "name": "Alex Carter",
-      "profilePhoto": "",
-      "values": {
-        "environmental sustainability": 5
-      }
+  {
+    "bio": "Just a tech enthusiast exploring the world.",
+    "contactInfo": "coolUser123",
+    "contactMethod": "discord",
+    "email": "cooluser123@example.com",
+    "hasProfile": true,
+    "interests": {
+      "coding": 2,
+      "music": 2,
+      "chess": 2,
+      "food": 0,
+      "jogging": -2,
+      "technology": 1
     },
-    {
-      "bio": "Gamer and sci-fi lover.",
-      "contactInfo": "gamer.dan@example.com",
-      "contactMethod": "email",
-      "email": "gamer.dan@example.com",
-      "hasProfile": true,
-      "interests": {
-        "video games": 5,
-        "sci-fi": 5,
-        "streaming": 5,
-        "hiking": 3,
-        "photography": 2
-      },
-      "name": "Daniel Jones",
-      "profilePhoto": "",
-      "values": {
-        "free speech": 5
-      }
-    },
-    {
-      "bio": "Aspiring chef with a love for spices.",
-      "contactInfo": "@spicychef22",
-      "contactMethod": "twitter",
-      "email": "spicychef22@example.com",
-      "hasProfile": true,
-      "interests": {
-        "cooking": 5,
-        "baking": 5,
-        "food blogging": 5,
-        "traveling": 3,
-        "gardening": 2
-      },
-      "name": "Sophia Reynolds",
-      "profilePhoto": "",
-      "values": {
-        "animal welfare": 5
-      }
-    },
-    {
-      "bio": "Fitness freak and part-time coder.",
-      "contactInfo": "555-123-9876",
-      "contactMethod": "phone",
-      "email": "fitcode@example.com",
-      "hasProfile": true,
-      "interests": {
-        "weightlifting": 5,
-        "running": 5,
-        "coding": 5,
-        "yoga": 4,
-        "meditation": 3
-      },
-      "name": "Jordan Lee",
-      "profilePhoto": "",
-      "values": {
-        "mental health awareness": 5
-      }
-    },
-    {
-      "bio": "Lover of literature and creative writing.",
-      "contactInfo": "writer.gal@example.com",
-      "contactMethod": "email",
-      "email": "writer.gal@example.com",
-      "hasProfile": true,
-      "interests": {
-        "writing": 5,
-        "poetry": 5,
-        "literature": 5,
-        "calligraphy": 3,
-        "journalism": 2
-      },
-      "name": "Emma Johnson",
-      "profilePhoto": "",
-      "values": {
-        "freedom of expression": 5
-      }
-    },
-    {
-      "bio": "Passionate about technology and AI.",
-      "contactInfo": "techgeek77",
-      "contactMethod": "discord",
-      "email": "techgeek77@example.com",
-      "hasProfile": true,
-      "interests": {
-        "AI": 5,
-        "robotics": 5,
-        "programming": 5,
-        "electronics": 3,
-        "gaming": 2
-      },
-      "name": "Lucas Fernandez",
-      "profilePhoto": "",
-      "values": {
-        "innovation": 5
-      }
-    },
-    {
-      "bio": "Nature lover and explorer.",
-      "contactInfo": "nature_lover",
-      "contactMethod": "instagram",
-      "email": "naturelover@example.com",
-      "hasProfile": true,
-      "interests": {
-        "hiking": 5,
-        "camping": 5,
-        "wildlife photography": 5,
-        "rock climbing": 3,
-        "kayaking": 2
-      },
-      "name": "Isabella Green",
-      "profilePhoto": "",
-      "values": {
-        "conservation": 5
-      }
-    },
-    {
-      "bio": "History buff and collector of antiques.",
-      "contactInfo": "historymaniac@example.com",
-      "contactMethod": "email",
-      "email": "historymaniac@example.com",
-      "hasProfile": true,
-      "interests": {
-        "history": 5,
-        "museums": 5,
-        "collecting artifacts": 5,
-        "writing": 3,
-        "photography": 2
-      },
-      "name": "Benjamin Harris",
-      "profilePhoto": "",
-      "values": {
-        "cultural heritage": 5
-      }
-    },
-    {
-      "bio": "Casual artist and painter.",
-      "contactInfo": "paint.and.sketch",
-      "contactMethod": "instagram",
-      "email": "artist@example.com",
-      "hasProfile": true,
-      "interests": {
-        "painting": 5,
-        "drawing": 5,
-        "digital art": 5,
-        "sculpting": 3,
-        "animation": 2
-      },
-      "name": "Natalie Brooks",
-      "profilePhoto": "",
-      "values": {
-        "creative freedom": 5
-      }
-    },
-    {
-      "bio": "Self-taught musician and audio engineer.",
-      "contactInfo": "tune.maker@example.com",
-      "contactMethod": "email",
-      "email": "tune.maker@example.com",
-      "hasProfile": true,
-      "interests": {
-        "music production": 5,
-        "guitar": 5,
-        "singing": 5,
-        "songwriting": 4,
-        "DJing": 3
-      },
-      "name": "Ethan Taylor",
-      "profilePhoto": "",
-      "values": {
-        "artistic integrity": 5
-      }
+    "name": "Alex Carter",
+    "profilePhoto": "",
+    "values": {
+      "environmental sustainability": 2,
+      "personal growth": 0
     }
-  ]
-  
+  },
+  {
+    "bio": "Gamer and sci-fi lover.",
+    "contactInfo": "gamer.dan@example.com",
+    "contactMethod": "email",
+    "email": "gamer.dan@example.com",
+    "hasProfile": true,
+    "interests": {
+      "video games": 2,
+      "sci-fi": 2,
+      "streaming": 2,
+      "hiking": 0,
+      "photography": -1,
+      "technology": -1
+    },
+    "name": "Daniel Jones",
+    "profilePhoto": "",
+    "values": {
+      "free speech": 2,
+      "personal growth": 1
+    }
+  },
+  {
+    "bio": "Aspiring chef with a love for spices.",
+    "contactInfo": "@spicychef22",
+    "contactMethod": "twitter",
+    "email": "spicychef22@example.com",
+    "hasProfile": true,
+    "interests": {
+      "cooking": 2,
+      "baking": 2,
+      "food blogging": 2,
+      "traveling": 0,
+      "gardening": -1,
+      "technology": 0
+    },
+    "name": "Sophia Reynolds",
+    "profilePhoto": "",
+    "values": {
+      "animal welfare": 2,
+      "personal growth": 2
+    }
+  },
+  {
+    "bio": "Fitness freak and part-time coder.",
+    "contactInfo": "555-123-9876",
+    "contactMethod": "phone",
+    "email": "fitcode@example.com",
+    "hasProfile": true,
+    "interests": {
+      "weightlifting": 2,
+      "running": 2,
+      "coding": 2,
+      "yoga": 1,
+      "meditation": 0,
+      "technology": 1
+    },
+    "name": "Jordan Lee",
+    "profilePhoto": "",
+    "values": {
+      "mental health awareness": 2,
+      "personal growth": -2
+    }
+  },
+  {
+    "bio": "Lover of literature and creative writing.",
+    "contactInfo": "writer.gal@example.com",
+    "contactMethod": "email",
+    "email": "writer.gal@example.com",
+    "hasProfile": true,
+    "interests": {
+      "writing": 2,
+      "poetry": 2,
+      "literature": 2,
+      "calligraphy": 0,
+      "journalism": -1,
+      "technology": 2
+    },
+    "name": "Emma Johnson",
+    "profilePhoto": "",
+    "values": {
+      "freedom of expression": 2,
+      "personal growth": 1
+    }
+  },
+  {
+    "bio": "Passionate about technology and AI.",
+    "contactInfo": "techgeek77",
+    "contactMethod": "discord",
+    "email": "techgeek77@example.com",
+    "hasProfile": true,
+    "interests": {
+      "AI": 2,
+      "robotics": 2,
+      "programming": 2,
+      "electronics": 0,
+      "gaming": -1,
+      "technology": 0
+    },
+    "name": "Lucas Fernandez",
+    "profilePhoto": "",
+    "values": {
+      "innovation": 2,
+      "personal growth": 2
+    }
+  },
+  {
+    "bio": "Nature lover and explorer.",
+    "contactInfo": "nature_lover",
+    "contactMethod": "instagram",
+    "email": "naturelover@example.com",
+    "hasProfile": true,
+    "interests": {
+      "hiking": 2,
+      "camping": 2,
+      "wildlife photography": 2,
+      "rock climbing": 0,
+      "kayaking": -1,
+      "technology": 1
+    },
+    "name": "Isabella Green",
+    "profilePhoto": "",
+    "values": {
+      "conservation": 2,
+      "personal growth": -1
+    }
+  },
+  {
+    "bio": "History buff and collector of antiques.",
+    "contactInfo": "historymaniac@example.com",
+    "contactMethod": "email",
+    "email": "historymaniac@example.com",
+    "hasProfile": true,
+    "interests": {
+      "history": 2,
+      "museums": 2,
+      "collecting artifacts": 2,
+      "writing": 0,
+      "photography": -1,
+      "technology": -2
+    },
+    "name": "Benjamin Harris",
+    "profilePhoto": "",
+    "values": {
+      "cultural heritage": 2,
+      "personal growth": 1
+    }
+  },
+  {
+    "bio": "Casual artist and painter.",
+    "contactInfo": "paint.and.sketch",
+    "contactMethod": "instagram",
+    "email": "artist@example.com",
+    "hasProfile": true,
+    "interests": {
+      "painting": 2,
+      "drawing": 2,
+      "digital art": 2,
+      "sculpting": 0,
+      "animation": -1,
+      "technology": 2
+    },
+    "name": "Natalie Brooks",
+    "profilePhoto": "",
+    "values": {
+      "creative freedom": 2,
+      "personal growth": 0
+    }
+  },
+  {
+    "bio": "Self-taught musician and audio engineer.",
+    "contactInfo": "tune.maker@example.com",
+    "contactMethod": "email",
+    "email": "tune.maker@example.com",
+    "hasProfile": true,
+    "interests": {
+      "music production": 2,
+      "guitar": 2,
+      "singing": 2,
+      "songwriting": 1,
+      "DJing": 0,
+      "technology": 1
+    },
+    "name": "Ethan Taylor",
+    "profilePhoto": "",
+    "values": {
+      "artistic integrity": 2,
+      "personal growth": -1
+    }
+  }
+]

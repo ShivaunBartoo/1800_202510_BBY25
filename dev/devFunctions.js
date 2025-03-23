@@ -11,7 +11,7 @@ window.addTestUsers = addTestUsers;
 window.deleteTestUsers = deleteTestUsers;
 window.addAllToGroup = addAllToGroup;
 console.log("dev functions loaded");
-
+console.log("OVWSdIxoOVFbOTcOjRRN");
 // adds all users in the 'users' collection to the group with the specified groupID.
 function addAllToGroup(groupID) {
     let group = db.collection("groups").doc(groupID);

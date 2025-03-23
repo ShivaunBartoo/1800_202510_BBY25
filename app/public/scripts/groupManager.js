@@ -33,58 +33,59 @@ export function getGroupMemberIDs(groupID) {
     });
 }
 
-
 export function getGroupMembersPromise(groupMemberIDs) {
     return new Promise((res, rej) => {
         // console.log(groupMemberIDs);
         let users = [];
-        db.collection('users').get()
-        .then((doc) => {
-            doc.forEach((eachUser) => {
-                if (groupMemberIDs.includes(eachUser.id)) {
-                    users.push(eachUser);
+        db.collection("users")
+            .get()
+            .then((doc) => {
+                doc.forEach((eachUser) => {
+                    if (groupMemberIDs.includes(eachUser.id)) {
+                        users.push(eachUser);
+                    }
+                });
+                if (users.length > 0) {
+                    res(users);
+                } else {
+                    rej("No users in list, or something broke.");
                 }
-            });
-            if (users.length > 0) {
-                res(users)
-            }
-            else {
-                rej("No users in list, or something broke.")
-            }
             });
     });
 }
 export async function getNouns(groupID) {
-    getGroupMemberIDs(groupID)
-    .then((idList) => getGroupMembersPromise(idList))
-    .then((usersList) => {
-        let nouns = [];
-        usersList.forEach((user) => {
-            let data = user.data()
-            
-            for(const key in data.values) {
-                nouns.push(key);
-            }
-            for(const key in data.interests) {
-                nouns.push(key)
-            }
-
+    return getGroupMemberIDs(groupID)
+        .then((idList) => getGroupMembersPromise(idList))
+        .then((usersList) => {
+            let nouns = [];
+            usersList.forEach((user) => {
+                let data = user.data();
+                for (const key in data.values) {
+                    if (!nouns.some((noun) => noun.word === key)) {
+                        nouns.push({ word: key, type: "value" });
+                    }
+                }
+                for (const key in data.interests) {
+                    if (!nouns.some((noun) => noun.word === key)) {
+                        nouns.push({ word: key, type: "interest" });
+                    }
+                }
+            });
+            return nouns;
         })
-        return nouns;
-    })
-    .catch((err) => console.log(err));
+        .catch((err) => console.log(err));
 }
 
-export async function getCompatibility(currentUserID, currentGroupID) { 
-    let users = await getGroupMembers(currentGroupID)
+export async function getCompatibility(currentUserID, currentGroupID) {
+    let users = await getGroupMembers(currentGroupID);
     let currentUser = await db.collection("users").doc(currentUserID).get();
     let compat = {};
     users.forEach((user) => {
         // console.log(user.data().interests);
         let currentUserInterests = currentUser.data().interests;
-        console.log(currentUserInterests)
-        for(key in currentUserInterests) {
-            console.log(key)
+        console.log(currentUserInterests);
+        for (key in currentUserInterests) {
+            console.log(key);
         }
         // let userInterests = user.data().interests;
         // let difference = 0;
@@ -100,8 +101,6 @@ export async function getCompatibility(currentUserID, currentGroupID) {
         //     console.log(percent)
         //     compat[currentUserID+ ", " + user.id] = percent;
         // }
-
-
     });
 
     // console.log(compat)

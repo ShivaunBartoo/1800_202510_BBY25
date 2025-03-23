@@ -82,7 +82,6 @@ async function getProfileImage(num) {
             console.error(`Error loading image data: ${error}`);
         }
     }
-    console.log(`getting image: image${num}`);
     return imageData[`image${num}`] || null;
 }
 

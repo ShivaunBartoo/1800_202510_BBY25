@@ -34,46 +34,47 @@ export function getGroupMemberIDs(groupID) {
     });
 }
 
-
 export function getGroupMembersPromise(groupMemberIDs) {
     return new Promise((res, rej) => {
         // console.log(groupMemberIDs);
         let users = [];
-        db.collection('users').get()
-        .then((doc) => {
-            doc.forEach((eachUser) => {
-                if (groupMemberIDs.includes(eachUser.id)) {
-                    users.push(eachUser);
+        db.collection("users")
+            .get()
+            .then((doc) => {
+                doc.forEach((eachUser) => {
+                    if (groupMemberIDs.includes(eachUser.id)) {
+                        users.push(eachUser);
+                    }
+                });
+                if (users.length > 0) {
+                    res(users);
+                } else {
+                    rej("No users in list, or something broke.");
                 }
-            });
-            if (users.length > 0) {
-                res(users)
-            }
-            else {
-                rej("No users in list, or something broke.")
-            }
             });
     });
 }
 export async function getNouns(groupID) {
-    getGroupMemberIDs(groupID)
-    .then((idList) => getGroupMembersPromise(idList))
-    .then((usersList) => {
-        let nouns = [];
-        usersList.forEach((user) => {
-            let data = user.data()
-            
-            for(const key in data.values) {
-                nouns.push(key);
-            }
-            for(const key in data.interests) {
-                nouns.push(key)
-            }
-
+    return getGroupMemberIDs(groupID)
+        .then((idList) => getGroupMembersPromise(idList))
+        .then((usersList) => {
+            let nouns = [];
+            usersList.forEach((user) => {
+                let data = user.data();
+                for (const key in data.values) {
+                    if (!nouns.some((noun) => noun.word === key)) {
+                        nouns.push({ word: key, type: "value" });
+                    }
+                }
+                for (const key in data.interests) {
+                    if (!nouns.some((noun) => noun.word === key)) {
+                        nouns.push({ word: key, type: "interest" });
+                    }
+                }
+            });
+            return nouns;
         })
-        return nouns;
-    })
-    .catch((err) => console.log(err));
+        .catch((err) => console.log(err));
 }
 
 //returns a list of the users compatibility between them and the rest of the group before answering questions

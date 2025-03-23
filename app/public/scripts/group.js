@@ -12,6 +12,7 @@ async function initialize() {
     const matchCardHTML = await response.text();
 
     const group = await getCurrentGroup();
+    console.log("group loaded");
     if (group) {
         const groupMembers = await getGroupMembers(group.id);
         for (const member of groupMembers) {

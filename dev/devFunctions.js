@@ -10,10 +10,19 @@ import { db } from "../app/public/scripts/app.js";
 window.addTestUsers = addTestUsers;
 window.deleteTestUsers = deleteTestUsers;
 window.addAllToGroup = addAllToGroup;
+window.regenerateTestUsers = regenerateTestUsers;
 console.log("dev functions loaded");
 console.log("OVWSdIxoOVFbOTcOjRRN");
+async function regenerateTestUsers() {
+    await deleteTestUsers();
+    await addTestUsers();
+    await addAllToGroup("OVWSdIxoOVFbOTcOjRRN");
+}
+
 // adds all users in the 'users' collection to the group with the specified groupID.
-function addAllToGroup(groupID) {
+//paste in chrome console to add all users to default group:
+//  addAllToGroup("OVWSdIxoOVFbOTcOjRRN");
+async function addAllToGroup(groupID) {
     let group = db.collection("groups").doc(groupID);
     db.collection("users")
         .get()
@@ -24,40 +33,60 @@ function addAllToGroup(groupID) {
                 });
             });
         });
+    console.log("users added to group successfully.");
 }
-//paste in chrome console to add all users to default group:
-//  addAllToGroup("OVWSdIxoOVFbOTcOjRRN");
 
 // populates the 'users' collection with test users from testUsers.json.
-function addTestUsers() {
-    fetch("../app/files/testUsers.json")
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Cannot find testUsers.json");
-            }
-            return response.json();
-        })
-        .then((testUsers) => {
-            testUsers.forEach((user) => {
-                const testUser = db.collection("users").doc();
-                testUser.set({
-                    name: user.name,
-                    bio: user.bio,
-                    email: user.email,
-                    hasProfile: user.hasProfile,
-                    contactMethod: user.contactMethod,
-                    contactInfo: user.contactInfo,
-                    email: user.email,
-                    interests: user.interests,
-                    profilePhoto: user.profilePhoto,
-                    values: user.values,
-                    testUser: true,
-                });
+async function addTestUsers() {
+    let index = 1;
+    try {
+        const response = await fetch("../app/files/testUsers.json");
+        if (!response.ok) {
+            throw new Error("Cannot read testUsers.json");
+        }
+        const testUsers = await response.json();
+        for (const user of testUsers) {
+            console.log("generating user: " + user.name);
+            const profilePhoto = await getProfileImage(index++);
+            const testUser = db.collection("users").doc();
+            await testUser.set({
+                name: user.name,
+                bio: user.bio,
+                email: user.email,
+                hasProfile: user.hasProfile,
+                contactMethod: user.contactMethod,
+                contactInfo: user.contactInfo,
+                interests: user.interests,
+                profilePhoto: profilePhoto,
+                values: user.values,
+                testUser: true,
             });
-        });
+        }
+        console.log("Test users added successfully.");
+    } catch (error) {
+        console.error("Error adding test users:", error);
+    }
+}
+
+//gets an image from a dataset of ai-generated faces from https://thispersondoesnotexist.com/
+let imageData = null;
+async function getProfileImage(num) {
+    if (!imageData) {
+        try {
+            const response = await fetch("imagesBase64.json");
+            if (!response.ok) {
+                throw new Error("Failed to fetch image.");
+            }
+            imageData = await response.json();
+        } catch (error) {
+            console.error(`Error loading image data: ${error}`);
+        }
+    }
+    return imageData[`image${num}`] || null;
 }
 
 // deletes all test users from the 'users' collection.
+// (test users have the testUser: true field in their db)
 async function deleteTestUsers() {
     let groups = await db.collection("groups").get();
     db.collection("users")
@@ -73,4 +102,5 @@ async function deleteTestUsers() {
                 });
             });
         });
+    console.log("test users deleted successfully.");
 }

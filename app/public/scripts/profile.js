@@ -16,7 +16,7 @@ async function initialize() {
     if (user) {
         document.querySelector("#user-name").innerHTML = user.name;
         document.querySelector("#profile-bio").innerHTML = user.bio;
-        // document.querySelector("#profile-image").src = user.profileImage;
+        document.querySelector("#user-picture").setAttribute("src", user.profilePhoto);
         let interestList = document.querySelector("#interest-list");
         let interestCount = 0;
         for (let interest in user.interests) {

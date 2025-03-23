@@ -1,4 +1,4 @@
-import { getUser, auth, db } from "./app.js";
+import { getUserData, auth, db } from "./app.js";
 
 let matchcard;
 
@@ -20,16 +20,17 @@ export async function loadContent(selector, filePath) {
     }
 }
 
-// loads the header component into the page, and confures its elements
+// loads the header component into the page, and confures its elements.
+// It is used on all pages in the app.
 export async function loadHeader(showBackButton = false, showGroup = false, showAvatar = true, showButton = false) {
     await loadContent("header", "./components/header.html");
     let header = document.querySelector("header");
-    let user = await getUser();
+    let user = await getUserData();
     if (header) {
         let backButton = header.querySelector(".header-back-button");
         let titleHeader = header.querySelector("#title-header");
         let groupHeader = header.querySelector("#group-header");
-        let avatar = header.querySelector("#profile-picture");
+        let avatar = header.querySelector("#profile-picture-container");
         let headerButtons = header.querySelector("#header-buttons");
 
         if (backButton) {
@@ -42,7 +43,8 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
         }
         if (avatar) {
             if (user) {
-                //TODO: Set the avatar image source
+                header.querySelector("#profile-picture").src =
+                    user.data().profilePhoto || "../public/images/blank_avatar.jpeg";
                 avatar.style.display = showAvatar ? "block" : "none";
             } else {
                 avatar.style.display = "none";
@@ -87,6 +89,9 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
     }
 }
 
+// This function loads a match card into a specified container.
+// It retrieves user data from Firestore using the provided UID and updates the card's content.
+// It is used in the group.html and main.html pages.
 export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
     let container = document.querySelector(containerSelector);
     if (!container) {
@@ -106,6 +111,11 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
     let card = tempDiv.firstElementChild;
     if (card) {
         card.querySelector(".match-card-name").textContent = userData.name || "Unknown";
+        console.log("setting profile photo");
+        card.querySelector(".match-card-image").setAttribute(
+            "src",
+            userData.profilePhoto || "../public/images/blank_avatar.jpeg"
+        );
 
         container.appendChild(card);
         card.addEventListener("click", () => {

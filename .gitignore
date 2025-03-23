@@ -4,3 +4,4 @@ node_modules/
 .vscode/
 app/public/scripts/firebaseAPI_BBY25.js
 app/html/runTestFiles.html
+dev/faces

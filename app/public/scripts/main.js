@@ -1,12 +1,12 @@
-import { loadContent } from "../scripts/loadContent.js";
+import { loadContent, loadHeader } from "../scripts/loadContent.js";
 
 initialize();
 
 // This function initializes the page by loading HTML content into specified elements
 // and setting up event listeners for survey responses.
 async function initialize() {
-    await loadContent(".header-authenticated", "./components/header_authenticated.html");
-    await loadContent(".match-card-container", "./components/match_card.html");
+    loadHeader(true, true, true);
+    loadContent(".match-card-container", "./components/match_card.html");
     await loadContent(".survey-card-container", "./components/survey_card.html");
 
     // Ensure event listeners are attached after content is loaded
@@ -27,8 +27,8 @@ async function initialize() {
                 // Set opacity to zero
                 surveyCard.style.opacity = "0";
 
-                // After a short delay, set opacity back to normal 
-                // CSS adds a transition effect 
+                // After a short delay, set opacity back to normal
+                // CSS adds a transition effect
                 setTimeout(() => {
                     surveyCard.style.opacity = "";
                 }, 100);

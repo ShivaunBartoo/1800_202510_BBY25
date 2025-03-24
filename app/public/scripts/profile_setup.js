@@ -82,12 +82,7 @@ function initialize() {
             const int2 = document.getElementById("interest2").value;
             const int3 = document.getElementById("interest3").value;
             const val1 = document.getElementById("value1").value;
-            const interests = {};
-            const values = {};
-            interests[int1] = 5;
-            interests[int2] = 5;
-            interests[int3] = 5;
-            values[val1] = 5;
+
             // Get form data
             const formData = {
                 bio: document.getElementById("bio").value,
@@ -96,12 +91,12 @@ function initialize() {
                 profilePhoto: document.getElementById("profile-photo").src,
                 hasProfile: true,
                 interests: {
-                    [int1.toLowerCase()]: 5,
-                    [int2.toLowerCase()]: 5,
-                    [int3.toLowerCase()]: 5,
+                    [int1.toLowerCase()]: 2,
+                    [int2.toLowerCase()]: 2,
+                    [int3.toLowerCase()]: 2,
                 },
                 values: {
-                    [val1.toLowerCase()]: 5,
+                    [val1.toLowerCase()]: 2,
                 },
             };
             // Save form data to Firestore

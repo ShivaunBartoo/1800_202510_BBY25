@@ -24,13 +24,20 @@ export async function getUser() {
     }
 }
 
+let cachedUserData = null; // Cache for user data
+
 // Retrieves the user data from Firestore.
-export async function getUserData() {
+export async function getUserData(reload = false) {
+    if (cachedUserData && !reload) {
+        return cachedUserData;
+    }
+
     const user = await getUser();
     if (user) {
         try {
             const userDoc = await db.collection("users").doc(user.uid).get();
             if (userDoc.exists) {
+                cachedUserData = userDoc; // Cache the user document
                 return userDoc;
             } else {
                 console.log("No document found for the user");
@@ -95,8 +102,6 @@ export function clearCachedGroup() {
     cachedGroup = null;
     console.log("Cached group cleared.");
 }
-
-export async function getCommonInterests(userID) {}
 
 // Monitor authentication state
 auth.onAuthStateChanged((user) => {

@@ -13,35 +13,22 @@
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
         <script type="module" src="../public/scripts/profile.js"></script>
-        <script type="module">
-            import { loadHeader } from "../public/scripts/loadContent.js";
-            loadHeader(
-                true, // show back button
-                true, // show group
-                true, // show profile image
-                false //   show login/logout button
-            );
-        </script>
     </head>
     <body>
         <header></header>
         <main>
             <div id="profile-container-top">
-                <div class="page-header" id="user-name">Unknown</div>
+                <div class="page-header" id="user-name">&nbsp;</div>
                 <img id="user-picture" src="../public/images/blank_avatar.jpeg" alt="Profile Picture" />
                 <button id="message-button">Ask to Connect</button>
             </div>
             <div id="profile-container">
-                <p id="profile-bio">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.
-                </p>
+                <p id="profile-bio">&nbsp;</p>
                 <div id="profile-interests">
                     <div class="noun-header">Interests</div>
-                    <ul id="interest-list"></ul>
+                    <div class="noun-container" id="interest-container"></div>
                     <div class="noun-header">Values</div>
-                    <ul id="value-list"></ul>
+                    <div class="noun-container" id="value-container"></div>
                 </div>
             </div>
         </main>

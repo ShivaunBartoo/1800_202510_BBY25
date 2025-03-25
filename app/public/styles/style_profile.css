@@ -8,7 +8,6 @@ main {
 
 main {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -17,17 +16,16 @@ main {
 }
 #profile-container-top {
     width: 100%;
-    margin-top: 15px;
+    margin: 15px 0;
     display: flex;
     flex-direction: column;
     justify-content: start;
     gap: 5px;
     align-items: center;
 }
-
 #profile-container {
+    flex-grow: 1;
     width: 100%;
-    height: 60%;
     background-color: #e2f5fe;
     box-sizing: border-box;
     padding: 20px;
@@ -58,4 +56,18 @@ main {
 .noun-header {
     font-size: 1.5em;
     font-weight: bold;
+}
+
+.noun-container {
+    padding: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.noun-bubble {
+    margin-top: 5px;
+    padding: 3px 6px;
+    white-space: nowrap;
+    background: white;
+    border-radius: 12px;
 }

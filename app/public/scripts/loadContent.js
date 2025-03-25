@@ -1,5 +1,5 @@
 import { getUserData, getAllUsersInGroup, getCurrentGroup, auth, db } from "./app.js";
-import { getCompatibility } from "./groupManager.js";
+import { getCompatibility, getCommonInterests } from "./groupManager.js";
 
 let matchcard;
 let usersCache = null;
@@ -41,12 +41,12 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
             backButton.setAttribute("href", document.referrer);
         }
         if (titleHeader && groupHeader) {
-            groupHeader.style.display = showGroup ? "flex" : "none";
-            titleHeader.style.display = showGroup ? "none" : "flex";
             if (showGroup) {
                 let currentGroup = await getCurrentGroup();
                 header.querySelector(".group-title").innerHTML = currentGroup.data().groupName;
             }
+            groupHeader.style.display = showGroup ? "flex" : "none";
+            titleHeader.style.display = showGroup ? "none" : "flex";
         }
         if (avatar) {
             if (currentUser) {
@@ -125,6 +125,21 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
             "src",
             cardUser.profilePhoto || "../public/images/blank_avatar.jpeg"
         );
+        let commonInterests = await getCommonInterests(cardUser, currentUser.data(), 2);
+        card.querySelectorAll(".match-card-info").forEach((info, index) => {
+            if (commonInterests[index]) {
+                let output = "";
+                if (commonInterests[index].type === "value") {
+                    output = "also values ";
+                } else {
+                    output = "also likes ";
+                }
+                output = output + commonInterests[index].word;
+                info.innerHTML = output;
+            } else {
+                info.innerHTML = "";
+            }
+        });
 
         container.appendChild(card);
         card.addEventListener("click", () => {

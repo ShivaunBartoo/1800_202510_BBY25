@@ -127,14 +127,29 @@ export function getCompatibility(userData1, userData2) {
         if (key in map1) {
             //the difference between the 2 interests, order does not matter here
             difference += Math.abs(map1[key] - map2[key]);
-        } else {
-            difference += 5;
+        } 
+        else {
+            difference += 2.5;
         }
     }
 
     //the percentage of how close they are to max incompatibility.
     const percent = (difference / max) * 100;
     return 100 - percent;
+}
+
+export async function getCommonInterests(userData1, userData2) {
+    let map1 = { ...userData1.interests, ...userData1.values };
+    let map2 = { ...userData2.interests, ...userData2.values };
+
+    let commonList = []
+    for (const key in map2) {
+        if (key in map1) {
+            commonList.append(key);
+        }
+    }
+
+    return commonList;
 }
 
 // returns a promise of group users in the specified group.

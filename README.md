@@ -8,7 +8,7 @@ Example:
 
 This client-side JavaScript web application provides real-time weather updates for cities worldwide. It simplifies accessing weather information through an intuitive mobile-first interface, allowing users to input a city name and receive data on temperature, humidity, and conditions.
 
-Developed for the [Course Name] course, applying User-Centred Design practices, agile project management processes, integrating a weather API, and Firebase backend services.
+Developed for the COMP-1800 course, applying User-Centred Design practices, agile project management processes, integrating a weather API, and Firebase backend services.
 
 Example:
 - Real-time weather updates for any city.
@@ -41,9 +41,9 @@ Example:
 Example:
 ```
 project-name/
-├── src/
-│   ├── index.html
-│   ├── style.css
+├── app/
+│   ├── files/
+│   ├── html/
 │   ├── app.js
 │   └── components/
 ├── package.json
@@ -55,7 +55,7 @@ project-name/
 
 ## Contributors
 - **Shivaun Bartoo** - Former professional animator, current BCIT student with a interdiciplinary creative and technical skillset and an enthusiasm to learn.
-- **Luis Saberon** - BCIT CST student, spends an unfortunate amount of money on games, both
+- **Luis Saberon** - 
 
 ---
 

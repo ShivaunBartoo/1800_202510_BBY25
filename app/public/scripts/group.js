@@ -14,6 +14,7 @@ async function initialize() {
     const group = await getCurrentGroup();
     if (group) {
         const groupMembers = await getGroupMembers(group.id);
+        document.querySelector("#member-count").innerHTML = groupMembers.length;
         for (const member of groupMembers) {
             if (member.id != currentUser.uid) {
                 loadMatchCard("#member-list", member.id, matchCardHTML);

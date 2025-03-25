@@ -16,7 +16,7 @@
             import { loadContent, loadHeader } from "../public/scripts/loadContent.js";
             loadContent(".match-card-container", "./components/match_card.html");
             loadHeader(
-                false, // show back button
+                true, // show back button
                 false, // show group
                 false, // show profile image
                 true //   show login/logout button
@@ -27,9 +27,9 @@
     <body>
         <header></header>
         <main>
-            <div class="settings-username" id="bigName">George</div>
+            <div class="settings-username" id="bigName"></div>
 
-            <img id="profile-picture-large" src="../public/images/headshot5.jpeg" alt="Profile Picture" />
+            <img id="profile-picture-large" src="../public/images/blank_avatar.jpeg" alt="Profile Picture" />
             <!-- TODO: populate dynamically -->
 
             <div class="setting-group">

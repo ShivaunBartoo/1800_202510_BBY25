@@ -5,7 +5,6 @@ function randInt(max) {
 }
 
 window.getCompatibilityList = getCompatibilityList;
-window.getCompatiblity = getCompatiblity;
 window.getNouns = getNouns;
 window.testViewGroupUsers = testViewGroupUsers;
 window.testGroupMemberPromise = testGroupMemberPromise;
@@ -78,44 +77,41 @@ export async function getNouns(groupID) {
 }
 
 //returns a list of the users compatibility between them and the rest of the group before answering questions
-export async function getCompatibilityList(currentUserID, currentGroupID) { 
+export async function getCompatibilityList(currentUserID, currentGroupID) {
     let currentUser = await db.collection("users").doc(currentUserID).get();
     let compat = {};
-    let users = await getGroupMembers(currentGroupID)
+    let users = await getGroupMembers(currentGroupID);
     users.forEach((user) => {
         //this makes sure that the user doesn't get the compatabilit they have for themself.
-        if(user.id != currentUser.id) {
-            let currentUserInterests = currentUser.data().interests;
-            let userInterests = user.data().interests;
-            let percent = getCompatibility(currentUserInterests, userInterests);
-            compat[[currentUserID, user.id]] = percent;   
+        if (user.id != currentUser.id) {
+            let percent = getCompatibility(currentUser.data(), user.data());
+            compat[[currentUserID, user.id]] = percent;
         }
     });
     return compat;
 }
 
-function getCompatibility(map1, map2) {
+export function getCompatibility(userData1, userData2) {
+    let map1 = { ...userData1.interests, ...userData1.values };
+    let map2 = { ...userData2.interests, ...userData2.values };
     //the difference in scores between the current user and the other user.
     let difference = 0;
-    //the max possible difference in scores. 
+    //the max possible difference in scores.
     let max = 0;
-    for(const key in map2) {
+    for (const key in map2) {
         max += 5;
-        if(key in map1) {
-
+        if (key in map1) {
             //the difference between the 2 interests, order does not matter here
             difference += Math.abs(map1[key] - map2[key]);
-        }
-        else{
+        } else {
             difference += 5;
         }
     }
 
     //the percentage of how close they are to max incompatibility.
-    const percent = (difference/max)*100;
-    return 100-percent;
+    const percent = (difference / max) * 100;
+    return 100 - percent;
 }
-
 
 // returns a promise of group users in the specified group.
 export async function getGroupMembers(groupID) {

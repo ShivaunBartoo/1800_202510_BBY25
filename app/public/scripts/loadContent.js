@@ -1,6 +1,9 @@
-import { getUserData, auth, db } from "./app.js";
+import { getUserData, getAllUsersInGroup, getCurrentGroup, auth, db } from "./app.js";
+import { getCompatibility } from "./groupManager.js";
 
 let matchcard;
+let usersCache = null;
+let currentUser = null;
 
 // This function loads HTML content from a specified file path
 // and inserts it into elements matching a given selector.
@@ -25,7 +28,7 @@ export async function loadContent(selector, filePath) {
 export async function loadHeader(showBackButton = false, showGroup = false, showAvatar = true, showButton = false) {
     await loadContent("header", "./components/header.html");
     let header = document.querySelector("header");
-    let user = await getUserData();
+    await cacheCurrentUser();
     if (header) {
         let backButton = header.querySelector(".header-back-button");
         let titleHeader = header.querySelector("#title-header");
@@ -40,11 +43,15 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
         if (titleHeader && groupHeader) {
             groupHeader.style.display = showGroup ? "flex" : "none";
             titleHeader.style.display = showGroup ? "none" : "flex";
+            if (showGroup) {
+                let currentGroup = await getCurrentGroup();
+                header.querySelector(".group-title").innerHTML = currentGroup.data().groupName;
+            }
         }
         if (avatar) {
-            if (user) {
+            if (currentUser) {
                 header.querySelector("#profile-picture").src =
-                    user.data().profilePhoto || "../public/images/blank_avatar.jpeg";
+                    currentUser.data().profilePhoto || "../public/images/blank_avatar.jpeg";
                 avatar.style.display = showAvatar ? "block" : "none";
             } else {
                 avatar.style.display = "none";
@@ -59,7 +66,7 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
                 let loginButton = headerButtons.querySelector("#login-button");
                 let logoutButton = headerButtons.querySelector("#logout-button");
                 // Check if the user is logged in, and show the logout button if they are
-                if (user) {
+                if (currentUser) {
                     console.log("User is logged in");
                     loginButton.style.display = "none";
                     logoutButton.style.display = "block";
@@ -98,28 +105,46 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
         throw new Error(`Container does not exist`);
     }
 
-    let user = await db.collection("users").doc(uid).get();
-    if (!user.exists) {
+    await cacheCurrentUser();
+    await cacheGroupUsers();
+    let cardUser = usersCache[uid];
+
+    if (!cardUser) {
         throw new Error(`No user found with the given ID: ${uid}`);
     }
-
-    let userData = user.data();
 
     let tempDiv = document.createElement("div");
     tempDiv.innerHTML = matchCardHTML;
 
     let card = tempDiv.firstElementChild;
     if (card) {
-        card.querySelector(".match-card-name").textContent = userData.name || "Unknown";
-        console.log("setting profile photo");
+        let matchPercent = Math.ceil(getCompatibility(cardUser, currentUser.data())) + "%";
+        card.querySelector(".match-card-percent").textContent = matchPercent;
+        card.querySelector(".match-card-name").textContent = cardUser.name || "Unknown";
         card.querySelector(".match-card-image").setAttribute(
             "src",
-            userData.profilePhoto || "../public/images/blank_avatar.jpeg"
+            cardUser.profilePhoto || "../public/images/blank_avatar.jpeg"
         );
 
         container.appendChild(card);
         card.addEventListener("click", () => {
             window.location.href = `profile.html?uid=${uid}`;
         });
+    }
+}
+
+//populates the user cache
+//only makes a db call if the cache doesn't exist or the reload flag is true.
+async function cacheGroupUsers(reload = false) {
+    if (!usersCache || reload) {
+        usersCache = await getAllUsersInGroup();
+    }
+}
+
+//caches the currentUser to a local variable.
+//only makes a db call if the cache doesn't exist or the reload flag is true.
+async function cacheCurrentUser(reload = false) {
+    if (!currentUser) {
+        currentUser = await getUserData();
     }
 }

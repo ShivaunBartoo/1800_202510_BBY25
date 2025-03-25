@@ -8,6 +8,8 @@ export const app = firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
+let cachedGroup = null; // Cache for the current group
+
 // copilot helped me get the Promise working with this function
 // Retrieves the current Firebase user or waits for auth state changes.
 export async function getUser() {
@@ -44,7 +46,23 @@ export async function getUserData() {
     }
 }
 
-let cachedGroup = null; // Cache for the current group
+// Returns an object containing a key-value pair of user.id to userData
+export async function getAllUsersInGroup() {
+    let users = {};
+    let group = await getCurrentGroup();
+    if (!group) {
+        console.error("No group found.");
+        return users;
+    }
+
+    let usersSnapshot = await db.collection("users").get();
+    usersSnapshot.forEach((userDoc) => {
+        if (group.data().users.includes(userDoc.id)) {
+            users[userDoc.id] = userDoc.data();
+        }
+    });
+    return users;
+}
 
 export async function getCurrentGroup() {
     if (cachedGroup) {

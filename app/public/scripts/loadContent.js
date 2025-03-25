@@ -118,7 +118,7 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
 
     let card = tempDiv.firstElementChild;
     if (card) {
-        let matchPercent = Math.ceil(getCompatibility(cardUser, currentUser.data())) + "%";
+        let matchPercent = Math.ceil(getCompatibility(cardUser, currentUser.data())[0]) + "%";
         card.querySelector(".match-card-percent").textContent = matchPercent;
         card.querySelector(".match-card-name").textContent = cardUser.name || "Unknown";
         card.querySelector(".match-card-image").setAttribute(

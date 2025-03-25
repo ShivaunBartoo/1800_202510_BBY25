@@ -118,6 +118,8 @@ export async function getCompatibilityList(currentUserID, currentGroupID) {
 export function getCompatibility(userData1, userData2) {
     let map1 = { ...userData1.interests, ...userData1.values };
     let map2 = { ...userData2.interests, ...userData2.values };
+    //if every noun in map 1 is in map2, return true, otherwise return false. 
+    let fullOverlap = true;
     //the difference in scores between the current user and the other user.
     let difference = 0;
     //the max possible difference in scores.
@@ -130,12 +132,13 @@ export function getCompatibility(userData1, userData2) {
         } 
         else {
             difference += 2.5;
+            fullOverlap = false;
         }
     }
 
     //the percentage of how close they are to max incompatibility.
     const percent = (difference / max) * 100;
-    return 100 - percent;
+    return [(100 - percent), fullOverlap];
 }
 
 export async function getCommonInterests(userData1, userData2) {

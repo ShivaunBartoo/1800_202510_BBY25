@@ -5,19 +5,42 @@ function randInt(max) {
 }
 
 window.getCompatibilityList = getCompatibilityList;
-window.getCompatiblity = getCompatiblity;
 window.getNouns = getNouns;
 window.testViewGroupUsers = testViewGroupUsers;
 window.testGroupMemberPromise = testGroupMemberPromise;
-//Using a group ID and userID, adds the userID to the groups user array.
+//Using a group ID and userID, adds the userID to the groups user array and add the groupID to the user.
 export function addToGroup(groupID, userID) {
     const group = db.collection("groups").doc(groupID);
-    const user = db.collection(collection).doc(userID);
+    const user = db.collection("users").doc(userID);
 
     //firestores way of appending data to array values.
+    try{
     group.update({
         users: firebase.firestore.FieldValue.arrayUnion(userID),
     });
+}
+    catch(err){
+        console.log("Group does not exist")
+    }
+    user.update({
+        groups: firebase.firestore.FieldValue.arrayUnion(groupID)
+    })
+}
+
+// Creates a group, names it, then adds the creator to that group.
+export async function createGroup(groupName, userID) {
+    let groups = db.collection('groups');
+    try{
+    let group = await groups.add({
+        groupName: groupName
+    })
+    addToGroup(group.id, userID);
+    
+}
+catch (err) {
+    console.error(err);
+}
+
 }
 
 // returns a promise of group user ids in the specified group.
@@ -133,6 +156,7 @@ export async function getGroupMembers(groupID) {
     });
     return users;
 }
+
 
 //All functions after this point are for my testing, you shouldn't need them, but feel free to look anyways
 function testAddToGroup() {

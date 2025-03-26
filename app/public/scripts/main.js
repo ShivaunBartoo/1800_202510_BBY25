@@ -80,11 +80,9 @@ async function initialize() {
     let currentMatches = userData.data().currentMatches;
     if (currentMatches && currentMatches.length >= 1) {
         let recentMatch = currentMatches[currentMatches.length - 1];
-        console.log("updating match card: " + recentMatch);
         updateMatchCard(recentMatch);
     }
     nextMatch = await getNextMatch();
-    console.log("initializing: next match: " + nextMatch);
 }
 
 //Populates a surveyCard DOM element with the content of a given question
@@ -163,9 +161,7 @@ async function updateMatchCard(match) {
     const matchCardContainer = document.querySelector(".match-card-container");
     if (matchCardContainer) {
         matchCardContainer.innerHTML = "";
-        console.log("setting match card to uid: " + match);
         await loadMatchCard(".match-card-container", match, matchCardHTML);
-        console.log("Match card loaded!");
         return document.querySelector(".match-card");
     } else {
         console.error("Error: .match-card-container not found!");
@@ -193,12 +189,10 @@ async function getNextMatch() {
         console.error("Error: User document does not exist.");
         return null;
     }
-    console.log("userData: " + userData.id);
 
     let currentMatches = userData.data().currentMatches || [];
     let activeGroup = await getCurrentGroup();
     activeGroup = activeGroup.id;
-    console.log("activeGroup: " + activeGroup);
     if (!activeGroup) {
         console.error("Error: activeGroup is missing in user data.");
         return null;
@@ -207,12 +201,9 @@ async function getNextMatch() {
     let compatabilityList = await getCompatibilityList(userData.id, activeGroup);
     compatabilityList.sort((a, b) => b.percent - a.percent);
 
-    console.log(compatabilityList);
-
     for (let match of compatabilityList) {
         // console.log("Considering user: " + match.user2);
         if (!currentMatches.includes(match.user2)) {
-            console.log("Next match: " + match.user2);
             return match.user2;
         }
     }

@@ -66,7 +66,6 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
                 let logoutButton = headerButtons.querySelector("#logout-button");
                 // Check if the user is logged in, and show the logout button if they are
                 if (currentUser) {
-                    console.log("User is logged in");
                     loginButton.style.display = "none";
                     logoutButton.style.display = "block";
                     logoutButton.addEventListener("click", () => {
@@ -81,7 +80,6 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
                 }
                 // If the user is not logged in, show the login button
                 else {
-                    console.log("User is logged out");
                     loginButton.style.display = "block";
                     logoutButton.style.display = "none";
                     loginButton.addEventListener("click", () => {
@@ -118,7 +116,6 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
     let card = tempDiv.firstElementChild;
     if (card) {
         let matchPercent = Math.ceil(getCompatibility(currentUser.data(), cardUser)[0]) + "%";
-        console.log("compatability for " + cardUser.name + ": " + matchPercent + "%");
         card.querySelector(".match-card-percent").textContent = matchPercent;
         card.querySelector(".match-card-name").textContent = cardUser.name || "Unknown";
         card.querySelector(".match-card-image").setAttribute(

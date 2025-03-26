@@ -31,8 +31,8 @@ async function initialize() {
 
     await loadContent(".survey-card-container", "./components/survey_card.html");
 
-    document.querySelectorAll(".survey-card-container").forEach((element) => {
-        setCardQuestion(element, nextQuestion());
+    document.querySelectorAll(".survey-card-container").forEach(async (element) => {
+        setCardQuestion(element, await nextQuestion());
     });
     // Ensure event listeners are attached after content is loaded
     document.querySelectorAll(".survey-response").forEach((element) => {
@@ -93,6 +93,7 @@ function setCardQuestion(container, question) {
     } else if (question.type === "interest") {
         container.setAttribute("data-type", "interest");
     }
+    console.log(question.word);
     container.querySelector(".survey-card-topic").innerHTML = question.word;
 }
 
@@ -110,13 +111,23 @@ function generateQuestions(nouns, userData) {
 }
 
 //Randomly selects a question from the questions list, and removes it from the list.
-function nextQuestion() {
+async function nextQuestion() {
+    if (questions.length == 0) {
+        await getDefaultQuestions();
+    }
     let index = Math.floor(Math.random() * questions.length);
     let question = questions[index];
     questions.splice(index, 1);
+    console.log("selected question: " + question.word);
     return question;
 }
 
+async function getDefaultQuestions() {
+    let hobbies = await fetch("../files/hobbies.json").then((result) => result.json());
+    Object.values(hobbies).forEach((hobby) => {
+        questions.push({ word: hobby, type: "interest" });
+    });
+}
 //set the percentage value of the progress bar.
 async function setProgressBar(percentage, userData = null) {
     if (!userData) {

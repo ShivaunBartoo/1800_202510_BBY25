@@ -124,8 +124,12 @@ async function authenticatePage() {
     const requiresSetup = requiresSetupElement ? requiresSetupElement.content : false;
     if (requiresAuth || requiresSetup) {
         let userData = await getUserData();
-        if ((requiresAuth && !userData) || (requiresSetup && userData.data().hasProfile == false)) {
+        if (requiresAuth && !userData) {
             window.location.href = "./index.html";
+        } else if (userData.data().activeGroup == null) {
+            window.location.href = "./createOrJoin.html";
+        } else if (requiresSetup && userData.data().hasProfile == false) {
+            window.location.href = "./profile_setup.html";
         }
     }
 }

@@ -4,33 +4,52 @@
         <title>Likemind</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="requires-auth" content="true" />
-        <meta name="requires-setup" content="true" />
         <!-- Stylesheets -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <link rel="stylesheet" href="../public/styles/style_app.css" />
+        <link rel="stylesheet" href="../public/styles/style_create_or_join.css" />
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
-        <script type="module" src="../public/scripts/groupManager.js">
-        </script>
-        <script type="module" src="../public/scripts/c_or_j_group.js"></script>
+        <script type="module" src="../public/scripts/groupManager.js"></script>
+        <script type="module" src="../public/scripts/CreateOrJoin.js"></script>
     </head>
     <body>
         <header></header>
 
-        
-        <form id="createGroup">
-            <h1>Create A Group</h1>
-            <h3>Enter the groups name</h3>
-            <input type="text" id="groupName" name="groupName" placeholder = "Group Name">
-            <button type="submit">ABC</button>
-        </form>
+        <div id="form-container">
+            <form class="form-content" id="joinGroup">
+                <h1>Welcome to Likemind!</h1>
+                <p>
+                    To get started, you'll need to either join an existing group, or create your own. <br />
+                    If you want to join a group, ask someone for a group code.
+                </p>
+                <label for="groupCode">Have a group code? Enter it below:</label>
+                <div class="button-group">
+                    <input type="text" id="groupCode" name="groupCode" placeholder="OVWSdIxoOVFbOTcOjRRN" />
 
-      <form id="joinGroup">
-        <h1>Join a Group</h1>
-        <h3>Enter the groups code to join (this is just the group id)</h3>
-        <input type="text" id="groupCode" name="groupCode" placeholder="Group Code">
-        <button type="submit">DEF</button>
-      </form>
+                    <button type="submit">JOIN</button>
+                </div>
+                <small>(the default group code is already in the box.)</small>
+                <div class="warning" id="bad-group-code">Sorry, invalid group code.</div>
+                <div class="choice-switcher">...or click here to create a group.</div>
+            </form>
+
+            <form class="form-content" id="createGroup" style="display: none">
+                <h1>Welcome to Likemind!</h1>
+                <p>
+                    You can create a group for your school, workplace, or other social setting. You'll be able to invite
+                    others to join the group by sharing a group code.
+                </p>
+                <label for="groupName">Enter the name of your group:</label>
+                <div>
+                    <input type="text" id="groupName" name="groupName" placeholder="Group Name" />
+
+                    <button type="submit">CREATE</button>
+                    <div class="warning" id="blank-name">Please give your group a name.</div>
+
+                    <div class="choice-switcher">Nevermind, I want to join a group.</div>
+                </div>
+            </form>
+        </div>
     </body>
 </html>

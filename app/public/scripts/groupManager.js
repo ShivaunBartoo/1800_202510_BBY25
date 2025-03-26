@@ -26,6 +26,10 @@ export function addToGroup(groupID, userID) {
     });
 }
 
+export async function getGroup(groupID) {
+    return db.collection("groups").doc(groupID).get();
+}
+
 // Creates a group, names it, then adds the creator to that group.
 export async function createGroup(groupName, userID) {
     let groups = db.collection("groups");
@@ -33,9 +37,11 @@ export async function createGroup(groupName, userID) {
         let group = await groups.add({
             groupName: groupName,
         });
-        addToGroup(group.id, userID);
+        await addToGroup(group.id, userID);
+        return group;
     } catch (err) {
         console.error(err);
+        throw err;
     }
 }
 

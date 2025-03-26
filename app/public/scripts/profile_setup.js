@@ -1,4 +1,5 @@
 import { auth, db } from "./app.js";
+import { loadHeader } from "./loadContent.js";
 
 let currentPage = 0;
 let pages = [];
@@ -9,6 +10,9 @@ initialize();
 // This function initializes the page by loading HTML content into specified elements
 // and setting up event listeners for navigation buttons and form submission.
 function initialize() {
+    // loads the header without a back button or group
+    loadHeader(false, false, false, false);
+
     pages = Array.from(document.querySelectorAll(".form-page"));
     navButtons = Array.from(document.querySelectorAll(".nav-button"));
 

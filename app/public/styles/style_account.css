@@ -64,3 +64,17 @@ main .material-icons {
 .material-icons:hover {
   color: #007bff; /* Blue color when hovered */
 }
+
+.noun-container {
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.noun-bubble {
+  margin-top: 5px;
+  padding: 3px 6px;
+  white-space: nowrap;
+  background: white;
+  border-radius: 12px;
+}

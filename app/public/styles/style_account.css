@@ -31,7 +31,9 @@
   margin: 2.5px;
 }
 
-
+.content {
+  overflow-y: scroll;
+}
 
 body {
   overflow-y: auto;
@@ -70,6 +72,7 @@ main .material-icons {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+  background-color: orange;
 }
 .noun-bubble {
   margin-top: 5px;
@@ -77,4 +80,9 @@ main .material-icons {
   white-space: nowrap;
   background: white;
   border-radius: 12px;
+  cursor: default;
+}
+
+#survey {
+  user-select: none;
 }

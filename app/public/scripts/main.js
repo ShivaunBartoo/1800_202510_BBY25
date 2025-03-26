@@ -13,9 +13,9 @@ async function initialize() {
     loadHeader(true, true, true);
     loadContent(".match-card-container", "./components/match_card.html");
 
+    let userData = await getUserData();
     let group = await getCurrentGroup();
     let nouns = await getNouns(group.id);
-    let userData = await getUserData();
 
     let progressPercent = await getMatchProgress(userData);
     setProgressBar(progressPercent);

@@ -12,16 +12,6 @@
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
         <script type="module" src="../public/scripts/account.js"></script>
-        <script type="module">
-            import { loadContent, loadHeader } from "../public/scripts/loadContent.js";
-            loadContent(".match-card-container", "./components/match_card.html");
-            loadHeader(
-                true, // show back button
-                false, // show group
-                false, // show profile image
-                true //   show login/logout button
-            );
-        </script>
         <script src="../public/scripts/collapsible.js" defer></script>
     </head>
     <body>
@@ -65,7 +55,7 @@
                 <button type="button" class="collapsible">Surveys</button>
                 <div class="content">
                     <h3>Very Interested</h3>
-                    <div class = "noun-container" id ="very-interested"></div>
+                    <div class="noun-container" id="very-interested"></div>
                     <h3>Mildly Interested</h3>
                     <div class="noun-container" id="mildly-interested"></div>
                     <h3>No opinion</h3>

@@ -1,9 +1,10 @@
 import { loadHeader, loadMatchCard } from "./loadContent.js";
 import { getGroupMembers } from "./groupManager.js";
-import { getUser, getCurrentGroup } from "./app.js";
+import { getUser, getCurrentGroup, setBackButtonDestination } from "./app.js";
 async function initialize() {
     // loads the header with a back button, group, and profile image
-    loadHeader(true, true, true);
+    loadHeader(true, true, true).then(() => setBackButtonDestination("main.html"));
+
     let currentUser = await getUser();
     const response = await fetch("./components/match_card.html");
     if (!response.ok) {

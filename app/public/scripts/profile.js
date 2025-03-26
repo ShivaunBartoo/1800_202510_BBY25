@@ -1,4 +1,4 @@
-import { db, getUser, getUserData } from "../scripts/app.js";
+import { db, getUser, getUserData, setBackButtonDestination } from "../scripts/app.js";
 import { loadHeader } from "../scripts/loadContent.js";
 import { getCommonInterests } from "../scripts/groupManager.js";
 
@@ -12,7 +12,7 @@ async function initialize() {
         true, // show group
         true, // show profile image
         false //   show login/logout button
-    );
+    ).then(() => setBackButtonDestination("javascript:history.back()"));
     let params = new URLSearchParams(window.location.search);
     let user = null;
     // Check if the URL contains a "uid" parameter,

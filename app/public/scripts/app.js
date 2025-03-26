@@ -10,6 +10,8 @@ export const auth = firebase.auth();
 
 let cachedGroup = null; // Cache for the current group
 
+await authenticatePage();
+
 // Retrieves the current Firebase user or waits for auth state changes.
 export async function getUser() {
     if (auth.currentUser) {
@@ -95,6 +97,11 @@ export function clearCachedGroup() {
     console.log("Cached group cleared.");
 }
 
+//sets the destination for the back button on the header
+export function setBackButtonDestination(href) {
+    document.querySelector(".header-back-button").setAttribute("href", href);
+}
+
 // Monitor authentication state
 auth.onAuthStateChanged((user) => {
     if (user) {
@@ -108,3 +115,19 @@ document.addEventListener("DOMContentLoaded", () => {
     let requiresAuth = document.body.getAttribute("requires-auth");
     let requiresSetup = document.body.getAttribute("requires-setup");
 });
+
+async function authenticatePage() {
+    console.log("authenticating page");
+    const requiresAuthElement = document.querySelector('meta[name="requires-auth"]');
+    const requiresSetupElement = document.querySelector('meta[name="requires-setup"]');
+    const requiresAuth = requiresAuthElement ? requiresAuthElement.content : false;
+    const requiresSetup = requiresSetupElement ? requiresSetupElement.content : false;
+    console.log("requiresAuth: " + requiresAuth);
+    if (requiresAuth || requiresSetup) {
+        let userData = await getUserData();
+        console.log("userData" + userData);
+        if ((requiresAuth && !userData) || (requiresSetup && userData.data().hasProfile == false)) {
+            window.location.href = "./index.html";
+        }
+    }
+}

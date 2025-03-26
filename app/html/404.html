@@ -11,14 +11,14 @@
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
         <script type="module">
-            import { loadContent, loadHeader } from "../public/scripts/loadContent.js";
-            loadContent(".match-card-container", "./components/match_card.html");
+            import { loadHeader } from "../public/scripts/loadContent.js";
+            import { setBackButtonDestination } from "../public/scripts/app.js";
             loadHeader(
                 true, // show back button
                 true, // show group
                 true, // show profile image
                 false // show login/logout button
-            );
+            ).then(() => setBackButtonDestination("javascript:history.back()"));
         </script>
     </head>
     <body>

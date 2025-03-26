@@ -38,7 +38,6 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
 
         if (backButton) {
             backButton.style.display = showBackButton ? "block" : "none";
-            backButton.setAttribute("href", document.referrer);
         }
         if (titleHeader && groupHeader) {
             if (showGroup) {

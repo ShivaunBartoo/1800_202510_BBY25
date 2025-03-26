@@ -25,12 +25,19 @@ export async function loadContent(selector, filePath) {
 
 // loads the header component into the page, and confures its elements.
 // It is used on all pages in the app.
-export async function loadHeader(showBackButton = false, showGroup = false, showAvatar = true, showButton = false) {
+export async function loadHeader(
+    showBackButton = false,
+    showGroup = false,
+    showAvatar = true,
+    showButton = false,
+    showGroupButton = false
+) {
     await loadContent("header", "./components/header.html");
     let header = document.querySelector("header");
     await cacheCurrentUser();
     if (header) {
         let backButton = header.querySelector(".header-back-button");
+        let groupButton = header.querySelector(".header-group-button");
         let titleHeader = header.querySelector("#title-header");
         let groupHeader = header.querySelector("#group-header");
         let avatar = header.querySelector("#profile-picture-container");
@@ -39,6 +46,11 @@ export async function loadHeader(showBackButton = false, showGroup = false, show
         if (backButton) {
             backButton.style.display = showBackButton ? "block" : "none";
         }
+
+        if (groupButton) {
+            groupButton.style.display = showGroupButton ? "block" : "none";
+        }
+
         if (titleHeader && groupHeader) {
             if (showGroup) {
                 let currentGroup = await getCurrentGroup();

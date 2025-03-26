@@ -14,9 +14,10 @@ initialize();
 async function initialize() {
     loadHeader(
         false, // show back button
-        true, // show group
+        false, // show group
         true, // show profile image
-        false //   show login/logout button
+        false, //   show login/logout button
+        true //   show group button
     );
     // loadContent(".match-card-container", "./components/match_card.html");
 
@@ -60,7 +61,7 @@ async function initialize() {
 
                 // Set opacity to zero
                 surveyCard.style.opacity = "0";
-                setCardQuestion(surveyCard, nextQuestion());
+                setCardQuestion(surveyCard, await nextQuestion());
                 // After a short delay, set opacity back to normal
                 // CSS adds a transition effect
                 setTimeout(() => {
@@ -93,7 +94,6 @@ function setCardQuestion(container, question) {
     } else if (question.type === "interest") {
         container.setAttribute("data-type", "interest");
     }
-    console.log(question.word);
     container.querySelector(".survey-card-topic").innerHTML = question.word;
 }
 
@@ -118,7 +118,6 @@ async function nextQuestion() {
     let index = Math.floor(Math.random() * questions.length);
     let question = questions[index];
     questions.splice(index, 1);
-    console.log("selected question: " + question.word);
     return question;
 }
 

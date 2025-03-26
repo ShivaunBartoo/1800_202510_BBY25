@@ -17,17 +17,16 @@
     <body>
         <header></header>
         <div id="group-info">
-            <span
-                ><span id="member-count">8</span> Group Members |
-                <a id="switch-group-link" href="#switchgroup">Switch Group</a></span
-            >
+            <span>
+                <span id="member-count">8</span> Group Members
+                <!-- <a id="switch-group-link" href="#switchgroup">Switch Group</a> -->
+            </span>
             <span id="group-share-link">copy share link</span>
         </div>
         <div id="group-matches">
-            <div class="section-header">New Matches</div>
-            <div class="match-container"></div>
-            <div class="section-header">Other Members</div>
+            <div class="section-header" id="all-matches">All Matches</div>
             <div id="member-list" class="match-container"></div>
+            <div id="no-matches" style="display: none">No matches yet! <br />Answer questions to unlock matches.</div>
         </div>
     </body>
 </html>

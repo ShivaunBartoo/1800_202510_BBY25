@@ -68,7 +68,8 @@ header {
     background-color: #e2f5fe;
     display: grid;
     grid-template-rows: 100px;
-    grid-template-columns: 10vw 80vw 10vw;
+    grid-template-columns: 25vw 50vw 25vw;
+    justify-content: center;
     align-items: center;
     position: sticky;
     top: 0;
@@ -90,18 +91,19 @@ header a {
     font-size: 1.5em;
 }
 
-.header-back-button {
+.header-back-button,
+.header-group-button {
     grid-column: 1;
     font-size: 3em;
     color: #384e59;
-    margin-top: 25px;
-    margin-left: 10px;
+    margin-top: 0px;
+    margin-left: 20px;
 }
 
 #header-buttons {
     position: absolute;
-    right: 2%;
-    bottom: 10%;
+    right: 4%;
+    bottom: 40%;
     width: 60px;
     height: 30px;
 }
@@ -125,11 +127,12 @@ header a {
 #group-header,
 #title-header {
     grid-column: 2;
+    width: 50vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1em;
     margin-top: 30px;
+    padding: 0;
 }
 
 #profile-picture-container {

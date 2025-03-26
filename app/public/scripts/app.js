@@ -99,6 +99,7 @@ export function clearCachedGroup() {
 
 //sets the destination for the back button on the header
 export function setBackButtonDestination(href) {
+    console.log("setting back button destination: " + href);
     document.querySelector(".header-back-button").setAttribute("href", href);
 }
 
@@ -117,15 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function authenticatePage() {
-    console.log("authenticating page");
     const requiresAuthElement = document.querySelector('meta[name="requires-auth"]');
     const requiresSetupElement = document.querySelector('meta[name="requires-setup"]');
     const requiresAuth = requiresAuthElement ? requiresAuthElement.content : false;
     const requiresSetup = requiresSetupElement ? requiresSetupElement.content : false;
-    console.log("requiresAuth: " + requiresAuth);
     if (requiresAuth || requiresSetup) {
         let userData = await getUserData();
-        console.log("userData" + userData);
         if ((requiresAuth && !userData) || (requiresSetup && userData.data().hasProfile == false)) {
             window.location.href = "./index.html";
         }

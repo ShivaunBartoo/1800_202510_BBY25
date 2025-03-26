@@ -34,6 +34,19 @@
     transition: width 0.3s ease; /* Smooth transition for width changes */
 }
 
+.match-card-container {
+    min-height: 110px;
+}
+
+#match-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-style: italic;
+    white-space: wrap;
+    color: #384e59;
+}
 /* #endregion MATCH_PROGRESS_BAR */
 
 /* #region SURVEY_CARD */

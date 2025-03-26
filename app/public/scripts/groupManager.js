@@ -99,13 +99,18 @@ export async function getNouns(groupID) {
 //returns a list of the users compatibility between them and the rest of the group before answering questions
 export async function getCompatibilityList(currentUserID, currentGroupID) {
     let currentUser = await db.collection("users").doc(currentUserID).get();
-    let compat = {};
+    let compat = [];
     let users = await getGroupMembers(currentGroupID);
     users.forEach((user) => {
         //this makes sure that the user doesn't get the compatabilit they have for themself.
         if (user.id != currentUser.id) {
             let percent = getCompatibility(currentUser.data(), user.data());
-            compat[[currentUserID, user.id]] = percent;
+            compat.push({
+                user1: currentUserID,
+                user2: user.id,
+                percent: percent[0],
+                fullOverlap: percent[1],
+            });
         }
     });
     return compat;
@@ -114,7 +119,8 @@ export async function getCompatibilityList(currentUserID, currentGroupID) {
 export function getCompatibility(userData1, userData2) {
     let map1 = { ...userData1.interests, ...userData1.values };
     let map2 = { ...userData2.interests, ...userData2.values };
-    //if every noun in map 1 is in map2, return true, otherwise return false. 
+
+    //if every noun in map 1 is in map2, return true, otherwise return false.
     let fullOverlap = true;
     //the difference in scores between the current user and the other user.
     let difference = 0;
@@ -133,7 +139,7 @@ export function getCompatibility(userData1, userData2) {
 
     //the percentage of how close they are to max incompatibility.
     const percent = (difference / max) * 100;
-    return [(100 - percent), fullOverlap];
+    return [100 - percent, fullOverlap];
 }
 
 export async function getCommonInterests(userData1, userData2, minScore = 2) {
@@ -142,7 +148,6 @@ export async function getCommonInterests(userData1, userData2, minScore = 2) {
         for (const key in map2) {
             if (key in map1) {
                 if (map1[key] >= minScore && map2[key] >= minScore) {
-                    console.log("found: " + key);
                     commonList.push({ word: key, type: wordType });
                 }
             }

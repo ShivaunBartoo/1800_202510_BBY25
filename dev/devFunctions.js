@@ -1,4 +1,4 @@
-import { db } from "../app/public/scripts/app.js";
+import { db, auth } from "../app/public/scripts/app.js";
 
 // IMPORTANT: DO NOT USE THIS CODE IN PRODUCTION.
 // This code is for testing purposes only.
@@ -11,6 +11,8 @@ window.addTestUsers = addTestUsers;
 window.deleteTestUsers = deleteTestUsers;
 window.addAllToGroup = addAllToGroup;
 window.regenerateTestUsers = regenerateTestUsers;
+window.clearUserInterestsAndValues = clearUserInterestsAndValues;
+
 console.log("dev functions loaded");
 console.log("OVWSdIxoOVFbOTcOjRRN");
 async function regenerateTestUsers() {
@@ -103,4 +105,23 @@ async function deleteTestUsers() {
             });
         });
     console.log("test users deleted successfully.");
+}
+
+async function clearUserInterestsAndValues() {
+    const user = auth.currentUser;
+    const userDoc = await db.collection("users").doc(user.uid).get();
+    const userData = userDoc.data();
+
+    const interests = userData.interests;
+    const values = userData.values;
+
+    await db
+        .collection("users")
+        .doc(user.uid)
+        .update({
+            interests: {[Object.keys(interests)[0]]: interests[Object.keys(interests)[0]]},
+            values: {[Object.keys(values)[0]]: values[Object.keys(values)[0]]},
+        });
+
+    console.log("Successfully cleared interests and values except for the first entry.");
 }

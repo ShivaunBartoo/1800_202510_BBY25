@@ -117,14 +117,15 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
 
     let card = tempDiv.firstElementChild;
     if (card) {
-        let matchPercent = Math.ceil(getCompatibility(cardUser, currentUser.data())[0]) + "%";
+        let matchPercent = Math.ceil(getCompatibility(currentUser.data(), cardUser)[0]) + "%";
+        console.log("compatability for " + cardUser.name + ": " + matchPercent + "%");
         card.querySelector(".match-card-percent").textContent = matchPercent;
         card.querySelector(".match-card-name").textContent = cardUser.name || "Unknown";
         card.querySelector(".match-card-image").setAttribute(
             "src",
             cardUser.profilePhoto || "../public/images/blank_avatar.jpeg"
         );
-        let commonInterests = await getCommonInterests(cardUser, currentUser.data(), 2);
+        let commonInterests = await getCommonInterests(currentUser.data(), cardUser, 2);
         card.querySelectorAll(".match-card-info").forEach((info, index) => {
             if (commonInterests[index]) {
                 let output = "";

@@ -151,15 +151,19 @@ header a {
 /* #region MATCH_CARD */
 
 .match-card-container {
-    min-height: 110px;
+    /* min-height: 110px; */
 }
 
 .match-card {
+    box-sizing: border-box;
     width: 320px;
+    min-height: 110px;
     display: grid;
     grid-template-columns: 25% 75%;
     grid-template-rows: 20% 80%;
     cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s ease-out, opacity 0.5s ease;
 }
 
 .match-card .match-card-image {

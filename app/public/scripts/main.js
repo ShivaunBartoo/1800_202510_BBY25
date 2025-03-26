@@ -1,17 +1,24 @@
-import { loadContent, loadHeader } from "../scripts/loadContent.js";
-import { getNouns } from "../scripts/groupManager.js";
+import { loadContent, loadHeader, loadMatchCard } from "../scripts/loadContent.js";
+import { getNouns, getCompatibilityList } from "../scripts/groupManager.js";
 import { db, getCurrentGroup, getUser, getUserData } from "../scripts/app.js";
 
 let questions = [];
-const questionProgressValue = 10;
+const questionProgressValue = 20;
+let nextMatch = null;
+let matchCardHTML = null;
 
 initialize();
 
 // This function initializes the page by loading HTML content into specified elements
 // and setting up event listeners for survey responses.
 async function initialize() {
-    loadHeader(true, true, true);
-    loadContent(".match-card-container", "./components/match_card.html");
+    loadHeader(
+        false, // show back button
+        true, // show group
+        true, // show profile image
+        false //   show login/logout button
+    );
+    // loadContent(".match-card-container", "./components/match_card.html");
 
     let userData = await getUserData();
     let group = await getCurrentGroup();
@@ -21,7 +28,6 @@ async function initialize() {
     setProgressBar(progressPercent);
 
     generateQuestions(nouns, userData);
-    console.log(questions);
 
     await loadContent(".survey-card-container", "./components/survey_card.html");
 
@@ -38,8 +44,6 @@ async function initialize() {
             if (surveyCardGallery.firstElementChild === surveyCard) {
                 let dataValue = element.getAttribute("data-value");
                 let surveyTopic = surveyCard.querySelector(".survey-card-topic").textContent;
-                console.log("Survey topic:" + surveyTopic);
-                console.log("Survey response clicked:" + dataValue);
 
                 let dataType = surveyCard.dataset.type; // Get the data type (e.g., "interest" or "value")
 
@@ -65,6 +69,22 @@ async function initialize() {
             }
         });
     });
+
+    const response = await fetch("./components/match_card.html");
+    if (!response.ok) {
+        throw new Error(`Failed to load match_card.html: ${response.statusText}`);
+    }
+
+    //update match card to most recent match
+    matchCardHTML = await getMatchcardHTML();
+    let currentMatches = userData.data().currentMatches;
+    if (currentMatches && currentMatches.length >= 1) {
+        let recentMatch = currentMatches[currentMatches.length - 1];
+        console.log("updating match card: " + recentMatch);
+        updateMatchCard(recentMatch);
+    }
+    nextMatch = await getNextMatch();
+    console.log("initializing: next match: " + nextMatch);
 }
 
 //Populates a surveyCard DOM element with the content of a given question
@@ -112,9 +132,93 @@ async function setProgressBar(percentage, userData = null) {
     bar.style.width = percentage + "%";
     db.collection("users").doc(userData.id).set({ matchProgress: percentage }, { merge: true });
     if (percentage == 100) {
-        console.log("progress bar full");
+        revealMatch();
         setProgressBar(0, userData);
     }
+}
+
+async function revealMatch() {
+    if (!nextMatch) {
+        await getNextMatch();
+    }
+    let newCard = await updateMatchCard(nextMatch);
+    if (newCard) {
+        animateMatchCard(newCard);
+    }
+    let currentUser = await getUser();
+    db.collection("users")
+        .doc(currentUser.uid)
+        .update({
+            currentMatches: firebase.firestore.FieldValue.arrayUnion(nextMatch),
+        });
+    nextMatch = await getNextMatch();
+}
+
+//deletes the previous match card and loads a new one
+//param match: uid of user to populate match card with
+async function updateMatchCard(match) {
+    if (!matchCardHTML) {
+        await getMatchcardHTML();
+    }
+    const matchCardContainer = document.querySelector(".match-card-container");
+    if (matchCardContainer) {
+        matchCardContainer.innerHTML = "";
+        console.log("setting match card to uid: " + match);
+        await loadMatchCard(".match-card-container", match, matchCardHTML);
+        console.log("Match card loaded!");
+        return document.querySelector(".match-card");
+    } else {
+        console.error("Error: .match-card-container not found!");
+        return null;
+    }
+}
+
+function animateMatchCard(card) {
+    card.style.opacity = "0";
+    card.style.transform = "scale(0.1)";
+    setTimeout(() => {
+        card.style.transform = "scale(1.1)";
+    }, 10);
+    setTimeout(() => {
+        card.style.opacity = "";
+    }, 50);
+    setTimeout(() => {
+        card.style.transform = "scale(1)";
+    }, 200);
+}
+
+async function getNextMatch() {
+    let userData = await getUserData();
+    if (!userData || !userData.exists) {
+        console.error("Error: User document does not exist.");
+        return null;
+    }
+    console.log("userData: " + userData.id);
+
+    let currentMatches = userData.data().currentMatches || [];
+    let activeGroup = await getCurrentGroup();
+    activeGroup = activeGroup.id;
+    console.log("activeGroup: " + activeGroup);
+    if (!activeGroup) {
+        console.error("Error: activeGroup is missing in user data.");
+        return null;
+    }
+
+    let compatabilityList = await getCompatibilityList(userData.id, activeGroup);
+    compatabilityList.sort((a, b) => b.percent - a.percent);
+
+    console.log(compatabilityList);
+
+    for (let match of compatabilityList) {
+        // console.log("Considering user: " + match.user2);
+        if (!currentMatches.includes(match.user2)) {
+            console.log("Next match: " + match.user2);
+            return match.user2;
+        }
+    }
+
+    console.warn("No suitable match found.");
+    return null;
 }
 
 //increases the percentage of the progress bar.
@@ -134,4 +238,12 @@ async function getMatchProgress(userData = null) {
         await db.collection("users").doc(userData.id).set({ matchProgress: 0 }, { merge: true });
     }
     return progressPercent;
+}
+
+async function getMatchcardHTML() {
+    const response = await fetch("./components/match_card.html");
+    if (!response.ok) {
+        throw new Error(`Failed to load match_card.html: ${response.statusText}`);
+    }
+    matchCardHTML = await response.text();
 }

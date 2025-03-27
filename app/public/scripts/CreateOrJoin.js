@@ -19,6 +19,7 @@ function initialize() {
                 await db.collection("users").doc(user.uid).update({
                     activeGroup: group.id,
                 });
+                location.href = "./profile_setup.html";
             } else {
                 let warning = document.querySelector("#blank-name");
                 warning.style.display = "block";
@@ -27,8 +28,6 @@ function initialize() {
         } else {
             console.log("User is not logged in");
         }
-
-        location.href = "./profile_setup.html";
     });
 
     document.querySelectorAll(".choice-switcher").forEach((element) => {
@@ -68,6 +67,7 @@ function initialize() {
                 await db.collection("users").doc(user.uid).update({
                     activeGroup: groupID,
                 });
+                location.href = "./profile_setup.html";
             } else {
                 let warning = document.querySelector("#bad-group-code");
                 warning.style.display = "block";
@@ -78,7 +78,5 @@ function initialize() {
         } else {
             console.log("User is not logged in");
         }
-
-        location.href = "./profile_setup.html";
     });
 }

@@ -99,23 +99,8 @@ export function clearCachedGroup() {
 
 //sets the destination for the back button on the header
 export function setBackButtonDestination(href) {
-    console.log("setting back button destination: " + href);
     document.querySelector(".header-back-button").setAttribute("href", href);
 }
-
-// Monitor authentication state
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        console.log("User logged in:", user.uid);
-    } else {
-        console.log("User logged out");
-    }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    let requiresAuth = document.body.getAttribute("requires-auth");
-    let requiresSetup = document.body.getAttribute("requires-setup");
-});
 
 async function authenticatePage() {
     const requiresAuthElement = document.querySelector('meta[name="requires-auth"]');

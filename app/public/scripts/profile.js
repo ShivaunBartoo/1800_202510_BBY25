@@ -15,11 +15,12 @@ async function initialize() {
     ).then(() => setBackButtonDestination("javascript:history.back()"));
     let params = new URLSearchParams(window.location.search);
     let user = null;
+    let userDoc = null;
     // Check if the URL contains a "uid" parameter,
     // and if not, default to the current user's UID
     let uid = params.get("uid") || (await getUser()).uid;
     if (uid) {
-        let userDoc = await db.collection("users").doc(uid).get();
+        userDoc = await db.collection("users").doc(uid).get();
         user = userDoc.data();
     }
 
@@ -42,6 +43,14 @@ async function initialize() {
                 valueList.innerHTML += `<span class="noun-bubble">${value}</span>`;
                 valueCount++;
             }
+        }
+        let currentUserData = await getUserData();
+        if (currentUserData.data().currentMatches.includes(userDoc.id)) {
+            let contactContainer = document.querySelector("#contact-container");
+            contactContainer.style.display = "flex";
+            contactContainer.querySelector(".name").innerHTML = user.name.split(" ")[0];
+            contactContainer.querySelector("#contact-method").innerHTML = user.contactMethod + ": ";
+            contactContainer.querySelector("#contact-info").innerHTML = user.contactInfo;
         }
     } else {
         window.location.href = "./404.html";

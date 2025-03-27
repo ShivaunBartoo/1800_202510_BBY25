@@ -53,6 +53,23 @@ main {
     background-color: #2a3d46;
 }
 
+#contact-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
+}
+
+#contact-container * {
+    text-align: center;
+}
+
+#contact-container small {
+    color: #384e59;
+}
+
 .noun-header {
     font-size: 1.5em;
     font-weight: bold;

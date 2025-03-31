@@ -24,47 +24,33 @@ async function initialize() {
         document.querySelector("#email").innerHTML = udata.email;
         document.querySelector("#contactMethod").innerHTML = udata.contactMethod;
         document.querySelector("#contactInfo").innerHTML = udata.contactInfo;
+        document.querySelector('#bio').innerHTML = udata.bio;
+        addBubbles(udata);
 
-        for (let interest in udata.interests) {
-            let score = udata.interests[interest];
-            console.log(udata.interests[interest] + interest)
-            switch(score){
-                case 2: document.querySelector("#very-interested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
-                break;
-                case 1: document.querySelector("#mildly-interested").innerHTML +=`<span class="noun-bubble" draggable="true">${interest}</span>`;
-                break;
-                case 0: document.querySelector("#no-opinion").innerHTML +=`<span class="noun-bubble" draggable="true">${interest}</span>`;
-                break;
-                case -1: document.querySelector("#mildly-disinterested").innerHTML +=`<span class="noun-bubble" draggable="true">${interest}</span>`;
-                break;
-                case -2: document.querySelector("#very-disinterested").innerHTML +=`<span class="noun-bubble" draggable="true">${interest}</span>`;
-            }
-        }
-
-        for (let value in udata.values) {
-            let score = udata.values[value];
-            console.log(udata.values[value] + value);
-            switch(score){
-                case 2: document.querySelector("#very-interested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
-                break;
-                case 1: document.querySelector("#mildly-interested").innerHTML +=`<span class="noun-bubble" draggable="true">${value}</span>`;
-                break;
-                case 0: document.querySelector("#no-opinion").innerHTML +=`<span class="noun-bubble" draggable="true">${value}</span>`;
-                break;
-                case -1: document.querySelector("#mildly-disinterested").innerHTML +=`<span class="noun-bubble" draggable="true">${value}</span>`;
-                break;
-                case -2: document.querySelector("#very-disinterested").innerHTML +=`<span class="noun-bubble" draggable="true">${value}</span>`;
-            }
-        }
 
         document.querySelectorAll('.noun-bubble').forEach((bubble) =>{
             bubble.addEventListener('drag', (event) => {
-                // console.log('dragging');
             })
             bubble.addEventListener('dragstart', (event) => {
                 dragged = event.target;
                 event.target.classList.add('dragging');
-                console.log(dragged.innerHTML);
+            })
+            bubble.addEventListener('dragover', (event) => {
+                event.preventDefault();
+            }, false)
+            bubble.addEventListener('drop', (event) => {
+                event.preventDefault();
+                let parent = event.target.parentNode;
+                parent.appendChild(dragged)
+                let newValue = parseInt(parent.dataset.value);
+                let noun = dragged.innerHTML;
+                if (noun in udata.interests) {
+                    addNoun(noun, newValue, true);
+                } else if(noun in udata.values) {
+                    addNoun(noun, newValue, false);
+                } else {
+                    console.log('Something went wrong')
+                }
             })
         })
 
@@ -75,6 +61,38 @@ async function initialize() {
     } else {
         window.location.href = "./404.html";
         console.log("Error: User not found");
+    }
+}
+
+function addBubbles(udata) {
+    for (let interest in udata.interests) {
+        let score = udata.interests[interest];
+        switch(score){
+            case 2: document.querySelector("#very-interested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
+            break;
+            case 1: document.querySelector("#mildly-interested").innerHTML +=`<span class="noun-bubble" draggable="true">${interest}</span>`;
+            break;
+            case 0: document.querySelector("#no-opinion").innerHTML +=`<span class="noun-bubble" draggable="true">${interest}</span>`;
+            break;
+            case -1: document.querySelector("#mildly-disinterested").innerHTML +=`<span class="noun-bubble" draggable="true">${interest}</span>`;
+            break;
+            case -2: document.querySelector("#very-disinterested").innerHTML +=`<span class="noun-bubble" draggable="true">${interest}</span>`;
+        }
+    }
+
+    for (let value in udata.values) {
+        let score = udata.values[value];
+        switch(score){
+            case 2: document.querySelector("#very-interested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
+            break;
+            case 1: document.querySelector("#mildly-interested").innerHTML +=`<span class="noun-bubble" draggable="true">${value}</span>`;
+            break;
+            case 0: document.querySelector("#no-opinion").innerHTML +=`<span class="noun-bubble" draggable="true">${value}</span>`;
+            break;
+            case -1: document.querySelector("#mildly-disinterested").innerHTML +=`<span class="noun-bubble" draggable="true">${value}</span>`;
+            break;
+            case -2: document.querySelector("#very-disinterested").innerHTML +=`<span class="noun-bubble" draggable="true">${value}</span>`;
+        }
     }
 }
 
@@ -101,7 +119,8 @@ async function onSubmit(udata) {
             name: udata.name,
             email: udata.email,
             contactMethod: udata.contactMethod,
-            contactInfo: udata.contactInfo
+            contactInfo: udata.contactInfo,
+            bio: udata.bio
         }
 
         for (let key in profileData) {
@@ -109,13 +128,9 @@ async function onSubmit(udata) {
                 if(document.getElementById(key + "Input").value){
                     profileData[key] = document.getElementById(key + "Input").value;
                 }
-                else{
-                    console.log(profileData[key]);
-                }
             }
         }
         firebase.auth().currentUser.updateEmail(profileData['email']).then(() => {
-            console.log('email upated');
             userDoc.set(profileData, {merge: true});
             for(let key in profileData) {
                 document.getElementById(key).innerHTML = profileData[key];
@@ -147,29 +162,41 @@ async function addDragListeners(udata) {
                 let newValue = parseInt(event.target.dataset.value);
                 let noun = dragged.innerHTML;
                 if (noun in udata.interests) {
-                    try{
-                        userDoc.set({
-                            "interests": {
-                                [noun]: newValue
-                            } 
-                        }, {merge: true})
-                    } catch(err) {
-                        console.log(err);
-                    }
-                } else if (noun in udata.values) {
-                    try{
-                        userDoc.set({
-                            "interests": {
-                                [noun]: newValue
-                            } 
-                        }, {merge: true})
-                    } catch(err) {
-                        console.log(err);
-                    }
-                } else {
-                    console.log('something broke');
+                    addNoun(noun, newValue, true);
+                } else if(noun in udata.values) {
+                    addNoun(noun, newValue, false);
+                } else{
+                    console.log('something went wrong')
                 }
             }
         });
     });
+}
+
+async function addNoun(noun, newValue, isInterest) {
+    let user = await getUser();
+    let userDoc = await db.collection('users').doc(user.uid);
+
+    if(isInterest) {
+        try{
+            userDoc.set({
+                "interests": {
+                    [noun]: newValue
+                } 
+            }, {merge: true})
+        } catch(err) {
+            console.log(err);
+        }
+    } else{
+        try{
+            userDoc.set({
+                "values": {
+                    [noun]: newValue
+                } 
+            }, {merge: true})
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
 }

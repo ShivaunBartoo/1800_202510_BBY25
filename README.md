@@ -27,7 +27,6 @@ Example:
 
 ## Project Structure
 
-Example:
 ```
 project-name/
 ├── app/
@@ -65,22 +64,21 @@ project-name/
 ## Limitations and Future Work
 ### Limitations
 
-Example:
-- Currently, the app only supports city-based weather searches.
-- Limited to basic weather parameters like temperature, humidity, and conditions.
-- The user interface can be further enhanced for accessibility.
+- Currently there are no admin functions for group owners.
+- There is currently no means to report or block an inappropriate account.
+- It is not currently possible to add new interests/values after initial account creation.
+- There is no way to change a user's password.
 
 ### Future Work
-
-Example: 
-- Add support for location-based weather detection using GPS.
-- Implement additional weather parameters like wind speed and UV index.
-- Create a dark mode for better usability in low-light conditions.
-- Integrate user accounts for saving favorite locations.
+- Create a desktop-adaptive version of the webpages.
+- Optimize page load times by caching data.
+- Add discord integration: 
+  - Create a group from a Discord group.
+  - register with a Discord account.
+  - Discord bot for sharing invite links and group admin features.
 
 ---
 
 ## License
 
-Example:
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. 

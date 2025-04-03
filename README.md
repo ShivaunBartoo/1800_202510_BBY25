@@ -44,13 +44,20 @@ project-name/
 ├── app/
 │   ├── files/
 │   ├── html/
-│   ├── app.js
-│   └── components/
+|       ├──components/
+|       ├── html files
+│   ├── public/
+|       ├──fonts/
+|       ├──images/
+|       ├──scripts/
+|       ├──styles/
+├── dev
+|   ├──Dev files and scripts
 ├── package.json
+├── package-lock.json
 ├── README.md
 └── .gitignore
 ```
-
 ---
 
 ## Contributors

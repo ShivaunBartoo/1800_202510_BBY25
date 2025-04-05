@@ -1,31 +1,20 @@
 
-# Project Name
+# Likemind
 
 ## Overview
-Summarize your project's purpose, problem solved, key features, user benefits, development context, and main technologies used.
+Likemind is a web application designed to help individuals form relationships within unfamiliar social groups by matching them with like-minded peers based on shared interests and values. The app surveys users to create detailed profiles, then introduces them to others within the same group who have similar responses. Users can also create and administer groups, such as university cohorts or workplace communities, and invite their peers to join.
 
-Example:
+This project was inspired by our own experiences of stepping into a classroom on the first day of school without knowing anyone. We aim to ease the anxiety of these situations by helping users build connections more quickly and naturally in new environments.
 
-This client-side JavaScript web application provides real-time weather updates for cities worldwide. It simplifies accessing weather information through an intuitive mobile-first interface, allowing users to input a city name and receive data on temperature, humidity, and conditions.
+Likemind also seeks to prevent missed connections in medium-sized groups (ranging from several dozen to several hundred people). In these environments, two like-minded individuals might spend years crossing paths without ever properly meeting. Our goal is to facilitate that first meaningful connection.
 
-Developed for the COMP-1800 course, applying User-Centred Design practices, agile project management processes, integrating a weather API, and Firebase backend services.
-
-Example:
-- Real-time weather updates for any city.
-- Responsive design for desktop and mobile.
-- Displays temperature, humidity, and weather conditions.
-
----
+Developed for the COMP-1800 course, applying User-Centred Design practices, agile project management processes, and Firebase backend services.
 
 ## Technologies Used
 
-Example:
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Firebase for hosting
 - **Database**: Firestore
-- **API**: OpenWeatherMap API
-
----
 
 ## Usage
 
@@ -38,19 +27,25 @@ Example:
 
 ## Project Structure
 
-Example:
 ```
 project-name/
 ├── app/
 │   ├── files/
 │   ├── html/
-│   ├── app.js
-│   └── components/
+|       ├──components/
+|       ├── html files
+│   ├── public/
+|       ├──fonts/
+|       ├──images/
+|       ├──scripts/
+|       ├──styles/
+├── dev
+|   ├──Dev files and scripts
 ├── package.json
+├── package-lock.json
 ├── README.md
 └── .gitignore
 ```
-
 ---
 
 ## Contributors
@@ -61,32 +56,29 @@ project-name/
 
 ## Acknowledgments
 
-Example:
-- Weather data sourced from [OpenWeatherMap](https://openweathermap.org/).
-- Code snippets for ___ algoirthm were adapted from resources such as [Stack Overflow](https://stackoverflow.com/) and [MDN Web Docs](https://developer.mozilla.org/).
-- Icons sourced from [FontAwesome](https://fontawesome.com/) and images from [Unsplash](https://unsplash.com/).
+- Image assets sourced from [Adobe Stock](https://stock.adobe.com/)
+- Collapsable code snippit from [w3schools](https://www.w3schools.com/howto/howto_js_collapsible.asp)
+- Fonts and Icons from [Google Fonts](https://fonts.google.com/)
 - Copilot and ChatGPT used for problem solving, code documentation, debugging, and generating test-data
----
 
 ## Limitations and Future Work
 ### Limitations
 
-Example:
-- Currently, the app only supports city-based weather searches.
-- Limited to basic weather parameters like temperature, humidity, and conditions.
-- The user interface can be further enhanced for accessibility.
+- Currently there are no admin functions for group owners.
+- There is currently no means to report or block an inappropriate account.
+- It is not currently possible to add new interests/values after initial account creation.
+- There is no way to change a user's password.
 
 ### Future Work
-
-Example: 
-- Add support for location-based weather detection using GPS.
-- Implement additional weather parameters like wind speed and UV index.
-- Create a dark mode for better usability in low-light conditions.
-- Integrate user accounts for saving favorite locations.
+- Create a desktop-adaptive version of the webpages.
+- Optimize page load times by caching data.
+- Add discord integration: 
+  - Create a group from a Discord group.
+  - register with a Discord account.
+  - Discord bot for sharing invite links and group admin features.
 
 ---
 
 ## License
 
-Example:
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. 

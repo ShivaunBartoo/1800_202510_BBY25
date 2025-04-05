@@ -32,7 +32,7 @@ export async function loadHeader(
     showButton = false,
     showGroupButton = false
 ) {
-    await loadContent("header", "./components/header.html");
+    await loadContent("header", "/html/components/header.html");
     let header = document.querySelector("header");
     await cacheCurrentUser();
     if (header) {
@@ -83,7 +83,7 @@ export async function loadHeader(
                     logoutButton.addEventListener("click", () => {
                         auth.signOut()
                             .then(() => {
-                                window.location.href = "./index.html";
+                                window.location.href = "../index.html";
                             })
                             .catch((error) => {
                                 console.error("Error signing out: ", error);
@@ -95,7 +95,7 @@ export async function loadHeader(
                     loginButton.style.display = "block";
                     logoutButton.style.display = "none";
                     loginButton.addEventListener("click", () => {
-                        window.location.href = "./login.html?mode=login";
+                        window.location.href = "./html/login.html?mode=login";
                     });
                 }
             } else {

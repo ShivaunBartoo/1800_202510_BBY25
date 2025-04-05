@@ -68,10 +68,11 @@ main .material-icons {
 }
 
 .noun-container {
-    padding: 10px 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  background-color: #384e59;
 }
 .noun-bubble {
     margin-top: 5px;
@@ -82,6 +83,9 @@ main .material-icons {
     cursor: default;
 }
 
+small {
+  font-size: 0.5em;
+}
 #survey {
     user-select: none;
 }

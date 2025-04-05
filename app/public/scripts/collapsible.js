@@ -9,7 +9,9 @@ for (i = 0; i < coll.length; i++) {
     if (content.style.maxHeight) {
       content.style.maxHeight = null;
     } else {
-      content.style.maxHeight = content.scrollHeight + "px";
+      //this is how it was like before, just in case having it be adaptive breaks something
+      // content.style.maxHeight = content.scrollHeight + "px";
+      content.style.maxHeight = "100%";
     }
   });
 }

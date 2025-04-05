@@ -1,88 +1,87 @@
 #profile-picture {
-  display: none;
+    display: none;
 }
 
 .settings-username {
-  margin-top: 20px;
-  font-size: 1.6em;
-  font-weight: bold;
-  text-align: center;
+    margin-top: 20px;
+    font-size: 1.6em;
+    font-weight: bold;
+    text-align: center;
 }
 #profile-picture-large {
-  width: 150px;
-  aspect-ratio: 1/1;
-  right: 20px;
-  top: 20px;
-  border-radius: 50%;
-  padding-top: 10px;
-  padding-bottom: 30px;
-  margin: 0 auto;
+    width: 150px;
+    aspect-ratio: 1/1;
+    right: 20px;
+    top: 20px;
+    border-radius: 50%;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    margin: 0 auto;
 }
 
 .setting-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 5px;
-  overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px;
+    overflow-y: auto;
 }
 
 .collapsible {
-  margin: 2.5px;
+    margin: 2.5px;
 }
 
 .content {
-  overflow-y: scroll;
+    overflow-y: scroll;
 }
 
 body {
-  overflow-y: auto;
-  height: 100%;
+    overflow-y: auto;
+    height: 100%;
 }
 table {
-  width: 100%;
-  border-collapse: collapse; /* Removes any space between table cells */
-  margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse; /* Removes any space between table cells */
+    margin-top: 20px;
 }
 
 td {
-  padding-right: 20px;
-  text-align: left;
-  vertical-align: middle;
+    padding-right: 20px;
+    text-align: left;
+    vertical-align: middle;
 }
 
 strong {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 /* Style the edit icon */
 main .material-icons {
-  cursor: pointer;
-  color: #384e59; /* Default icon color */
-  font-size: 1.5em;
+    cursor: pointer;
+    color: #384e59; /* Default icon color */
+    font-size: 1.5em;
 }
 
 /* Optional: Add hover effect for the edit icon */
 .material-icons:hover {
-  color: #007bff; /* Blue color when hovered */
+    color: #007bff; /* Blue color when hovered */
 }
 
 .noun-container {
-  padding: 10px 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  background-color: orange;
+    padding: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 .noun-bubble {
-  margin-top: 5px;
-  padding: 3px 6px;
-  white-space: nowrap;
-  background: white;
-  border-radius: 12px;
-  cursor: default;
+    margin-top: 5px;
+    padding: 3px 6px;
+    white-space: nowrap;
+    background: white;
+    border-radius: 12px;
+    cursor: default;
 }
 
 #survey {
-  user-select: none;
+    user-select: none;
 }

@@ -133,12 +133,12 @@ export function getCompatibility(userData1, userData2) {
     //the max possible difference in scores.
     let max = 0;
     for (const key in map1) {
-        max += 5;
+        max += 4;
         if (key in map2) {
             //the difference between the 2 interests, order does not matter here
             difference += Math.abs(map1[key] - map2[key]);
         } else {
-            difference += 2.5;
+            difference += 2;
             fullOverlap = false;
         }
     }

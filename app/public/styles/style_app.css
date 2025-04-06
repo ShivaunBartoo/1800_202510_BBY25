@@ -161,12 +161,16 @@ header a {
     box-sizing: border-box;
     width: 320px;
     min-height: 110px;
+    cursor: pointer;
+    transition: transform 0.2s ease-out, opacity 0.5s ease;
+}
+
+.match-card-content {
     display: grid;
     grid-template-columns: 25% 75%;
     grid-template-rows: 20% 80%;
-    cursor: pointer;
     white-space: nowrap;
-    transition: transform 0.2s ease-out, opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .match-card .match-card-image {

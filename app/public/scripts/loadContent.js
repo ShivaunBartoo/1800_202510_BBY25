@@ -152,6 +152,8 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
 
     await cacheCurrentUser(); // Cache the current user's data.
     await cacheGroupUsers(); // Cache the group users' data.
+    container.innerHTML = "";
+
     let cardUser = usersCache[uid];
 
     if (!cardUser) {

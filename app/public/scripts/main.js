@@ -1,7 +1,7 @@
 /**
  * This script manages the functionality for the main page (main.html).
  * It handles the survey process, progress tracking, and match generation for users.
- * 
+ *
  * Firestore is used to store and retrieve user data, including survey responses, progress, and matches.
  * This script is used exclusively on the main.html page.
  */
@@ -14,16 +14,16 @@ let questions = []; // Stores survey questions.
 const questionProgressValue = 20; // Progress increment for each answered question.
 let nextMatch = null; // Stores the next match to be revealed.
 let matchCardHTML = null; // Stores the HTML template for match cards.
-
 initialize();
 
 /**
  * Initializes the main page.
  * Loads the header, retrieves user and group data, generates survey questions, and sets up event listeners.
- * 
+ *
  * @returns {Promise<void>}
  */
 async function initialize() {
+    populateSurveyCards();
     loadHeader(
         false, // Do not show the back button.
         false, // Do not show the group button.
@@ -31,7 +31,6 @@ async function initialize() {
         false, // Do not show the login/logout button.
         true // Show the group button.
     );
-
     let userData = await getUserData(); // Fetch the current user's data from Firestore.
     let group = await getCurrentGroup(); // Fetch the current group from Firestore.
     let nouns = await getNouns(group.id); // Fetch nouns (interests and values) from the group.
@@ -41,15 +40,18 @@ async function initialize() {
 
     generateQuestions(nouns, userData); // Generate survey questions.
 
-    await loadContent(".survey-card-container", "./components/survey_card.html"); // Load survey card HTML.
-
     // Set up survey cards with questions.
+    //Animates opacity when switching from loader to actual topic for smooth transition
+    let i = 1;
     document.querySelectorAll(".survey-card-container").forEach(async (element) => {
-        setCardQuestion(element, await nextQuestion());
+        let topic = element.querySelector(".survey-card-topic");
+        topic.style.opacity = 0;
+        setTimeout(async () => {
+            topic.style.opacity = 100;
+            setCardQuestion(element, await nextQuestion());
+        }, i * 200);
+        i++;
     });
-
-    // Attach event listeners to survey response buttons.
-    setupSurveyCardEvents(userData);
 
     // Load the match card HTML template.
     const response = await fetch("./components/match_card.html");
@@ -62,10 +64,36 @@ async function initialize() {
     if (currentMatches && currentMatches.length >= 1) {
         let recentMatch = currentMatches[currentMatches.length - 1];
         updateMatchCard(recentMatch); // Update the match card with the most recent match.
+    } else {
+        document.querySelector("#no-matches").style.display = "block";
     }
     nextMatch = await getNextMatch(); // Determine the next match.
+
+    // Attach event listeners to survey response buttons.
+    setupSurveyCardEvents(userData);
 }
 
+/**
+ * Dynamically creates survey cards using the survey card template.
+ *
+ * @param {Array<Object>} topics - An array of topics to populate the survey cards.
+ * Each topic object should have a `word` property (the topic name) and a `type` property (e.g., "interest" or "value").
+ */
+function populateSurveyCards(topics) {
+    const template = document.getElementById("survey-card-template"); // Get the survey card template.
+    const containers = document.querySelectorAll(".survey-card"); // Get the container for survey cards.
+
+    let delay = 0;
+    containers.forEach((container) => {
+        const clone = template.content.cloneNode(true); // Clone the template including its subtree
+        container.appendChild(clone);
+    });
+    const content = document.querySelectorAll(".survey-card-content");
+    for (let i = 0; i < content.length; i++) {
+        const card = content[i];
+        setTimeout(() => (card.style.opacity = 100), (i + 1) * 10);
+    }
+}
 
 /**
  * Sets up event listeners for survey response elements within survey cards.
@@ -89,7 +117,6 @@ function setupSurveyCardEvents(userData) {
                 let surveyTopic = surveyCard.querySelector(".survey-card-topic").textContent;
                 let dataType = surveyCard.dataset.type; // Get the data type (e.g., "interest" or "value").
 
-
                 // Update the Firestore map field with the user's response.
                 db.collection("users")
                     .doc(userData.id)
@@ -99,7 +126,6 @@ function setupSurveyCardEvents(userData) {
 
                 incrementProgressBar(questionProgressValue); // Increment the progress bar.
                 surveyCardGallery.appendChild(surveyCard); // Move the card to the bottom of the gallery.
-
 
                 // Add a fade-out and fade-in animation for the card.
                 surveyCard.style.opacity = "0";
@@ -114,7 +140,7 @@ function setupSurveyCardEvents(userData) {
 
 /**
  * Populates a survey card with the content of a given question.
- * 
+ *
  * @param {HTMLElement} container - The survey card container element.
  * @param {Object} question - The question object containing the word and type.
  */
@@ -130,7 +156,7 @@ function setCardQuestion(container, question) {
 
 /**
  * Generates survey questions from group nouns that the user has not already responded to.
- * 
+ *
  * @param {Array<Object>} nouns - The list of nouns (interests and values) from the group.
  * @param {Object} userData - The current user's data.
  */
@@ -147,7 +173,7 @@ function generateQuestions(nouns, userData) {
 
 /**
  * Randomly selects a question from the questions list and removes it from the list.
- * 
+ *
  * @returns {Promise<Object>} The selected question object.
  */
 async function nextQuestion() {
@@ -162,7 +188,7 @@ async function nextQuestion() {
 
 /**
  * Loads default questions from a JSON file and populates the questions array.
- * 
+ *
  * @returns {Promise<void>}
  */
 async function getDefaultQuestions() {
@@ -175,7 +201,7 @@ async function getDefaultQuestions() {
 /**
  * Sets the percentage value of the progress bar.
  * Updates the user's progress in Firestore.
- * 
+ *
  * @param {number} percentage - The progress percentage to set.
  * @param {Object|null} userData - The current user's data (optional).
  * @returns {Promise<void>}
@@ -199,7 +225,7 @@ async function setProgressBar(percentage, userData = null) {
 /**
  * Reveals the next match by updating the match card and animating it.
  * Updates the user's current matches in Firestore.
- * 
+ *
  * @returns {Promise<void>}
  */
 async function revealMatch() {
@@ -221,7 +247,7 @@ async function revealMatch() {
 
 /**
  * Updates the match card with the given match.
- * 
+ *
  * @param {string} match - The UID of the user to populate the match card with.
  * @returns {Promise<HTMLElement|null>} The updated match card element, or null if not found.
  */
@@ -231,8 +257,14 @@ async function updateMatchCard(match) {
     }
     const matchCardContainer = document.querySelector(".match-card-container");
     if (matchCardContainer) {
-        matchCardContainer.innerHTML = "";
+        let content = document.querySelector(".match-card-content");
+        content.style.opacity = 0;
         await loadMatchCard(".match-card-container", match, matchCardHTML);
+        content = document.querySelector(".match-card-content");
+        content.style.opacity = 0;
+        setTimeout(() => {
+            content.style.opacity = 100;
+        }, 200);
         return document.querySelector(".match-card");
     } else {
         console.error("Error: .match-card-container not found!");
@@ -242,7 +274,7 @@ async function updateMatchCard(match) {
 
 /**
  * Animates the match card with a fade-in and scale effect.
- * 
+ *
  * @param {HTMLElement} card - The match card element to animate.
  */
 function animateMatchCard(card) {
@@ -261,7 +293,7 @@ function animateMatchCard(card) {
 
 /**
  * Retrieves the next match for the user based on compatibility.
- * 
+ *
  * @returns {Promise<string|null>} The UID of the next match, or null if no match is found.
  */
 async function getNextMatch() {
@@ -294,7 +326,7 @@ async function getNextMatch() {
 
 /**
  * Increments the progress bar by a specified amount.
- * 
+ *
  * @param {number} amount - The amount to increment the progress bar by.
  * @param {Object|null} userData - The current user's data (optional).
  * @returns {Promise<void>}
@@ -306,7 +338,7 @@ async function incrementProgressBar(amount, userData = null) {
 
 /**
  * Retrieves the user's current progress towards the next match.
- * 
+ *
  * @param {Object|null} userData - The current user's data (optional).
  * @returns {Promise<number>} The user's current progress percentage.
  */
@@ -324,7 +356,7 @@ async function getMatchProgress(userData = null) {
 
 /**
  * Fetches the HTML template for match cards.
- * 
+ *
  * @returns {Promise<string>} The HTML template for match cards.
  */
 async function getMatchcardHTML() {

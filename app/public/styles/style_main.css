@@ -61,14 +61,28 @@
 }
 
 .survey-card-container {
+    box-sizing: border-box;
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 320px; /* Give explicit width */
     height: 140px; /* Add explicit height to match the card */
-    transition: transform 0.6s ease, opacity 1s ease;
+    transition: transform 0.6s ease, opacity 0.2s ease;
 }
 
+.survey-card {
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.survey-card-content {
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: opacity 1s ease;
+}
 .survey-card-gallery > :nth-child(1) {
     transform: translate(-50%, -50%) translateY(70px) scale(1); /* Combine translate and scale */
     opacity: 1;
@@ -87,12 +101,6 @@
     z-index: 1;
 }
 
-.survey-card {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
 .survey-card .survey-card-header {
     font-size: 1.2em;
 }
@@ -103,8 +111,13 @@
 }
 
 .survey-card .survey-card-topic {
+    height: 1em;
     font-weight: bolder;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
 }
 
 .survey-card .survey-response-container {
@@ -120,6 +133,7 @@
     align-items: center;
     gap: 15px;
     color: #384e59;
+    cursor: pointer;
 }
 
 .survey-card .survey-response-labels {
@@ -134,4 +148,29 @@
     align-items: center;
 }
 
+/* source: https://css-loaders.com/dots/ */
+.loader {
+    width: 10px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+}
+@keyframes l5 {
+    0% {
+        box-shadow: 20px 0 #000, -20px 0 #0002;
+        background: #000;
+    }
+    33% {
+        box-shadow: 20px 0 #000, -20px 0 #0002;
+        background: #0002;
+    }
+    66% {
+        box-shadow: 20px 0 #0002, -20px 0 #000;
+        background: #0002;
+    }
+    100% {
+        box-shadow: 20px 0 #0002, -20px 0 #000;
+        background: #000;
+    }
+}
 /* #endregion SURVEY_CARD */

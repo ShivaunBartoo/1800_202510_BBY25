@@ -1,30 +1,54 @@
+/**
+ * This script handles the dynamic loading of HTML components and content into the application.
+ * It is used across multiple pages to load reusable components like the header and match cards.
+ *
+ * Firestore is used to fetch user and group data for dynamically updating the UI.
+ */
+
 import { getUserData, getAllUsersInGroup, getCurrentGroup, auth, db } from "./app.js";
 import { getCompatibility, getCommonInterests } from "./groupManager.js";
 
-let matchcard;
-let usersCache = null;
-let currentUser = null;
+// This constant determines the correct path for fetching header.html based on the current page location.
+const BASE_PATH = window.location.pathname.includes("/html/") ? "./" : "./html/";
 
-// This function loads HTML content from a specified file path
-// and inserts it into elements matching a given selector.
+let matchcard;
+let usersCache = null; // Cache for group users.
+let currentUser = null; // Cache for the current user.
+
+/**
+ * Loads HTML content from a specified file path and inserts it into elements matching a given selector.
+ *
+ * @param {string} selector - The CSS selector for the elements to insert the content into.
+ * @param {string} filePath - The path to the HTML file to load.
+ * @returns {Promise<void>}
+ */
 export async function loadContent(selector, filePath) {
     const elements = document.querySelectorAll(selector);
     for (const element of elements) {
         try {
-            const response = await fetch(filePath); // Fetch the content from the specified file path
+            const response = await fetch(filePath); // Fetch the content from the specified file path.
             if (!response.ok) {
                 throw new Error(`Failed to load ${filePath}: ${response.statusText}`);
             }
-            const html = await response.text(); // Wait for the response to be converted to text
-            element.innerHTML = html; // Insert the fetched HTML content into the element
+            const html = await response.text();
+            element.innerHTML = html; // Insert the fetched HTML content into the element.
         } catch (error) {
             console.error(`Error loading ${filePath} into ${selector}:`, error);
         }
     }
 }
 
-// loads the header component into the page, and confures its elements.
-// It is used on all pages in the app.
+/**
+ * Loads the header component into the page and configures its elements.
+ * It dynamically updates the header based on the provided parameters.
+ *
+ * @param {boolean} showBackButton - Whether to show the back button.
+ * @param {boolean} showGroup - Whether to show the group title.
+ * @param {boolean} showAvatar - Whether to show the user's profile image.
+ * @param {boolean} showButton - Whether to show the login/logout button.
+ * @param {boolean} showGroupButton - Whether to show the group button.
+ * @returns {Promise<void>}
+ */
 export async function loadHeader(
     showBackButton = false,
     showGroup = false,
@@ -32,25 +56,27 @@ export async function loadHeader(
     showButton = false,
     showGroupButton = false
 ) {
-    await loadContent("header", "/html/components/header.html");
+    // Load the header HTML content into the page.
+    await loadContent("header", `${BASE_PATH}components/header.html`);
     let header = document.querySelector("header");
     await cacheCurrentUser();
-    if (header) {
-        let backButton = header.querySelector(".header-back-button");
-        let groupButton = header.querySelector(".header-group-button");
-        let titleHeader = header.querySelector("#title-header");
-        let groupHeader = header.querySelector("#group-header");
-        let avatar = header.querySelector("#profile-picture-container");
-        let headerButtons = header.querySelector("#header-buttons");
 
+    if (header) {
+        // Configure the back button visibility.
+        let backButton = header.querySelector(".header-back-button");
         if (backButton) {
             backButton.style.display = showBackButton ? "block" : "none";
         }
 
+        // Configure the group button visibility.
+        let groupButton = header.querySelector(".header-group-button");
         if (groupButton) {
             groupButton.style.display = showGroupButton ? "block" : "none";
         }
 
+        // Configure the title and group header visibility.
+        let titleHeader = header.querySelector("#title-header");
+        let groupHeader = header.querySelector("#group-header");
         if (titleHeader && groupHeader) {
             if (showGroup) {
                 let currentGroup = await getCurrentGroup();
@@ -59,6 +85,9 @@ export async function loadHeader(
             groupHeader.style.display = showGroup ? "flex" : "none";
             titleHeader.style.display = showGroup ? "none" : "flex";
         }
+
+        // Configure the avatar visibility and content.
+        let avatar = header.querySelector("#profile-picture-container");
         if (avatar) {
             if (currentUser) {
                 header.querySelector("#profile-picture").src =
@@ -68,15 +97,16 @@ export async function loadHeader(
                 avatar.style.display = "none";
             }
         }
+
+        // Configure the login/logout button visibility and behavior.
+        let headerButtons = header.querySelector("#header-buttons");
         if (headerButtons) {
-            // Because the avatar and header buttons are in the same spot, only one
-            // should be shown at a time. If both are set to true, the avatar will be shown
             headerButtons.style.display = !showAvatar && showButton ? "block" : "none";
             if (!showAvatar && showButton) {
-                headerButtons.style.display = "block";
                 let loginButton = headerButtons.querySelector("#login-button");
                 let logoutButton = headerButtons.querySelector("#logout-button");
-                // Check if the user is logged in, and show the logout button if they are
+
+                // Show the logout button if the user is logged in.
                 if (currentUser) {
                     loginButton.style.display = "none";
                     logoutButton.style.display = "block";
@@ -90,7 +120,7 @@ export async function loadHeader(
                             });
                     });
                 }
-                // If the user is not logged in, show the login button
+                // Show the login button if the user is not logged in.
                 else {
                     loginButton.style.display = "block";
                     logoutButton.style.display = "none";
@@ -105,17 +135,23 @@ export async function loadHeader(
     }
 }
 
-// This function loads a match card into a specified container.
-// It retrieves user data from Firestore using the provided UID and updates the card's content.
-// It is used in the group.html and main.html pages.
+/**
+ * Loads a match card into a specified container.
+ * Retrieves user data from Firestore using the provided UID and updates the card's content.
+ *
+ * @param {string} containerSelector - The CSS selector for the container to insert the match card into.
+ * @param {string} uid - The UID of the user to load the match card for.
+ * @param {string} matchCardHTML - The HTML template for the match card.
+ * @returns {Promise<void>}
+ */
 export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
     let container = document.querySelector(containerSelector);
     if (!container) {
         throw new Error(`Container does not exist`);
     }
 
-    await cacheCurrentUser();
-    await cacheGroupUsers();
+    await cacheCurrentUser(); // Cache the current user's data.
+    await cacheGroupUsers(); // Cache the group users' data.
     let cardUser = usersCache[uid];
 
     if (!cardUser) {
@@ -157,18 +193,28 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
     }
 }
 
-//populates the user cache
-//only makes a db call if the cache doesn't exist or the reload flag is true.
+/**
+ * Caches the group users' data to a local variable.
+ * Only makes a Firestore call if the cache doesn't exist or the reload flag is true.
+ *
+ * @param {boolean} reload - Whether to force a reload of the cache.
+ * @returns {Promise<void>}
+ */
 async function cacheGroupUsers(reload = false) {
     if (!usersCache || reload) {
-        usersCache = await getAllUsersInGroup();
+        usersCache = await getAllUsersInGroup(); // Fetch all users in the group from Firestore.
     }
 }
 
-//caches the currentUser to a local variable.
-//only makes a db call if the cache doesn't exist or the reload flag is true.
+/**
+ * Caches the current user's data to a local variable.
+ * Only makes a Firestore call if the cache doesn't exist or the reload flag is true.
+ *
+ * @param {boolean} reload - Whether to force a reload of the cache.
+ * @returns {Promise<void>}
+ */
 async function cacheCurrentUser(reload = false) {
     if (!currentUser) {
-        currentUser = await getUserData();
+        currentUser = await getUserData(); // Fetch the current user's data from Firestore.
     }
 }

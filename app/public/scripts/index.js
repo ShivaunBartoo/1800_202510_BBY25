@@ -1,19 +1,28 @@
+/**
+ * This script manages the functionality for the landing page (index.html).
+*/
+
 import { getUser } from "../scripts/app.js";
 import { loadHeader } from "../scripts/loadContent.js";
 
 initialize();
 
-// Check if the user is logged in and redirect to main.html if they are
+/**
+ * Initializes the landing page.
+ * Checks if the user is logged in and redirects to main.html if they are.
+ * Loads the header for the landing page.
+ * 
+ * @returns {Promise<void>}
+ */
 async function initialize() {
-    loadHeader(
-        false, // show back button
-        false, // show group
-        false, // show profile image
-        true //   show login/logout button
-    );
-    let user = await getUser();
-    console.log("User:", user);
+    let user = await getUser(); // Check if the user is logged in.
     if (user) {
-        window.location.href = "./main.html";
+        window.location.href = "./html/main.html"; // Redirect to the main page if the user is logged in.
     }
+    loadHeader(
+        false, // Do not show the back button.
+        false, // Do not show the group button.
+        false, // Do not show the profile image.
+        true // Show the login/logout button.
+    );
 }

@@ -1,3 +1,10 @@
+/**
+ * This script initializes and manages the Firebase app, Firestore database, and authentication.
+ * It provides utility functions for interacting with Firebase services, such as retrieving user data,
+ * managing groups, and handling authentication. This script is used across multiple pages in the application
+ * to ensure consistent access to Firebase resources and user session management.
+ */
+
 import "https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js";
 import "https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js";
 import "https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js";
@@ -12,7 +19,11 @@ let cachedGroup = null; // Cache for the current group
 
 await authenticatePage();
 
-// Retrieves the current Firebase user or waits for auth state changes.
+/**
+ * Retrieves the current Firebase user or waits for auth state changes.
+ *
+ * @returns {Promise<Object>} The current Firebase user object.
+ */
 export async function getUser() {
     if (auth.currentUser) {
         return auth.currentUser;
@@ -25,14 +36,19 @@ export async function getUser() {
     }
 }
 
-// Retrieves the user data from Firestore.
+/**
+ * Retrieves the user data from Firestore.
+ * Reads the user document from the "users" collection in Firestore.
+ *
+ * @returns {Promise<Object|null>} The Firestore document for the user, or null if not found.
+ */
 export async function getUserData() {
     const user = await getUser();
     if (user) {
         try {
             const userDoc = await db.collection("users").doc(user.uid).get();
             if (userDoc.exists) {
-                return userDoc; // Always fetch fresh data from Firestore
+                return userDoc;
             } else {
                 console.log("No document found for the user");
                 return null;
@@ -47,7 +63,12 @@ export async function getUserData() {
     }
 }
 
-// Returns an object containing a key-value pair of user.id to userData
+/**
+ * Retrieves all users in the current group from Firestore.
+ * Reads the "users" collection and filters users based on the active group.
+ *
+ * @returns {Promise<Object>} An object containing user IDs as keys and user data as values.
+ */
 export async function getAllUsersInGroup() {
     let users = {};
     let group = await getCurrentGroup();
@@ -65,6 +86,12 @@ export async function getAllUsersInGroup() {
     return users;
 }
 
+/**
+ * Retrieves the current group document from Firestore.
+ * Reads the "groups" collection and fetches the group associated with the user's active group.
+ *
+ * @returns {Promise<Object|null>} The Firestore document for the current group, or null if not found.
+ */
 export async function getCurrentGroup() {
     if (cachedGroup) {
         return cachedGroup;
@@ -91,30 +118,45 @@ export async function getCurrentGroup() {
     }
 }
 
-// Function to clear the cached group data (e.g., when the user switches groups)
+/**
+ * Clears the cached group data.
+ * This is useful when the user switches groups or the group data needs to be refreshed.
+ */
 export function clearCachedGroup() {
     cachedGroup = null;
     console.log("Cached group cleared.");
 }
 
-//sets the destination for the back button on the header
+/**
+ * Sets the destination for the back button on the header.
+ *
+ * @param {string} href - The URL to set as the back button's destination.
+ */
 export function setBackButtonDestination(href) {
     document.querySelector(".header-back-button").setAttribute("href", href);
 }
 
+/**
+ * Authenticates the page based on meta tags and user data.
+ * Redirects the user to appropriate pages if authentication or setup is required.
+ */
 async function authenticatePage() {
     const requiresAuthElement = document.querySelector('meta[name="requires-auth"]');
     const requiresSetupElement = document.querySelector('meta[name="requires-setup"]');
     const requiresAuth = requiresAuthElement ? requiresAuthElement.content : false;
     const requiresSetup = requiresSetupElement ? requiresSetupElement.content : false;
+
     if (requiresAuth || requiresSetup) {
         let userData = await getUserData();
         if (requiresAuth && !userData) {
+            // Redirect to the login page if authentication is required and no user is logged in
             window.location.href = "./index.html";
         } else if (userData.data().activeGroup == null) {
-            window.location.href = "./createOrJoin.html";
+            // Redirect to the group creation/join page if no active group is set
+            window.location.href = "./html/createOrJoin.html";
         } else if (requiresSetup && userData.data().hasProfile == false) {
-            window.location.href = "./profile_setup.html";
+            // Redirect to the profile setup page if setup is required and the profile is incomplete
+            window.location.href = "./html/profile_setup.html";
         }
     }
 }

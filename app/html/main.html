@@ -1,3 +1,20 @@
+<!-- 
+    Main Page
+    
+    This is the primary interface for user interaction with the Likemind application.
+    Users answer survey questions about their interests and values, which are used
+    to match them with like-minded individuals in their group. As users answer questions,
+    they make progress toward unlocking new matches.
+    
+    Features:
+    - Display of the user's most recent match
+    - Progress bar showing advancement toward the next match
+    - Interactive survey cards for answering questions about interests and values
+    - Dynamic loading of new survey questions
+    
+    The page uses a card-based UI with a stacked card appearance for survey questions
+    and displays real-time progress feedback as questions are answered.
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,9 +32,10 @@
         <script type="module" src="../public/scripts/main.js"></script>
     </head>
     <body>
+        <!-- Header Section - Loaded dynamically by loadContent.js -->
         <header></header>
         <main>
-            <!-- Most Recent Match -->
+            <!-- Most Recent Match Section - Displays the user's latest connection -->
             <div id="recent-match-container">
                 <div class="section-header">Most Recent Match</div>
                 <div class="match-card-container">
@@ -27,7 +45,7 @@
                 </div>
             </div>
 
-            <!-- Match Progress Bar -->
+            <!-- Progress Tracking Section - Shows advancement toward next match -->
             <div class="match-progress-bar-container">
                 <div class="match-progress-bar-header">
                     <div class="match-progress-bar-title">Answer Questions</div>
@@ -42,7 +60,7 @@
                 </div>
             </div>
 
-            <!-- Survey Cards -->
+            <!-- Survey Interface Section - Stack of cards for answering questions -->
             <div class="survey-card-gallery">
                 <div class="survey-card-container"></div>
                 <div class="survey-card-container"></div>

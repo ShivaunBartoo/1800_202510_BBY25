@@ -1,3 +1,17 @@
+<!-- 
+    Account Page
+    
+    This page allows users to view and edit their profile information, manage account settings,
+    and organize their interests/values. The page displays the user's profile information including
+    name, email, contact information, and bio. Users can edit these fields and manage their survey
+    responses through a series of collapsible sections.
+    
+    Features:
+    - Profile information display and editing
+    - Group management options like switching between groups (Not yet implemented)
+    - Survey response organization with drag-and-drop capabilities
+    - Administrative tools (for admin users) (Not yet implemented)
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,59 +29,65 @@
         <script src="../public/scripts/collapsible.js" defer></script>
     </head>
     <body>
+        <!-- Header Section - Loaded dynamically by loadContent.js -->
         <header></header>
         <main>
+            <!-- User Profile Display Section - Shows username and profile picture -->
             <div class="settings-username" id="bigName"></div>
-
             <img id="profile-picture-large" src="../public/images/blank_avatar.jpeg" alt="Profile Picture" />
-            <!-- TODO: populate dynamically -->
 
             <div class="setting-group">
+                <!-- Profile Information Section - Editable user details -->
                 <button type="button" class="collapsible">Profile</button>
                 <div class="content">
-                <form id="profile">
-                    <table>
-                        <tr>
-                            <td><strong>Name:</strong></td>
-                            <td id="name">George A.</td>
-                            <td><span class="material-icons edit" data-value="name">edit</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Email:</strong></td>
-                            <td id="email">george@george.com</td>
-                            <td><span class="material-icons edit" data-value="email">edit</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Contact Method:</strong></td>
-                            <td id="contactMethod">discord</td>
-                            <td><span class="material-icons edit" data-value="contactMethod">edit</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Contact Info:</strong></td>
-                            <td id="contactInfo">Georgygeorge</td>
-                            <td><span class="material-icons edit" data-value="contactInfo">edit</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Bio:</strong></td>
-                            <td id="bio">Bio</td>
-                            <td><span class="material-icons edit" data-value="bio">edit</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div id="subDiv"></div>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
+                    <form id="profile">
+                        <table>
+                            <tr>
+                                <td><strong>Name:</strong></td>
+                                <td id="name">George A.</td>
+                                <td><span class="material-icons edit" data-value="name">edit</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email:</strong></td>
+                                <td id="email">george@george.com</td>
+                                <td><span class="material-icons edit" data-value="email">edit</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contact Method:</strong></td>
+                                <td id="contactMethod">discord</td>
+                                <td><span class="material-icons edit" data-value="contactMethod">edit</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contact Info:</strong></td>
+                                <td id="contactInfo">Georgygeorge</td>
+                                <td><span class="material-icons edit" data-value="contactInfo">edit</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bio:</strong></td>
+                                <td id="bio">Bio</td>
+                                <td><span class="material-icons edit" data-value="bio">edit</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="subDiv"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
+
+                <!-- Group Section - Switch between groups -->
                 <button type="button" class="collapsible">Account</button>
+                <!-- Not yet implemented -->
                 <div class="content">
                     <p>Lorem ipsum...</p>
                 </div>
+
+                <!-- Surveys Section - Manage interest and value preferences -->
                 <button type="button" class="collapsible">Surveys</button>
                 <div class="content" id="survey">
                     <h3>Very Interested <small>Drag and Drop to Edit</small></h3>
-                    <div class = "noun-container" id ="very-interested" data-value="2"></div>
+                    <div class="noun-container" id="very-interested" data-value="2"></div>
                     <h3>Mildly Interested</h3>
                     <div class="noun-container" id="mildly-interested" data-value="1"></div>
                     <h3>No opinion</h3>
@@ -77,7 +97,10 @@
                     <h3>Very Disinterested</h3>
                     <div class="noun-container" id="very-disinterested" data-value="-2"></div>
                 </div>
+
+                <!-- Admin Section - Administrative tools and functions -->
                 <button type="button" class="collapsible">Admin</button>
+                <!-- Not yet implemented -->
                 <div class="content">
                     <p>Lorem ipsum...</p>
                 </div>

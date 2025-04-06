@@ -1,83 +1,90 @@
+/**
+ * This script manages the functionality for the profile setup page (profileSetup.html).
+ * It allows users to create or update their profile by filling out a multi-page form.
+ * The form collects user information such as bio, contact details, interests, and values.
+ * 
+ * Firestore is used to store the user's profile data, including their interests, values, and profile photo.
+ * This script is used exclusively on the profileSetup.html page.
+ */
+
 import { auth, db } from "./app.js";
 import { loadHeader } from "./loadContent.js";
 
-let currentPage = 0;
-let pages = [];
-let navButtons = [];
+let currentPage = 0; // Tracks the current page of the form.
+let pages = []; // Stores all form pages.
+let navButtons = []; // Stores navigation buttons for the form.
 
 initialize();
 
-// This function initializes the page by loading HTML content into specified elements
-// and setting up event listeners for navigation buttons and form submission.
+/**
+ * Initializes the profile setup page.
+ * Loads the header, sets up navigation between form pages, and handles form submission.
+ */
 function initialize() {
-    // loads the header without a back button or group
+    // Load the header without a back button or group button.
     loadHeader(false, false, false, false);
 
-    pages = Array.from(document.querySelectorAll(".form-page"));
-    navButtons = Array.from(document.querySelectorAll(".nav-button"));
+    pages = Array.from(document.querySelectorAll(".form-page")); // Get all form pages.
+    navButtons = Array.from(document.querySelectorAll(".nav-button")); // Get all navigation buttons.
 
     // Set up the initial page and hide the others.
     pages.forEach((page, index) => {
         if (index !== currentPage) {
-            page.style.opacity = "0";
-            page.style.pointerEvents = "none";
+            page.style.opacity = "0"; // Hide the page.
+            page.style.pointerEvents = "none"; // Disable interaction.
         } else {
-            page.style.opacity = "1";
-            page.style.pointerEvents = "auto";
+            page.style.opacity = "1"; // Show the current page.
+            page.style.pointerEvents = "auto"; // Enable interaction.
         }
-        // Add event listeners to the navigation buttons
+
+        // Add event listeners to the navigation buttons.
         const nextButton = page.querySelector(".next-button");
         if (nextButton) {
             nextButton.addEventListener("click", () => {
-                setPage(currentPage + 1);
+                setPage(currentPage + 1); // Navigate to the next page.
             });
         }
         const prevButton = page.querySelector(".prev-button");
         if (prevButton) {
             prevButton.addEventListener("click", () => {
-                setPage(currentPage - 1);
+                setPage(currentPage - 1); // Navigate to the previous page.
             });
         }
     });
 
-    // Set up event listeners for the navigation buttons
+    // Set up event listeners for the navigation buttons.
     navButtons.forEach((button, index) => {
         button.addEventListener("click", () => {
-            setPage(index);
+            setPage(index); // Navigate to the specified page.
         });
     });
 
-    // Add event listeners to the text inputs to restrict input to letters and spaces only
+    // Add event listeners to restrict input to letters and spaces only.
     document.querySelectorAll(".noun-input").forEach((input) => {
-        input.addEventListener("input", function (event) {
-            // Copilot used to generate this regex
-            this.value = this.value.replace(/[^a-zA-Z\s]/g, ""); // Allow only letters and spaces
+        input.addEventListener("input", function () {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, ""); // Allow only letters and spaces.
         });
     });
 
-    // This is a bit of a hack. The way that the input type="file" is styled wasn't working with
-    // the layout, so I added a button that triggers the click event of the input type="file"
-    // when clicked. This way, the user can select a file without seeing the ugly input type="file" element.
+    // Set up the profile photo upload functionality.
     document.getElementById("upload-button").addEventListener("click", function () {
-        document.getElementById("profile-photo-input").click();
+        document.getElementById("profile-photo-input").click(); // Trigger the file input click event.
     });
 
-    // Profile photo upload
-    // Currently this is not fully functional as it does not upload the image to Firebase Storage.
-    // Patrick suggested using Cloudinary to host the images and to save the ID of the image in Firestore.
+    // Display the selected profile photo.
     document.getElementById("profile-photo-input").addEventListener("change", function (event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 const img = document.getElementById("profile-photo");
-                img.src = e.target.result;
+                img.src = e.target.result; // Display the selected image.
             };
             reader.readAsDataURL(file);
         }
     });
 
-    // Add event listener to the form that saves the form data to Firestore when a submit button is clicked
+    // Handle form submission and save data to Firestore.
     document.querySelector(".paged-form").addEventListener("submit", async function (event) {
         event.preventDefault();
         const user = auth.currentUser;
@@ -87,7 +94,7 @@ function initialize() {
             const int3 = document.getElementById("interest3").value;
             const val1 = document.getElementById("value1").value;
 
-            // Get form data
+            // Collect form data.
             const formData = {
                 bio: document.getElementById("bio").value,
                 contactMethod: document.getElementById("contact1").value,
@@ -103,11 +110,12 @@ function initialize() {
                     [val1.toLowerCase()]: 2,
                 },
             };
-            // Save form data to Firestore
+
+            // Save form data to Firestore.
             try {
                 await db.collection("users").doc(user.uid).set(formData, { merge: true });
                 console.log("Form data saved successfully!");
-                window.location.href = "./main.html";
+                window.location.href = "./main.html"; // Redirect to the main page.
             } catch (error) {
                 console.error("Error saving form data:", error);
             }
@@ -117,8 +125,11 @@ function initialize() {
     });
 }
 
-// This function sets the current page to the specified number and updates the navigation buttons accordingly.
-// It also handles the visibility and interactivity of the pages based on the current page number.
+/**
+ * Sets the current page of the form and updates the navigation buttons.
+ * 
+ * @param {number} num - The page number to navigate to.
+ */
 function setPage(num) {
     if (num < 0 || num >= pages.length) {
         console.error("Invalid page number:", num);
@@ -126,14 +137,14 @@ function setPage(num) {
     }
     pages.forEach((page, index) => {
         if (index === num) {
-            page.style.opacity = "1";
-            page.style.pointerEvents = "auto";
-            navButtons[index].innerText = "radio_button_checked";
+            page.style.opacity = "1"; // Show the current page.
+            page.style.pointerEvents = "auto"; // Enable interaction.
+            navButtons[index].innerText = "radio_button_checked"; // Highlight the current button.
         } else {
-            page.style.opacity = "0";
-            page.style.pointerEvents = "none";
-            navButtons[index].innerText = "radio_button_unchecked";
+            page.style.opacity = "0"; // Hide other pages.
+            page.style.pointerEvents = "none"; // Disable interaction.
+            navButtons[index].innerText = "radio_button_unchecked"; // Unhighlight other buttons.
         }
     });
-    currentPage = num;
+    currentPage = num; // Update the current page index.
 }

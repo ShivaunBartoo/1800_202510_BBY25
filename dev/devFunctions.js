@@ -1,12 +1,15 @@
+/**
+ * This script contains development-only functions for testing and debugging purposes.
+ * It includes functionality for creating and deleting test users, adding users to groups,
+ * and manipulating user data in bulk. These functions are not intended for production use.
+ */
+
 import { db, auth } from "../app/public/scripts/app.js";
 
 // IMPORTANT: DO NOT USE THIS CODE IN PRODUCTION.
 // This code is for testing purposes only.
 
-// these functions handles the creation and deletion of test users.
-// and mass-manipulation of groups.
-
-// allows these functions to be called from the Chrome console.
+// Allows these functions to be called from the Chrome console.
 window.addTestUsers = addTestUsers;
 window.deleteTestUsers = deleteTestUsers;
 window.addAllToGroup = addAllToGroup;
@@ -15,15 +18,24 @@ window.clearUserInterestsAndValues = clearUserInterestsAndValues;
 
 console.log("dev functions loaded");
 console.log("OVWSdIxoOVFbOTcOjRRN");
+
+/**
+ * Deletes all test users and regenerates them by adding them to the specified group.
+ * 
+ * @returns {Promise<void>}
+ */
 async function regenerateTestUsers() {
     await deleteTestUsers();
     await addTestUsers();
     await addAllToGroup("OVWSdIxoOVFbOTcOjRRN");
 }
 
-// adds all users in the 'users' collection to the group with the specified groupID.
-//paste in chrome console to add all users to default group:
-//  addAllToGroup("OVWSdIxoOVFbOTcOjRRN");
+/**
+ * Adds all users in the 'users' collection to the specified group.
+ * 
+ * @param {string} groupID - The ID of the group to add users to.
+ * @returns {Promise<void>}
+ */
 async function addAllToGroup(groupID) {
     let group = db.collection("groups").doc(groupID);
     db.collection("users")
@@ -38,7 +50,11 @@ async function addAllToGroup(groupID) {
     console.log("users added to group successfully.");
 }
 
-// populates the 'users' collection with test users from testUsers.json.
+/**
+ * Populates the 'users' collection with test users from testUsers.json.
+ * 
+ * @returns {Promise<void>}
+ */
 async function addTestUsers() {
     let index = 1;
     try {
@@ -70,7 +86,13 @@ async function addTestUsers() {
     }
 }
 
-//gets an image from a dataset of ai-generated faces from https://thispersondoesnotexist.com/
+/**
+ * Retrieves an image from a dataset of AI-generated faces.
+ * The dataset is stored in imagesBase64.json.
+ * 
+ * @param {number} num - The index of the image to retrieve.
+ * @returns {Promise<string|null>} The base64-encoded image string or null if not found.
+ */
 let imageData = null;
 async function getProfileImage(num) {
     if (!imageData) {
@@ -87,8 +109,12 @@ async function getProfileImage(num) {
     return imageData[`image${num}`] || null;
 }
 
-// deletes all test users from the 'users' collection.
-// (test users have the testUser: true field in their db)
+/**
+ * Deletes all test users from the 'users' collection.
+ * Test users are identified by the 'testUser: true' field in their Firestore documents.
+ * 
+ * @returns {Promise<void>}
+ */
 async function deleteTestUsers() {
     let groups = await db.collection("groups").get();
     db.collection("users")
@@ -107,6 +133,11 @@ async function deleteTestUsers() {
     console.log("test users deleted successfully.");
 }
 
+/**
+ * Clears all interests and values for the current user, except for the first entry in each category.
+ * 
+ * @returns {Promise<void>}
+ */
 async function clearUserInterestsAndValues() {
     const user = auth.currentUser;
     const userDoc = await db.collection("users").doc(user.uid).get();
@@ -119,8 +150,8 @@ async function clearUserInterestsAndValues() {
         .collection("users")
         .doc(user.uid)
         .update({
-            interests: {[Object.keys(interests)[0]]: interests[Object.keys(interests)[0]]},
-            values: {[Object.keys(values)[0]]: values[Object.keys(values)[0]]},
+            interests: { [Object.keys(interests)[0]]: interests[Object.keys(interests)[0]] },
+            values: { [Object.keys(values)[0]]: values[Object.keys(values)[0]] },
         });
 
     console.log("Successfully cleared interests and values except for the first entry.");

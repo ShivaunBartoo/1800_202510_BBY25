@@ -1,3 +1,17 @@
+<!-- 
+    Login Page
+    
+    This page provides user authentication functionality through Firebase Authentication UI.
+    Users can sign in with email/password or create new accounts. The page dynamically 
+    adapts to either "login" or "signup" mode based on URL parameters.
+    
+    Features:
+    - Email/password authentication
+    - User-friendly Firebase UI interface
+    - Custom messaging based on login/signup mode
+    
+    After successful authentication, users are redirected to create or join a group
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -24,9 +38,13 @@
         </script>
     </head>
     <body>
+        <!-- Header Section - Loaded dynamically by loadContent.js -->
         <header></header>
         <main>
+            <!-- Firebase Authentication UI Container -->
             <div id="firebaseui-auth-container"></div>
+
+            <!-- Loading Indicator - Shown while authentication components initialize -->
             <div id="loader">Loading...</div>
         </main>
     </body>

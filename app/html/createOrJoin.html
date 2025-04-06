@@ -1,3 +1,19 @@
+<!-- 
+    Create or Join Group Page
+    
+    This page serves as an entry point for users after authentication, allowing them to either join
+    an existing group using a group code or create a new group. It features a toggle interface with
+    two forms: one for joining groups and another for creating groups.
+    
+    Features:
+    - Join existing groups using a group code
+    - Create new groups with custom names
+    - Toggle between join and create interfaces
+    - Pre-filled default group code for easy testing
+    - Form validation with error messages
+    
+    After successfully joining or creating a group, users are redirected to the profile setup page.
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,9 +30,11 @@
         <script type="module" src="../public/scripts/CreateOrJoin.js"></script>
     </head>
     <body>
+        <!-- Header Section - Loaded dynamically by loadContent.js -->
         <header></header>
 
         <div id="form-container">
+            <!-- Join Group Form Section - Allows users to join existing groups -->
             <form class="form-content" id="joinGroup">
                 <h1>Welcome to Likemind!</h1>
                 <p>
@@ -34,6 +52,7 @@
                 <div class="choice-switcher">...or click here to create a group.</div>
             </form>
 
+            <!-- Create Group Form Section - Allows users to create new groups -->
             <form class="form-content" id="createGroup" style="display: none">
                 <h1>Welcome to Likemind!</h1>
                 <p>

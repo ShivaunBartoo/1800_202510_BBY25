@@ -1,19 +1,24 @@
+/**
+ * This script manages group-related functionality, including creating groups, adding users to groups,
+ * retrieving group members, and calculating compatibility between users.
+ *
+ * This script is used across multiple pages where group management is required, such as creating or joining groups,
+ * viewing group members, and calculating compatibility scores.
+ *
+ * Firestore is used to store and retrieve group and user data.
+ */
+
 import { db } from "./app.js";
 
-function randInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
-window.getCompatibilityList = getCompatibilityList;
-window.getNouns = getNouns;
-window.testViewGroupUsers = testViewGroupUsers;
-window.testGroupMemberPromise = testGroupMemberPromise;
-//Using a group ID and userID, adds the userID to the groups user array and add the groupID to the user.
+/**
+ * Adds a user to a group and updates the user's group list in Firestore.
+ *
+ * @param {string} groupID - The ID of the group to add the user to.
+ * @param {string} userID - The ID of the user to add to the group.
+ */
 export function addToGroup(groupID, userID) {
     const group = db.collection("groups").doc(groupID);
     const user = db.collection("users").doc(userID);
-
-    //firestores way of appending data to array values.
     try {
         group.update({
             users: firebase.firestore.FieldValue.arrayUnion(userID),
@@ -26,11 +31,23 @@ export function addToGroup(groupID, userID) {
     });
 }
 
+/**
+ * Retrieves a group document from Firestore.
+ *
+ * @param {string} groupID - The ID of the group to retrieve.
+ * @returns {Promise<Object>} The Firestore document for the group.
+ */
 export async function getGroup(groupID) {
     return db.collection("groups").doc(groupID).get();
 }
 
-// Creates a group, names it, then adds the creator to that group.
+/**
+ * Creates a new group, names it, and adds the creator to the group.
+ *
+ * @param {string} groupName - The name of the group to create.
+ * @param {string} userID - The ID of the user creating the group.
+ * @returns {Promise<Object>} The Firestore document for the newly created group.
+ */
 export async function createGroup(groupName, userID) {
     let groups = db.collection("groups");
     try {
@@ -45,7 +62,12 @@ export async function createGroup(groupName, userID) {
     }
 }
 
-// returns a promise of group user ids in the specified group.
+/**
+ * Retrieves the IDs of all users in a specified group.
+ *
+ * @param {string} groupID - The ID of the group to retrieve user IDs from.
+ * @returns {Promise<Array<string>>} A promise resolving to an array of user IDs.
+ */
 export function getGroupMemberIDs(groupID) {
     return new Promise((res, rej) => {
         const group = db.collection("groups").doc(groupID);
@@ -59,9 +81,14 @@ export function getGroupMemberIDs(groupID) {
     });
 }
 
-export function getGroupMembersPromise(groupMemberIDs) {
+/**
+ * Retrieves user documents for a list of user IDs.
+ *
+ * @param {Array<string>} groupMemberIDs - An array of user IDs to retrieve.
+ * @returns {Promise<Array<Object>>} A promise resolving to an array of user documents.
+ */
+export function getGroupMembersByID(groupMemberIDs) {
     return new Promise((res, rej) => {
-        // console.log(groupMemberIDs);
         let users = [];
         db.collection("users")
             .get()
@@ -79,9 +106,16 @@ export function getGroupMembersPromise(groupMemberIDs) {
             });
     });
 }
+
+/**
+ * Retrieves all nouns (interests and values) from the members of a specified group.
+ *
+ * @param {string} groupID - The ID of the group to retrieve nouns from.
+ * @returns {Promise<Array<Object>>} A promise resolving to an array of nouns.
+ */
 export async function getNouns(groupID) {
     return getGroupMemberIDs(groupID)
-        .then((idList) => getGroupMembersPromise(idList))
+        .then((idList) => getGroupMembersByID(idList))
         .then((usersList) => {
             let nouns = [];
             usersList.forEach((user) => {
@@ -102,13 +136,18 @@ export async function getNouns(groupID) {
         .catch((err) => console.log(err));
 }
 
-//returns a list of the users compatibility between them and the rest of the group before answering questions
+/**
+ * Calculates compatibility scores between a user and other members of a group.
+ *
+ * @param {string} currentUserID - The ID of the user to calculate compatibility for.
+ * @param {string} currentGroupID - The ID of the group to calculate compatibility within.
+ * @returns {Promise<Array<Object>>} A promise resolving to an array of compatibility scores.
+ */
 export async function getCompatibilityList(currentUserID, currentGroupID) {
     let currentUser = await db.collection("users").doc(currentUserID).get();
     let compat = [];
     let users = await getGroupMembers(currentGroupID);
     users.forEach((user) => {
-        //this makes sure that the user doesn't get the compatabilit they have for themself.
         if (user.id != currentUser.id) {
             let percent = getCompatibility(currentUser.data(), user.data());
             compat.push({
@@ -122,20 +161,23 @@ export async function getCompatibilityList(currentUserID, currentGroupID) {
     return compat;
 }
 
+/**
+ * Calculates compatibility between two users based on their interests and values.
+ *
+ * @param {Object} userData1 - The data of the first user.
+ * @param {Object} userData2 - The data of the second user.
+ * @returns {Array<number>} An array containing the compatibility percentage and full overlap status.
+ */
 export function getCompatibility(userData1, userData2) {
     let map1 = { ...userData1.interests, ...userData1.values };
     let map2 = { ...userData2.interests, ...userData2.values };
 
-    //if every noun in map 1 is in map2, return true, otherwise return false.
     let fullOverlap = true;
-    //the difference in scores between the current user and the other user.
     let difference = 0;
-    //the max possible difference in scores.
     let max = 0;
     for (const key in map1) {
         max += 4;
         if (key in map2) {
-            //the difference between the 2 interests, order does not matter here
             difference += Math.abs(map1[key] - map2[key]);
         } else {
             difference += 2;
@@ -143,11 +185,18 @@ export function getCompatibility(userData1, userData2) {
         }
     }
 
-    //the percentage of how close they are to max incompatibility.
     const percent = (difference / max) * 100;
     return [100 - percent, fullOverlap];
 }
 
+/**
+ * Retrieves common interests and values between two users.
+ *
+ * @param {Object} userData1 - The data of the first user.
+ * @param {Object} userData2 - The data of the second user.
+ * @param {number} [minScore=2] - The minimum score for an interest or value to be considered common.
+ * @returns {Promise<Array<Object>>} A promise resolving to an array of common interests and values.
+ */
 export async function getCommonInterests(userData1, userData2, minScore = 2) {
     let commonList = [];
     let addToList = (map1, map2, wordType) => {
@@ -164,7 +213,12 @@ export async function getCommonInterests(userData1, userData2, minScore = 2) {
     return commonList;
 }
 
-// returns a promise of group users in the specified group.
+/**
+ * Retrieves user documents for all members of a specified group.
+ *
+ * @param {string} groupID - The ID of the group to retrieve members from.
+ * @returns {Promise<Array<Object>>} A promise resolving to an array of user documents.
+ */
 export async function getGroupMembers(groupID) {
     let userIDs = await getGroupMemberIDs(groupID);
     if (!userIDs || userIDs.length === 0) {
@@ -179,27 +233,4 @@ export async function getGroupMembers(groupID) {
         }
     });
     return users;
-}
-
-//All functions after this point are for my testing, you shouldn't need them, but feel free to look anyways
-function testAddToGroup() {
-    db.collection("groups")
-        .get()
-        .then((doc) => {
-            doc.forEach((eachGroup) => {
-                let id = eachGroup.id;
-                addToGroup(id, "test4", true);
-            });
-        });
-}
-
-async function testViewGroupUsers() {
-    const result = await getGroupMemberIDs("OVWSdIxoOVFbOTcOjRRN");
-    console.log(await result);
-}
-
-async function testGroupMemberPromise(groupID) {
-    const a = await getGroupMemberIDs("OVWSdIxoOVFbOTcOjRRN");
-    const b = await getGroupMembersPromise(a);
-    console.log(await b);
 }

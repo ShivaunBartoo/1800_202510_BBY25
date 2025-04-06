@@ -1,3 +1,20 @@
+<!-- 
+    Profile Page
+    
+    This page displays a user's profile information including their name, photo, bio,
+    interests, and values. When users view profiles of people they've matched with,
+    they can also see contact information to connect outside the application.
+    
+    Features:
+    - Display of user's name and profile picture
+    - Bio section showing personal information
+    - Interest and value sections showing preferences
+    - Contact information display for matched users
+    
+    The page dynamically loads content based on the user ID passed in the URL parameters,
+    and shows contact details only if the current user has matched with the profile being viewed.
+    If no ID is passed, it instead shows the profile of the current user. 
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,8 +32,10 @@
         <script type="module" src="../public/scripts/profile.js"></script>
     </head>
     <body>
+        <!-- Header Section - Loaded dynamically by loadContent.js -->
         <header></header>
         <main>
+            <!-- User Profile Header Section - Displays name, photo and contact info -->
             <div id="profile-container-top">
                 <div class="page-header" id="user-name">&nbsp;</div>
                 <img id="user-picture" src="../public/images/blank_avatar.jpeg" alt="Profile Picture" />
@@ -31,6 +50,8 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- User Details Section - Displays bio, interests and values -->
             <div id="profile-container">
                 <p id="profile-bio">&nbsp;</p>
                 <div id="profile-interests">

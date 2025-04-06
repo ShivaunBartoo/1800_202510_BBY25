@@ -1,3 +1,21 @@
+<!-- 
+    Profile Setup Page
+    
+    This page guides new users through the initial profile setup process after they have
+    joined or created a group. It presents a multi-step form that collects essential user 
+    information including bio, interests, values, profile photo, and contact details.
+    
+    Features:
+    - Multi-page form with intuitive navigation
+    - Bio text entry for personal description
+    - Interest and value questions to facilitate matching
+    - Profile photo upload functionality
+    - Contact method and information collection
+    - Progress indicator showing form completion status
+    
+    Upon submission, the user's profile is created in Firestore and they are redirected
+    to the main application page where they can begin matching with others.
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,13 +30,15 @@
         <link rel="stylesheet" href="../public/styles/style_basic_nav.css" />
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
-        <script type="module" src="../public/scripts/profile_setup.js"></script>
+        <script type="module" src="../public/scripts/profileSetup.js"></script>
         <script type="module"></script>
     </head>
     <body>
+        <!-- Header Section - Loaded dynamically by loadContent.js -->
         <header></header>
         <main>
             <form class="paged-form">
+                <!-- Bio Information Page - First page to collect user's personal description -->
                 <fieldset class="form-page">
                     <div class="form-group">
                         <div>
@@ -37,6 +57,8 @@
                         <button type="button" class="next-button">Next</button>
                     </div>
                 </fieldset>
+                
+                <!-- Interests and Values Page - Second page to collect personal preferences -->
                 <fieldset class="form-page">
                     <div class="form-group">
                         <h4>Next, tell us a few of your interests and values.</h4>
@@ -91,6 +113,8 @@
                         <button type="button" class="next-button">Next</button>
                     </div>
                 </fieldset>
+                
+                <!-- Profile Photo Page - Third page for uploading a profile picture -->
                 <fieldset class="form-page">
                     <div class="form-group">
                         <h4>Upload a Profile Photo</h4>
@@ -105,6 +129,8 @@
                         <button type="button" class="next-button">Next</button>
                     </div>
                 </fieldset>
+                
+                <!-- Contact Information Page - Final page to collect communication preferences -->
                 <fieldset class="form-page">
                     <div class="form-group">
                         <div class="text">
@@ -130,6 +156,8 @@
                         <button type="submit" class="submit-button">Submit</button>
                     </div>
                 </fieldset>
+                
+                <!-- Navigation Dots - Visual indicators for form progress -->
                 <div class="nav-buttons">
                     <button type="button" class="material-icons nav-button">radio_button_checked</button>
                     <button type="button" class="material-icons nav-button">radio_button_unchecked</button>

@@ -33,8 +33,12 @@
         <header></header>
         <main>
             <!-- User Profile Display Section - Shows username and profile picture -->
-            <div class="settings-username" id="bigName"></div>
-            <img id="profile-picture-large" src="../public/images/blank_avatar.jpeg" alt="Profile Picture" />
+            <div class="settings-username" id="bigName">&nbsp;</div>
+            <div id="account-picture-container">
+                <img id="profile-picture-large" src="../public/images/blank_avatar.jpeg" alt="Profile Picture" />
+                <input type="file" id="profile-photo-input" accept="image/*" style="display: none" />
+                <div class="material-icons" id="upload-button">edit</div>
+            </div>
 
             <div class="setting-group">
                 <!-- Profile Information Section - Editable user details -->
@@ -53,7 +57,7 @@
                                 <td><span class="material-icons edit" data-value="email">edit</span></td>
                             </tr>
                             <tr>
-                                <td><strong>Contact Method:</strong></td>
+                                <td><strong>Contact:</strong></td>
                                 <td id="contactMethod">discord</td>
                                 <td><span class="material-icons edit" data-value="contactMethod">edit</span></td>
                             </tr>

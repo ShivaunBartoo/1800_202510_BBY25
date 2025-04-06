@@ -2,7 +2,7 @@
  * This script manages the functionality for the profile setup page (profileSetup.html).
  * It allows users to create or update their profile by filling out a multi-page form.
  * The form collects user information such as bio, contact details, interests, and values.
- * 
+ *
  * Firestore is used to store the user's profile data, including their interests, values, and profile photo.
  * This script is used exclusively on the profileSetup.html page.
  */
@@ -75,6 +75,11 @@ function initialize() {
     document.getElementById("profile-photo-input").addEventListener("change", function (event) {
         const file = event.target.files[0];
         if (file) {
+            const fileSizeInBytes = file.size;
+            if (fileSizeInBytes > 1024 * 1024) {
+                alert("File is too large. Please select an image smaller than 1MB.");
+                return;
+            }
             const reader = new FileReader();
             reader.onload = function (e) {
                 const img = document.getElementById("profile-photo");
@@ -127,7 +132,7 @@ function initialize() {
 
 /**
  * Sets the current page of the form and updates the navigation buttons.
- * 
+ *
  * @param {number} num - The page number to navigate to.
  */
 function setPage(num) {

@@ -150,7 +150,7 @@ async function authenticatePage() {
         let userData = await getUserData();
         if (requiresAuth && !userData) {
             // Redirect to the login page if authentication is required and no user is logged in
-            window.location.href = "./index.html";
+            window.location.href = "../index.html";
         } else if (userData.data().activeGroup == null) {
             // Redirect to the group creation/join page if no active group is set
             window.location.href = "./html/createOrJoin.html";

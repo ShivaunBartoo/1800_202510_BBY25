@@ -1,7 +1,7 @@
 /**
  * This script manages the group page functionality.
  * It loads the group header, displays the current user's matches, and shows group member details.
- * 
+ *
  * This script is used on the group.html page to provide an overview of the user's group and matches.
  * Firestore is used to fetch group and user data.
  */
@@ -15,7 +15,7 @@ initialize();
 /**
  * Initializes the group page by loading the header, matches, and group member details.
  * Fetches user and group data from Firestore and dynamically updates the UI.
- * 
+ *
  * @returns {Promise<void>}
  */
 async function initialize() {
@@ -51,7 +51,7 @@ async function initialize() {
 
     // Update the "All Matches" header with the number of matches.
     const allMatchesHeader = document.querySelector("#all-matches");
-    allMatchesHeader.textContent += currentMatches ? ` (${currentMatches.length})` : " (0)";
+    allMatchesHeader.textContent = currentMatches ? `All Matches (${currentMatches.length})` : " (0)";
 
     // Fetch the current group and its members from Firestore.
     const group = await getCurrentGroup(); // Fetch the current group document.

@@ -147,6 +147,7 @@ header a {
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 /* #endregion HEADER */
@@ -221,10 +222,11 @@ header a {
     color: #384e59;
     cursor: pointer;
     padding: 10px;
-    width: 100%;
+    width: 95%;
     text-align: left;
     outline: none;
     font-size: 1.2em;
+    box-sizing: border-box;
 }
 
 .active,

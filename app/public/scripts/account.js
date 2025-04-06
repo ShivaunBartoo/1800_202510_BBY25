@@ -33,6 +33,7 @@ async function initialize() {
         let udata = user.data();
         populateUserInfo(udata);
         setupDragAndDrop(udata);
+        setupEditProfileImage(user.id);
         addDragListeners(udata);
         addEditListeners();
         onSubmit(udata);
@@ -56,6 +57,43 @@ function populateUserInfo(udata) {
     document.querySelector("#contactInfo").innerHTML = udata.contactInfo;
     document.querySelector("#bio").innerHTML = udata.bio;
     addBubbles(udata);
+}
+
+/**
+ * Sets up the profile image upload and preview functionality.
+ * Adds event listeners to the upload button to trigger file selection
+ * and to the file input to display the selected image as a preview.
+ * Also updates the user's profile photo in Firestore.
+ *
+ * @param {Object} udata - The user data object containing profile information.
+ */
+function setupEditProfileImage(uid) {
+    // Set up the profile photo upload functionality.
+    document.getElementById("upload-button").addEventListener("click", function () {
+        document.getElementById("profile-photo-input").click(); // Trigger the file input click event.
+    });
+
+    // Display the selected profile photo.
+    document.getElementById("profile-photo-input").addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const fileSizeInBytes = file.size;
+            if (fileSizeInBytes > 1024 * 1024) {
+                alert("File is too large. Please select an image smaller than 1MB.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                const img = document.getElementById("profile-picture-large");
+                img.src = e.target.result; // Display the selected image.
+                console.log("uid " + uid);
+                console.log("setting firebase image");
+                await db.collection("users").doc(uid).set({ profilePhoto: e.target.result }, { merge: true });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 }
 
 /**
@@ -115,29 +153,19 @@ function addBubbles(udata) {
         // Append interest bubbles to the appropriate container based on their score
         switch (score) {
             case 2:
-                document.querySelector(
-                    "#very-interested"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
+                document.querySelector("#very-interested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
                 break;
             case 1:
-                document.querySelector(
-                    "#mildly-interested"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
+                document.querySelector("#mildly-interested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
                 break;
             case 0:
-                document.querySelector(
-                    "#no-opinion"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
+                document.querySelector("#no-opinion").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
                 break;
             case -1:
-                document.querySelector(
-                    "#mildly-disinterested"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
+                document.querySelector("#mildly-disinterested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
                 break;
             case -2:
-                document.querySelector(
-                    "#very-disinterested"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
+                document.querySelector("#very-disinterested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
         }
     }
 
@@ -146,29 +174,19 @@ function addBubbles(udata) {
         // Append value bubbles to the appropriate container based on their score
         switch (score) {
             case 2:
-                document.querySelector(
-                    "#very-interested"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
+                document.querySelector("#very-interested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
                 break;
             case 1:
-                document.querySelector(
-                    "#mildly-interested"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
+                document.querySelector("#mildly-interested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
                 break;
             case 0:
-                document.querySelector(
-                    "#no-opinion"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
+                document.querySelector("#no-opinion").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
                 break;
             case -1:
-                document.querySelector(
-                    "#mildly-disinterested"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
+                document.querySelector("#mildly-disinterested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
                 break;
             case -2:
-                document.querySelector(
-                    "#very-disinterested"
-                ).innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
+                document.querySelector("#very-disinterested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
         }
     }
 }
@@ -182,9 +200,7 @@ function addEditListeners() {
             let target = event.target.dataset.value;
             let originalValue = document.getElementById(target).innerHTML;
             // Replace the field with an input box for editing
-            document.getElementById(
-                target
-            ).innerHTML = `<input type='text' id='${target}Input' placeholder='${originalValue}' />`;
+            document.getElementById(target).innerHTML = `<input type='text' id='${target}Input' placeholder='${originalValue}' />`;
             document.getElementById("subDiv").innerHTML = `<input type='submit'>`;
             console.log(event.target);
             event.target.style.display = "none";

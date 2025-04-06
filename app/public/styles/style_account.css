@@ -8,15 +8,30 @@
     font-weight: bold;
     text-align: center;
 }
-#profile-picture-large {
+
+header {
+    z-index: 2;
+}
+
+#account-picture-container {
     width: 150px;
     aspect-ratio: 1/1;
-    right: 20px;
-    top: 20px;
+    position: relative;
+}
+
+#profile-picture-large {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
     border-radius: 50%;
     padding-top: 10px;
     padding-bottom: 30px;
     margin: 0 auto;
+}
+
+#upload-button {
+    bottom: 30px;
+    position: absolute;
 }
 
 .setting-group {
@@ -29,6 +44,7 @@
 
 .collapsible {
     margin: 2.5px;
+    align-self: center;
 }
 
 .content {
@@ -43,14 +59,27 @@ table {
     width: 100%;
     border-collapse: collapse; /* Removes any space between table cells */
     margin-top: 20px;
+    table-layout: fixed; /* Prevent the table from resizing based on content */
 }
 
 td {
     padding-right: 20px;
     text-align: left;
     vertical-align: middle;
+    overflow: hidden; /* Prevent content from overflowing */
+    white-space: nowrap; /* Prevent text from wrapping */
 }
 
+td:nth-child(1) {
+    width: 30%; /* First column width */
+}
+td:nth-child(2) {
+    width: 65%; /* Second column width */
+    overflow: scroll;
+}
+td:nth-child(3) {
+    width: 5%; /* Third column width */
+}
 strong {
     font-weight: bold;
 }
@@ -68,23 +97,24 @@ main .material-icons {
 }
 
 .noun-container {
-  padding: 10px 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  background-color: #384e59;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    border: 1px solid #384e59;
+    border-radius: 6px;
 }
 .noun-bubble {
     margin-top: 5px;
     padding: 3px 6px;
     white-space: nowrap;
-    background: white;
+    background: #ebf9ff;
     border-radius: 12px;
-    cursor: default;
+    cursor: pointer;
 }
 
 small {
-  font-size: 0.5em;
+    font-size: 0.5em;
 }
 #survey {
     user-select: none;

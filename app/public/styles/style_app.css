@@ -60,6 +60,12 @@ footer {
     padding: 15px;
 }
 
+#group-share-link {
+    font-style: italic;
+    color: #384e59;
+    cursor: pointer;
+}
+
 /* #region HEADER */
 
 header {

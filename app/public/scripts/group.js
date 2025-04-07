@@ -8,7 +8,7 @@
 
 import { loadHeader, loadMatchCard } from "./loadContent.js";
 import { getGroupMembers } from "./groupManager.js";
-import { getUserData, getCurrentGroup, setBackButtonDestination } from "./app.js";
+import { getUserData, getCurrentGroup, setBackButtonDestination, setupShareLinkFunctionality } from "./app.js";
 
 // The gap (in milliseconds) between revealing each match card or group member card.
 const revealGap = 50;
@@ -72,7 +72,6 @@ async function displayUserMatches(currentUser, currentMatches, matchCardHTML) {
         let delay = 0;
 
         for (let i = currentMatches.length - 1; i >= 0; i--) {
-
             loadMatchCard("#match-list", currentMatches[i], matchCardHTML).then((card) => {
                 document.querySelector("#match-list .loader").style.display = "none";
                 if (card) {
@@ -115,30 +114,6 @@ async function displayGroupMembers(currentUser, groupMembers, currentMatches, ma
             });
         }
     }
-}
-
-/**
- * Sets up the functionality for copying the group share link.
- */
-function setupShareLinkFunctionality() {
-    const groupShareLink = document.querySelector("#group-share-link");
-
-    groupShareLink.addEventListener("click", async () => {
-        const group = await getCurrentGroup();
-        const groupId = group.id; // Get the group ID.
-
-        try {
-            // Copy the group ID to the clipboard.
-            await navigator.clipboard.writeText(groupId);
-            const originalText = groupShareLink.textContent;
-            groupShareLink.textContent = "Link copied"; // Show a confirmation message.
-            setTimeout(() => {
-                groupShareLink.textContent = originalText; // Revert to the original text after 2 seconds.
-            }, 2000);
-        } catch (err) {
-            console.error("Failed to copy text: ", err);
-        }
-    });
 }
 
 function animateReveal(card, delay) {

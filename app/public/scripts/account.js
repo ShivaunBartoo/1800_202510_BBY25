@@ -5,7 +5,7 @@
  * and edit functionality for user interests and values.
  */
 
-import { db, getUserData, setBackButtonDestination, getUser, auth } from "../scripts/app.js";
+import { db, getUserData, setBackButtonDestination, getUser, setupShareLinkFunctionality, auth } from "../scripts/app.js";
 import { loadContent, loadHeader } from "../scripts/loadContent.js";
 
 let dragged;
@@ -20,6 +20,7 @@ initialize();
  */
 async function initialize() {
     loadContent(".match-card-container", "./components/match_card.html");
+    setupShareLinkFunctionality();
     await loadHeader(
         true, // show back button
         false, // show group

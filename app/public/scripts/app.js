@@ -137,6 +137,30 @@ export function setBackButtonDestination(href) {
 }
 
 /**
+ * Sets up the functionality for copying the group share link.
+ */
+export function setupShareLinkFunctionality() {
+    const groupShareLink = document.querySelector("#group-share-link");
+
+    groupShareLink.addEventListener("click", async () => {
+        const group = await getCurrentGroup();
+        const groupId = group.id; // Get the group ID.
+
+        try {
+            // Copy the group ID to the clipboard.
+            await navigator.clipboard.writeText(groupId);
+            const originalText = groupShareLink.textContent;
+            groupShareLink.textContent = "Link copied"; // Show a confirmation message.
+            setTimeout(() => {
+                groupShareLink.textContent = originalText; // Revert to the original text after 2 seconds.
+            }, 2000);
+        } catch (err) {
+            console.error("Failed to copy text: ", err);
+        }
+    });
+}
+
+/**
  * Authenticates the page based on meta tags and user data.
  * Redirects the user to appropriate pages if authentication or setup is required.
  */
@@ -150,13 +174,13 @@ async function authenticatePage() {
         let userData = await getUserData();
         if (requiresAuth && !userData) {
             // Redirect to the login page if authentication is required and no user is logged in
-            window.location.href = "../index.html";
+            window.location.href = `../index.html`;
         } else if (userData.data().activeGroup == null) {
             // Redirect to the group creation/join page if no active group is set
-            window.location.href = "./html/createOrJoin.html";
+            window.location.href = `./create_or_join.html`;
         } else if (requiresSetup && userData.data().hasProfile == false) {
             // Redirect to the profile setup page if setup is required and the profile is incomplete
-            window.location.href = "./html/profile_setup.html";
+            window.location.href = `./profile_setup.html`;
         }
     }
 }

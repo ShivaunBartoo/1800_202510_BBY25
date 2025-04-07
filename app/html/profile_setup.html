@@ -38,86 +38,51 @@
         <header></header>
         <main>
             <form class="paged-form">
-                <!-- Bio Information Page - First page to collect user's personal description -->
-                <fieldset class="form-page">
-                    <div class="form-group">
-                        <div>
-                            <h2>Profile Setup</h2>
-                            <h4>To get started, please write a short bio for your public profile.</h4>
-                        </div>
-                        <textarea
-                            id="bio"
-                            class="form-control"
-                            rows="12"
-                            placeholder="Tell us a little about yourself"
-                        ></textarea>
-                    </div>
-                    <div class="button-group">
-                        <div></div>
-                        <button type="button" class="next-button">Next</button>
-                    </div>
-                </fieldset>
-                
                 <!-- Interests and Values Page - Second page to collect personal preferences -->
                 <fieldset class="form-page">
                     <div class="form-group">
-                        <h4>Next, tell us a few of your interests and values.</h4>
+                        <h2>Profile Setup</h2>
+                        <h4>To get started, tell us a few of your interests and values.</h4>
                         <div class="text-group">
                             <div class="text-group-item">
                                 <label for="interest1">What are you passionate about?</label>
-                                <input
-                                    type="text"
-                                    id="interest1"
-                                    class="text-input noun-input"
-                                    pattern="[A-Za-z\s]+"
-                                    title="Letters only, no numbers or punctuation"
-                                    required
-                                />
+                                <input type="text" id="interest1" class="text-input noun-input" pattern="[A-Za-z\s]+" title="Letters only, no numbers or punctuation" required />
                             </div>
                             <div class="text-group-item">
                                 <label for="interest2">What recreational activity do you enjoy?</label>
-                                <input
-                                    type="text"
-                                    id="interest2"
-                                    class="text-input noun-input"
-                                    pattern="[A-Za-z\s]+"
-                                    title="Letters only, no numbers or punctuation"
-                                    required
-                                />
+                                <input type="text" id="interest2" class="text-input noun-input" pattern="[A-Za-z\s]+" title="Letters only, no numbers or punctuation" required />
                             </div>
                             <div class="text-group-item">
                                 <label for="interest3">What do you like to do with your friends?</label>
-                                <input
-                                    type="text"
-                                    id="interest3"
-                                    class="text-input noun-input"
-                                    pattern="[A-Za-z\s]+"
-                                    title="Letters only, no numbers or punctuation"
-                                    required
-                                />
+                                <input type="text" id="interest3" class="text-input noun-input" pattern="[A-Za-z\s]+" title="Letters only, no numbers or punctuation" required />
                             </div>
                             <div class="text-group-item">
                                 <label for="value1">What's a social issue that matters a lot to you?</label>
-                                <input
-                                    type="text"
-                                    id="value1"
-                                    class="text-input noun-input"
-                                    pattern="[A-Za-z\s]+"
-                                    title="Letters only, no numbers or punctuation"
-                                />
+                                <input type="text" id="value1" class="text-input noun-input" pattern="[A-Za-z\s]+" title="Letters only, no numbers or punctuation" />
                             </div>
                         </div>
+                    </div>
+                    <div class="button-group">
+                        <div>&nbsp;</div>
+                        <button type="button" class="next-button">Next</button>
+                    </div>
+                </fieldset>
+                <!-- Interests and Values Page - Second page to collect personal preferences -->
+                <fieldset class="form-page">
+                    <div class="form-group">
+                        <h2>NOT YET IMPLEMENTED</h2>
+                        <!-- @LUIS Put the "select interests" page here -->
                     </div>
                     <div class="button-group">
                         <button type="button" class="prev-button">Previous</button>
                         <button type="button" class="next-button">Next</button>
                     </div>
                 </fieldset>
-                
                 <!-- Profile Photo Page - Third page for uploading a profile picture -->
                 <fieldset class="form-page">
                     <div class="form-group">
-                        <h4>Upload a Profile Photo</h4>
+                        <h2>Upload a Profile Photo</h2>
+                        <h4>You can also do this later from the profile page.</h4>
                         <div class="photo-group">
                             <img id="profile-photo" src="../public/images/user.png" alt="Profile Photo" />
                             <input type="file" id="profile-photo-input" accept="image/*" style="display: none" />
@@ -129,7 +94,21 @@
                         <button type="button" class="next-button">Next</button>
                     </div>
                 </fieldset>
-                
+                <!-- Bio Information Page - First page to collect user's personal description -->
+                <fieldset class="form-page">
+                    <div class="form-group">
+                        <div>
+                            <h4>Write a short bio for your public profile.</h4>
+                            <h4>You can also do this later from the profile page.</h4>
+                        </div>
+                        <textarea id="bio" class="form-control" rows="12" placeholder="Tell us a little about yourself"></textarea>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="prev-button">Previous</button>
+                        <button type="button" class="next-button">Next</button>
+                    </div>
+                </fieldset>
+
                 <!-- Contact Information Page - Final page to collect communication preferences -->
                 <fieldset class="form-page">
                     <div class="form-group">
@@ -156,10 +135,11 @@
                         <button type="submit" class="submit-button">Submit</button>
                     </div>
                 </fieldset>
-                
+
                 <!-- Navigation Dots - Visual indicators for form progress -->
                 <div class="nav-buttons">
                     <button type="button" class="material-icons nav-button">radio_button_checked</button>
+                    <button type="button" class="material-icons nav-button">radio_button_unchecked</button>
                     <button type="button" class="material-icons nav-button">radio_button_unchecked</button>
                     <button type="button" class="material-icons nav-button">radio_button_unchecked</button>
                     <button type="button" class="material-icons nav-button">radio_button_unchecked</button>

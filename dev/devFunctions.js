@@ -21,7 +21,7 @@ console.log("OVWSdIxoOVFbOTcOjRRN");
 
 /**
  * Deletes all test users and regenerates them by adding them to the specified group.
- * 
+ *
  * @returns {Promise<void>}
  */
 async function regenerateTestUsers() {
@@ -32,7 +32,7 @@ async function regenerateTestUsers() {
 
 /**
  * Adds all users in the 'users' collection to the specified group.
- * 
+ *
  * @param {string} groupID - The ID of the group to add users to.
  * @returns {Promise<void>}
  */
@@ -52,13 +52,13 @@ async function addAllToGroup(groupID) {
 
 /**
  * Populates the 'users' collection with test users from testUsers.json.
- * 
+ *
  * @returns {Promise<void>}
  */
 async function addTestUsers() {
     let index = 1;
     try {
-        const response = await fetch("../app/files/testUsers.json");
+        const response = await fetch("./testUsers.json");
         if (!response.ok) {
             throw new Error("Cannot read testUsers.json");
         }
@@ -89,7 +89,7 @@ async function addTestUsers() {
 /**
  * Retrieves an image from a dataset of AI-generated faces.
  * The dataset is stored in imagesBase64.json.
- * 
+ *
  * @param {number} num - The index of the image to retrieve.
  * @returns {Promise<string|null>} The base64-encoded image string or null if not found.
  */
@@ -112,7 +112,7 @@ async function getProfileImage(num) {
 /**
  * Deletes all test users from the 'users' collection.
  * Test users are identified by the 'testUser: true' field in their Firestore documents.
- * 
+ *
  * @returns {Promise<void>}
  */
 async function deleteTestUsers() {
@@ -135,7 +135,7 @@ async function deleteTestUsers() {
 
 /**
  * Clears all interests and values for the current user, except for the first entry in each category.
- * 
+ *
  * @returns {Promise<void>}
  */
 async function clearUserInterestsAndValues() {

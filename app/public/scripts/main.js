@@ -49,7 +49,7 @@ async function initialize() {
         setTimeout(async () => {
             topic.style.opacity = 100;
             setCardQuestion(element, await nextQuestion());
-        }, i * 200);
+        }, i * 100);
         i++;
     });
 
@@ -65,6 +65,7 @@ async function initialize() {
         let recentMatch = currentMatches[currentMatches.length - 1];
         updateMatchCard(recentMatch); // Update the match card with the most recent match.
     } else {
+        document.querySelector("#recent-match-container .loader").style.display = "none";
         document.querySelector("#no-matches").style.display = "block";
     }
     nextMatch = await getNextMatch(); // Determine the next match.

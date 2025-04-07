@@ -200,7 +200,7 @@ function addEditListeners() {
             let target = event.target.dataset.value;
             let originalValue = document.getElementById(target).innerHTML;
             // Replace the field with an input box for editing
-            document.getElementById(target).innerHTML = `<input type='text' id='${target}Input' placeholder='${originalValue}' />`;
+            document.getElementById(target).innerHTML = `<input type='text' id='${target}Input' value="${originalValue}" />`;
             document.getElementById("subDiv").innerHTML = `<input type='submit'>`;
             console.log(event.target);
             event.target.style.display = "none";

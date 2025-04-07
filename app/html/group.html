@@ -32,7 +32,7 @@
     <body>
         <!-- Header Section - Loaded dynamically by loadContent.js -->
         <header></header>
-        
+
         <!-- Group Information Section - Shows member count and sharing options -->
         <div id="group-info">
             <span>
@@ -41,12 +41,24 @@
             </span>
             <span id="group-share-link">copy share link</span>
         </div>
-        
+
         <!-- Group Matches Section - Displays all matched users -->
         <div id="group-matches">
             <div class="section-header" id="all-matches">All Matches (-)</div>
-            <div id="member-list" class="match-container"></div>
-            <div id="no-matches" style="display: none">No matches yet! <br />Answer questions to unlock matches.</div>
+            <div class="match-card-list" id="match-list">
+                <div class="loader"></div>
+            </div>
+            <div id="no-matches" style="display: none">
+                <strong>No matches yet!</strong> <br />
+                <small>Answer questions to unlock matches.</small>
+            </div>
+        </div>
+        <!-- Group Matches Section - Displays all other group users -->
+        <div id="group-members">
+            <div class="section-header" id="all-members">All Group Members</div>
+            <div class="match-card-list" id="member-list">
+                <div class="loader"></div>
+            </div>
         </div>
     </body>
 </html>

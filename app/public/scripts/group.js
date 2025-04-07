@@ -10,6 +10,9 @@ import { loadHeader, loadMatchCard } from "./loadContent.js";
 import { getGroupMembers } from "./groupManager.js";
 import { getUserData, getCurrentGroup, setBackButtonDestination } from "./app.js";
 
+// The gap (in milliseconds) between revealing each match card or group member card.
+const revealGap = 50;
+
 initialize();
 
 /**
@@ -19,51 +22,105 @@ initialize();
  * @returns {Promise<void>}
  */
 async function initialize() {
-    // Load the header with a back button, group name, and profile image.
     loadHeader(
         true, // show back button
         true, // show group
         true, // show profile image
         false // do not show login/logout button
-    ).then(() => setBackButtonDestination("main.html")); // Set the back button destination to the main page.
+    ).then(() => setBackButtonDestination("main.html"));
 
-    let currentUser = await getUserData(); // Fetch the current user's data from Firestore.
+    const currentUser = await getUserData();
+    const matchCardHTML = await fetchMatchCardTemplate();
+    const currentMatches = currentUser.data().currentMatches;
 
-    // Fetch the match card HTML template.
+    displayUserMatches(currentUser, currentMatches, matchCardHTML);
+    setupShareLinkFunctionality();
+
+    const group = await getCurrentGroup();
+    const groupMembers = await getGroupMembers(group.id);
+    document.querySelector("#member-count").innerHTML = groupMembers.length;
+    displayGroupMembers(currentUser, groupMembers, currentMatches, matchCardHTML);
+}
+
+/**
+ * Fetches the match card HTML template.
+ *
+ * @returns {Promise<string>} The HTML content of the match card template.
+ */
+async function fetchMatchCardTemplate() {
     const response = await fetch("./components/match_card.html");
     if (!response.ok) {
         throw new Error(`Failed to load match_card.html: ${response.statusText}`);
     }
-    const matchCardHTML = await response.text();
+    return await response.text();
+}
 
-    // Get the current user's matches and display them.
-    let currentMatches = currentUser.data().currentMatches;
+/**
+ * Displays the user's matches using match cards.
+ *
+ * @param {Object} currentUser - The current user's data.
+ * @param {string} matchCardHTML - The HTML template for match cards.
+ * @returns {Promise<void>}
+ */
+async function displayUserMatches(currentUser, currentMatches, matchCardHTML) {
     if (!currentMatches || currentMatches.length == 0) {
         // Show a "no matches" message if there are no matches.
         const noMatches = document.querySelector("#no-matches");
         noMatches.style.display = "block";
     } else {
         // Load match cards for each match in reverse order.
+        let delay = 0;
         for (let i = currentMatches.length - 1; i >= 0; i--) {
-            loadMatchCard("#member-list", currentMatches[i], matchCardHTML);
+            loadMatchCard("#match-list", currentMatches[i], matchCardHTML).then((card) => {
+                if (card) {
+                    animateReveal(card, delay);
+                    delay += revealGap;
+                }
+            });
         }
     }
 
     // Update the "All Matches" header with the number of matches.
     const allMatchesHeader = document.querySelector("#all-matches");
-    allMatchesHeader.textContent = currentMatches ? `All Matches (${currentMatches.length})` : " (0)";
+    allMatchesHeader.textContent = currentMatches ? `All Matches (${currentMatches.length})` : "All Matches (0)";
+}
 
-    // Fetch the current group and its members from Firestore.
-    const group = await getCurrentGroup(); // Fetch the current group document.
-    const groupMembers = await getGroupMembers(group.id); // Fetch the group members.
+/**
+ * Displays group members by loading and rendering match cards for each member.
+ * Filters out the current user and members already in the current matches list.
+ * Dimmed styling is applied to the cards of members who are not in the current matches.
+ *
+ * @param {Object} currentUser - The current user object.
+ * @param {Array<Object>} groupMembers - An array of group member objects to display.
+ * @param {Array<Object>} [currentMatches] - An optional array of current match objects.
+ * @param {string} matchCardHTML - The HTML template string for a match card.
+ * @returns {Promise<void>} Resolves when all member cards are processed.
+ */
+async function displayGroupMembers(currentUser, groupMembers, currentMatches, matchCardHTML) {
+    let delay = 0;
+    for (let member of groupMembers) {
+        if (!currentMatches?.includes(member) && member.id != currentUser.id) {
+            loadMatchCard("#member-list", member.id, matchCardHTML, false).then((card) => {
+                if (card) {
+                    card.style.filter = "grayscale(80%)";
+                    animateReveal(card, delay);
+                    delay += revealGap;
+                }
+            });
+        }
+    }
+}
 
-    // Update the member count in the UI.
-    document.querySelector("#member-count").innerHTML = groupMembers.length;
-
-    // Set up the "Copy Group Link" functionality.
+/**
+ * Sets up the functionality for copying the group share link.
+ */
+function setupShareLinkFunctionality() {
     const groupShareLink = document.querySelector("#group-share-link");
+
     groupShareLink.addEventListener("click", async () => {
+        const group = await getCurrentGroup();
         const groupId = group.id; // Get the group ID.
+
         try {
             // Copy the group ID to the clipboard.
             await navigator.clipboard.writeText(groupId);
@@ -76,4 +133,13 @@ async function initialize() {
             console.error("Failed to copy text: ", err);
         }
     });
+}
+
+function animateReveal(card, delay) {
+    card.style.opacity = "0";
+    card.style.transition = "opacity 1s ease";
+    setTimeout(() => {
+        card.style.opacity = "";
+        card.style.transition = "";
+    }, delay);
 }

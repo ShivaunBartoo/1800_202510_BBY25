@@ -49,13 +49,7 @@ export async function loadContent(selector, filePath) {
  * @param {boolean} showGroupButton - Whether to show the group button.
  * @returns {Promise<void>}
  */
-export async function loadHeader(
-    showBackButton = false,
-    showGroup = false,
-    showAvatar = true,
-    showButton = false,
-    showGroupButton = false
-) {
+export async function loadHeader(showBackButton = false, showGroup = false, showAvatar = true, showButton = false, showGroupButton = false) {
     // Load the header HTML content into the page.
     await loadContent("header", `${BASE_PATH}components/header.html`);
     let header = document.querySelector("header");
@@ -90,8 +84,7 @@ export async function loadHeader(
         let avatar = header.querySelector("#profile-picture-container");
         if (avatar) {
             if (currentUser) {
-                header.querySelector("#profile-picture").src =
-                    currentUser.data().profilePhoto || "../public/images/blank_avatar.jpeg";
+                header.querySelector("#profile-picture").src = currentUser.data().profilePhoto || "../public/images/blank_avatar.jpeg";
                 avatar.style.display = showAvatar ? "block" : "none";
             } else {
                 avatar.style.display = "none";
@@ -136,15 +129,15 @@ export async function loadHeader(
 }
 
 /**
- * Loads a match card into a specified container.
- * Retrieves user data from Firestore using the provided UID and updates the card's content.
+ * Dynamically loads a match card into a specified container.
+ * Fetches user data from Firestore using the provided UID and populates the card's content.
  *
- * @param {string} containerSelector - The CSS selector for the container to insert the match card into.
- * @param {string} uid - The UID of the user to load the match card for.
- * @param {string} matchCardHTML - The HTML template for the match card.
- * @returns {Promise<void>}
+ * @param {string} containerSelector - The CSS selector for the container where the match card will be inserted.
+ * @param {string} uid - The unique identifier of the user whose data will populate the match card.
+ * @param {string} matchCardHTML - The HTML template for the match card structure.
+ * @returns {Promise<HTMLElement>} - The created match card element.
  */
-export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
+export async function loadMatchCard(containerSelector, uid, matchCardHTML, calculateMatchPercentage = true) {
     let container = document.querySelector(containerSelector);
     if (!container) {
         throw new Error(`Container does not exist`);
@@ -165,13 +158,12 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
 
     let card = tempDiv.firstElementChild;
     if (card) {
-        let matchPercent = Math.ceil(getCompatibility(currentUser.data(), cardUser)[0]) + "%";
-        card.querySelector(".match-card-percent").textContent = matchPercent;
+        if (calculateMatchPercentage) {
+            let matchPercent = Math.ceil(getCompatibility(currentUser.data(), cardUser)[0]) + "%";
+            card.querySelector(".match-card-percent").textContent = matchPercent;
+        } 
         card.querySelector(".match-card-name").textContent = cardUser.name || "Unknown";
-        card.querySelector(".match-card-image").setAttribute(
-            "src",
-            cardUser.profilePhoto || "../public/images/blank_avatar.jpeg"
-        );
+        card.querySelector(".match-card-image").setAttribute("src", cardUser.profilePhoto || "../public/images/blank_avatar.jpeg");
         let commonInterests = await getCommonInterests(currentUser.data(), cardUser, 2);
         card.querySelectorAll(".match-card-info").forEach((info, index) => {
             if (commonInterests[index]) {
@@ -192,6 +184,7 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML) {
         card.addEventListener("click", () => {
             window.location.href = `profile.html?uid=${uid}`;
         });
+        return card;
     }
 }
 

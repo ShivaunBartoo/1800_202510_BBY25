@@ -101,15 +101,16 @@ main .material-icons {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
-    border: 1px solid #384e59;
+    background: #ebf9ff;
     border-radius: 6px;
 }
+
 .noun-bubble {
     margin-top: 5px;
     padding: 3px 6px;
     white-space: nowrap;
-    background: #ebf9ff;
     border-radius: 12px;
+    background: white;
     cursor: pointer;
 }
 

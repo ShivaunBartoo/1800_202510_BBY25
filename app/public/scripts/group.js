@@ -72,7 +72,6 @@ async function displayUserMatches(currentUser, currentMatches, matchCardHTML) {
         let delay = 0;
 
         for (let i = currentMatches.length - 1; i >= 0; i--) {
-            console.log("Current Match:", currentMatches[i]);
 
             loadMatchCard("#match-list", currentMatches[i], matchCardHTML).then((card) => {
                 document.querySelector("#match-list .loader").style.display = "none";
@@ -102,12 +101,12 @@ async function displayUserMatches(currentUser, currentMatches, matchCardHTML) {
  */
 async function displayGroupMembers(currentUser, groupMembers, currentMatches, matchCardHTML) {
     let delay = 0;
-    let empty = true;
     for (let member of groupMembers) {
         if (!currentMatches?.includes(member.id) && member.id != currentUser.id) {
             loadMatchCard("#member-list", member.id, matchCardHTML, false).then((card) => {
                 if (card) {
-                    empty = false;
+                    document.querySelector("#group-members").style.display = "block";
+
                     document.querySelector("#member-list .loader").style.display = "none";
                     card.style.filter = "grayscale(80%)";
                     animateReveal(card, delay);
@@ -115,10 +114,6 @@ async function displayGroupMembers(currentUser, groupMembers, currentMatches, ma
                 }
             });
         }
-    }
-    if (empty) {
-        document.querySelector("#group-members").style.display = "none";
-        
     }
 }
 

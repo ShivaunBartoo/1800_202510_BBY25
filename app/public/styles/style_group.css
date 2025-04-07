@@ -44,3 +44,7 @@ body {
     text-align: center;
     margin: 5% 0;
 }
+
+#group-members {
+    display: none;
+}

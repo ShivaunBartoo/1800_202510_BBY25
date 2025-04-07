@@ -70,6 +70,15 @@ async function initialize() {
     }
     nextMatch = await getNextMatch(); // Determine the next match.
 
+    if (nextMatch) {
+        document.querySelector(".match-progress-bar-label").style.opacity = "100";
+        document.querySelector(".match-progress-bar").style.opacity = "100";
+    } else {
+        document.querySelector("#no-more-matches-message").style.display = "block";
+        document.querySelector(".match-progress-bar-label").style.display = "none";
+        document.querySelector(".match-progress-bar").style.display = "none";
+    }
+
     // Attach event listeners to survey response buttons.
     setupSurveyCardEvents(userData);
 }
@@ -217,7 +226,7 @@ async function setProgressBar(percentage, userData = null) {
     let bar = document.querySelector(".match-progress-bar-fill");
     bar.style.width = percentage + "%";
     db.collection("users").doc(userData.id).set({ matchProgress: percentage }, { merge: true }); // Update Firestore.
-    if (percentage == 100) {
+    if (percentage == 100 && nextMatch) {
         revealMatch(); // Reveal the next match when progress reaches 100%.
         setProgressBar(0, userData); // Reset the progress bar.
     }
@@ -260,7 +269,13 @@ async function updateMatchCard(match) {
     if (matchCardContainer) {
         let content = document.querySelector(".match-card-content");
         content.style.opacity = 0;
-        await loadMatchCard(".match-card-container", match, matchCardHTML);
+        let card = await loadMatchCard(".match-card-container", match, matchCardHTML);
+        Array.from(document.querySelector(".match-card-container").children).forEach((child) => {
+            if (child != card) {
+                child.remove();
+            }
+        });
+
         content = document.querySelector(".match-card-content");
         content.style.opacity = 0;
         setTimeout(() => {
@@ -320,8 +335,6 @@ async function getNextMatch() {
             return match.user2; // Return the first unmatched user.
         }
     }
-
-    console.warn("No suitable match found.");
     return null;
 }
 

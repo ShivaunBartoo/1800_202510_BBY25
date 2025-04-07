@@ -1,3 +1,13 @@
+#no-more-matches-message {
+    display: none;
+    margin: 20px;
+}
+
+#no-more-matches-message a {
+    text-decoration: none;
+    color: #384e59;
+}
+
 /* #region MATCH_PROGRESS_BAR */
 
 .match-progress-bar-header {
@@ -12,11 +22,15 @@
 
 .match-progress-bar-label {
     color: #384e59;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .match-progress-bar {
     width: 90%;
     margin: 0 auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .match-progress-bar-base {
@@ -133,6 +147,10 @@
     align-items: center;
     gap: 15px;
     color: #384e59;
+    cursor: default;
+}
+
+.survey-card-gallery > :nth-child(1) .survey-response {
     cursor: pointer;
 }
 

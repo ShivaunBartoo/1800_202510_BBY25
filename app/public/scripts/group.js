@@ -33,7 +33,7 @@ async function initialize() {
     const matchCardHTML = await fetchMatchCardTemplate();
     const currentMatches = currentUser.data().currentMatches;
 
-    displayUserMatches(currentUser, currentMatches, matchCardHTML);
+    await displayUserMatches(currentUser, currentMatches, matchCardHTML);
     setupShareLinkFunctionality();
 
     const group = await getCurrentGroup();
@@ -70,8 +70,12 @@ async function displayUserMatches(currentUser, currentMatches, matchCardHTML) {
     } else {
         // Load match cards for each match in reverse order.
         let delay = 0;
+
         for (let i = currentMatches.length - 1; i >= 0; i--) {
+            console.log("Current Match:", currentMatches[i]);
+
             loadMatchCard("#match-list", currentMatches[i], matchCardHTML).then((card) => {
+                document.querySelector("#match-list .loader").style.display = "none";
                 if (card) {
                     animateReveal(card, delay);
                     delay += revealGap;
@@ -98,16 +102,23 @@ async function displayUserMatches(currentUser, currentMatches, matchCardHTML) {
  */
 async function displayGroupMembers(currentUser, groupMembers, currentMatches, matchCardHTML) {
     let delay = 0;
+    let empty = true;
     for (let member of groupMembers) {
-        if (!currentMatches?.includes(member) && member.id != currentUser.id) {
+        if (!currentMatches?.includes(member.id) && member.id != currentUser.id) {
             loadMatchCard("#member-list", member.id, matchCardHTML, false).then((card) => {
                 if (card) {
+                    empty = false;
+                    document.querySelector("#member-list .loader").style.display = "none";
                     card.style.filter = "grayscale(80%)";
                     animateReveal(card, delay);
                     delay += revealGap;
                 }
             });
         }
+    }
+    if (empty) {
+        document.querySelector("#group-members").style.display = "none";
+        
     }
 }
 

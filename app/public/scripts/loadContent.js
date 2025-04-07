@@ -145,7 +145,7 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML, calcu
 
     await cacheCurrentUser(); // Cache the current user's data.
     await cacheGroupUsers(); // Cache the group users' data.
-    container.innerHTML = "";
+    // container.innerHTML = "";
 
     let cardUser = usersCache[uid];
 
@@ -161,7 +161,7 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML, calcu
         if (calculateMatchPercentage) {
             let matchPercent = Math.ceil(getCompatibility(currentUser.data(), cardUser)[0]) + "%";
             card.querySelector(".match-card-percent").textContent = matchPercent;
-        } 
+        }
         card.querySelector(".match-card-name").textContent = cardUser.name || "Unknown";
         card.querySelector(".match-card-image").setAttribute("src", cardUser.profilePhoto || "../public/images/blank_avatar.jpeg");
         let commonInterests = await getCommonInterests(currentUser.data(), cardUser, 2);

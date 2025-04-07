@@ -178,7 +178,7 @@ export function getCompatibility(userData1, userData2) {
     for (const key in map1) {
         max += 4;
         if (key in map2) {
-            difference += Math.abs(map1[key] - map2[key]);
+            difference += Math.abs(map1[key] - map2[key]) - 1;
         } else {
             difference += 2;
             fullOverlap = false;

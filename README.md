@@ -61,7 +61,7 @@ project-name/
 ## Contributors
 
 -   **Shivaun Bartoo** - Former professional animator, current BCIT student with a interdiciplinary creative and technical skillset and an enthusiasm to learn.
--   **Luis Saberon** -
+-   **Luis Saberon** - First year BCIT student. Likes to read and play games in his paset time, both board and video. 
 
 ---
 

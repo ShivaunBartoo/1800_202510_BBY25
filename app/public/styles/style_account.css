@@ -9,10 +9,6 @@
     text-align: center;
 }
 
-header {
-    z-index: 2;
-}
-
 #account-picture-container {
     width: 150px;
     aspect-ratio: 1/1;

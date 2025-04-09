@@ -172,10 +172,10 @@ async function authenticatePage() {
 
     if (requiresAuth || requiresSetup) {
         let userData = await getUserData();
-        if (requiresAuth && !userData) {
+        if (requiresAuth && !auth.currentUser) {
             // Redirect to the login page if authentication is required and no user is logged in
             window.location.href = `../index.html`;
-        } else if (userData.data().activeGroup == null) {
+        } else if (!userData || userData.data().activeGroup == null) {
             // Redirect to the group creation/join page if no active group is set
             window.location.href = `./create_or_join.html`;
         } else if (requiresSetup && userData.data().hasProfile == false) {

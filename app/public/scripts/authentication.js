@@ -43,11 +43,6 @@ var uiConfig = {
             // The widget is rendered.
             // Hide the loader.
             document.getElementById("loader").style.display = "none";
-        },
-        uiShown: function () {
-            // The widget is rendered.
-            // Hide the loader.
-            document.getElementById("loader").style.display = "none";
             // Insert the custom message after the UI is shown
             insertCustomMessage();
         },

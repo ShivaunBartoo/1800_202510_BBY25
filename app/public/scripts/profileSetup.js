@@ -241,20 +241,24 @@ function setupFormSubmission() {
 
                 // Collect form data.
                 const formData = {
-                    bio: document.getElementById("bio").value,
-                    contactMethod: document.getElementById("contact1").value,
-                    contactInfo: document.getElementById("contact2").value,
-                    profilePhoto: document.getElementById("profile-photo").src,
+                    bio: document.getElementById("bio").value || "",
+                    contactMethod: document.getElementById("contact1").value || "",
+                    contactInfo: document.getElementById("contact2").value || "",
+                    profilePhoto: document.getElementById("profile-photo").src || "",
                     hasProfile: true,
                     interests: {
                         [int1.toLowerCase()]: 2,
                         [int2.toLowerCase()]: 2,
                         [int3.toLowerCase()]: 2,
                     },
-                    values: {
-                        [val1.toLowerCase()]: 2,
-                    },
                 };
+
+                //only add values key if the field is populated.
+                if (val1.trim()) {
+                    formData.values = {
+                        [val1.toLowerCase()]: 2,
+                    };
+                }
 
                 // Save form data to Firestore.
                 try {

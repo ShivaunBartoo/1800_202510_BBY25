@@ -151,44 +151,27 @@ function handleDrop(event, udata) {
 function addBubbles(udata) {
     for (let interest in udata.interests) {
         let score = udata.interests[interest];
-        // Append interest bubbles to the appropriate container based on their score
-        switch (score) {
-            case 2:
-                document.querySelector("#very-interested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
-                break;
-            case 1:
-                document.querySelector("#mildly-interested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
-                break;
-            case 0:
-                document.querySelector("#no-opinion").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
-                break;
-            case -1:
-                document.querySelector("#mildly-disinterested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
-                break;
-            case -2:
-                document.querySelector("#very-disinterested").innerHTML += `<span class="noun-bubble" draggable="true">${interest}</span>`;
-        }
+        appendBubbleToContainer(score, interest);
     }
 
     for (let value in udata.values) {
         let score = udata.values[value];
-        // Append value bubbles to the appropriate container based on their score
-        switch (score) {
-            case 2:
-                document.querySelector("#very-interested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
-                break;
-            case 1:
-                document.querySelector("#mildly-interested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
-                break;
-            case 0:
-                document.querySelector("#no-opinion").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
-                break;
-            case -1:
-                document.querySelector("#mildly-disinterested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
-                break;
-            case -2:
-                document.querySelector("#very-disinterested").innerHTML += `<span class="noun-bubble" draggable="true">${value}</span>`;
-        }
+        appendBubbleToContainer(score, value);
+    }
+}
+
+function appendBubbleToContainer(score, text) {
+    const containerMap = {
+        2: "#very-interested",
+        1: "#mildly-interested",
+        0: "#no-opinion",
+        "-1": "#mildly-disinterested",
+        "-2": "#very-disinterested",
+    };
+
+    const containerSelector = containerMap[score];
+    if (containerSelector) {
+        document.querySelector(containerSelector).innerHTML += `<span class="noun-bubble" draggable="true">${text}</span>`;
     }
 }
 
@@ -301,34 +284,14 @@ async function addDragListeners(udata) {
  * @param {boolean} isInterest - Whether the noun is an interest (true) or a value (false).
  */
 async function addNoun(noun, newValue, isInterest) {
-    let user = await getUser();
-    let userDoc = await db.collection("users").doc(user.uid);
+    try {
+        let user = await getUser();
+        let userDoc = await db.collection("users").doc(user.uid);
 
-    if (isInterest) {
-        try {
-            userDoc.set(
-                {
-                    interests: {
-                        [noun]: newValue,
-                    },
-                },
-                { merge: true }
-            );
-        } catch (err) {
-            console.log(err);
-        }
-    } else {
-        try {
-            userDoc.set(
-                {
-                    values: {
-                        [noun]: newValue,
-                    },
-                },
-                { merge: true }
-            );
-        } catch (err) {
-            console.log(err);
-        }
+        const updateData = isInterest ? { interests: { [noun]: newValue } } : { values: { [noun]: newValue } };
+
+        await userDoc.set(updateData, { merge: true });
+    } catch (err) {
+        console.error("Error updating Firestore:", err);
     }
 }

@@ -65,8 +65,8 @@ async function fetchMatchCardTemplate() {
 async function displayUserMatches(currentUser, currentMatches, matchCardHTML) {
     if (!currentMatches || currentMatches.length == 0) {
         // Show a "no matches" message if there are no matches.
-        const noMatches = document.querySelector("#no-matches");
-        noMatches.style.display = "block";
+        document.querySelector("#no-matches").style.display = "block";
+        document.querySelector("#match-list .loader").style.display = "none";
     } else {
         // Load match cards for each match in reverse order.
         let delay = 0;
@@ -104,8 +104,6 @@ async function displayGroupMembers(currentUser, groupMembers, currentMatches, ma
         if (!currentMatches?.includes(member.id) && member.id != currentUser.id) {
             loadMatchCard("#member-list", member.id, matchCardHTML, false).then((card) => {
                 if (card) {
-                    document.querySelector("#group-members").style.display = "block";
-
                     document.querySelector("#member-list .loader").style.display = "none";
                     card.style.filter = "grayscale(80%)";
                     animateReveal(card, delay);

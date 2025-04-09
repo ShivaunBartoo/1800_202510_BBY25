@@ -1,0 +1,42 @@
+Pop
+Rock
+Hip Hop
+Classical
+Jazz
+Country
+R&B
+Reggae
+Blues
+Metal
+Soul
+Funk
+Folk
+Punk
+Indie
+Alternative
+House
+Techno
+Trance
+Dubstep
+Rap
+K-pop
+Latin
+Disco
+Gospel
+Reggaeton
+Ska
+Opera
+Swing
+Grunge
+Ambient
+Acoustic
+Experimental
+New Age
+Trap
+Dancehall
+Hardcore
+Post-punk
+Synthwave
+Bluegrass
+Lo-fi Hip Hop
+Singing

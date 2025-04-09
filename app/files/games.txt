@@ -1,0 +1,21 @@
+Action
+Adventure
+RPG (Role-Playing Game)
+Shooter
+Fighting
+Sports
+Strategy
+Simulation
+Horror
+Puzzle
+Platformer
+Racing
+MMO (Massively Multiplayer Online)
+Sandbox
+Battle Royale
+MOBA (Multiplayer Online Battle Arena)
+Survival
+Rhythm
+Card Game
+Board Game
+TTRPG (Table-top Role-Playing Game)

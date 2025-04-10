@@ -174,19 +174,20 @@ export function getCompatibility(userData1, userData2) {
 
     let fullOverlap = true;
     let difference = 0;
+    let noLap = 0;
     let max = 0;
     for (const key in map1) {
         max += 4;
         if (key in map2) {
-            difference += Math.abs(map1[key] - map2[key]) - 1;
+            difference += Math.abs(map1[key] - map2[key]);
         } else {
-            difference += 2;
+            noLap++;
             fullOverlap = false;
         }
     }
 
     const percent = (difference / max) * 100;
-    return [100 - percent, fullOverlap];
+    return [100 - percent - noLap, fullOverlap];
 }
 
 /**

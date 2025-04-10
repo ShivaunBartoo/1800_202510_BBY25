@@ -1,21 +1,21 @@
-Action
-Adventure
-RPG (Role-Playing Game)
-Shooter
-Fighting
-Sports
-Strategy
-Simulation
-Horror
-Puzzle
-Platformer
-Racing
-MMO (Massively Multiplayer Online)
-Sandbox
-Battle Royale
-MOBA (Multiplayer Online Battle Arena)
-Survival
-Rhythm
-Card Game
-Board Game
-TTRPG (Table-top Role-Playing Game)
+Action Games
+Adventure Games
+Role-Playing Games
+Shooter Games
+Fighting Games
+Sports Games
+Strategy Games
+Simulation Games
+Horror Games
+Puzzle Games
+Platformer Games
+Racing Games
+MMO Games
+Sandbox Games
+Battle Royale Games
+MOBA Games
+Survival Games
+Rhythm Games
+Card Games 
+Board Games
+TTRPGs

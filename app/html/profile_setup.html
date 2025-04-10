@@ -34,7 +34,7 @@
         <!-- Scripts -->
         <script type="module" src="../public/scripts/app.js"></script>
         <script type="module" src="../public/scripts/profileSetup.js"></script>
-        <script type="module"></script>
+        <script type="module" src="../public/scripts/collapsible.js"></script>
     </head>
     <body>
         <!-- Header Section - Loaded dynamically by loadContent.js -->
@@ -73,7 +73,19 @@
                 <!-- Interests and Values Page - Second page to collect personal preferences -->
                 <fieldset class="form-page">
                     <div class="form-group">
-                        <h2>NOT YET IMPLEMENTED</h2>
+                        <h2>Select a few common interests and values you might have</h2>
+                        <div class="interests">
+                            <button type="button" class="collapsible" id="gaming">Gaming</button>
+                            <div class="game-container content"></div>
+                            <button type="button" class="collapsible">Hobbies</button>
+                            <div class="hobby-container content"></div>
+                            <button type="button" class="collapsible">Music</button>
+                            <div class="music-container content"></div>
+                            <button type="button" class="collapsible">Politics</button>
+                            <div class="politics-container content"></div>
+                            <button type="button" class="collapsible">Social Issues</button>
+                            <div class="social-container content"></div>
+                        </div>
                         <!-- @LUIS Put the "select interests" page here -->
                     </div>
                     <div class="button-group">

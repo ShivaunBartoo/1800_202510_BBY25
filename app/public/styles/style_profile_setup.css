@@ -141,3 +141,37 @@ label {
     text-align: center;
     color: transparent;
 }
+
+.collapsible {
+    margin: 2.5px;
+    align-self: center;
+    text-align: center;
+}
+
+.content {
+    overflow-y: scroll;
+    /* padding: 10px; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    background: #ebf9ff;
+    border-radius: 6px;
+}
+
+.form-group {
+    overflow-y: scroll;
+}
+
+.noun-bubble {
+    margin-top: 5px;
+    padding: 3px 6px;
+    white-space: nowrap;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    user-select: none;
+}
+
+[data-value="clicked"] {
+    background: red;
+}

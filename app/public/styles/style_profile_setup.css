@@ -181,5 +181,6 @@ label {
 }
 
 [data-value="clicked"] {
-    background: red;
+    background: #384e59;
+    color: white;
 }

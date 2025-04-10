@@ -146,6 +146,7 @@ label {
     margin: 2.5px;
     align-self: center;
     text-align: center;
+    line-height: 0px;
 }
 
 .content {

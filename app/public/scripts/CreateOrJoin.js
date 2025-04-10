@@ -10,7 +10,8 @@ import { createGroup, addToGroup, getGroup } from "./groupManager.js";
 import { loadHeader } from "./loadContent.js";
 
 const defaultGroupCode = "OVWSdIxoOVFbOTcOjRRN"; // Default group code
-initialize();
+// initialize();
+console.log('hello');
 
 /**
  * Initializes the "Create or Join Group" page.
@@ -59,7 +60,7 @@ function setupCreateGroupForm() {
             activeGroup: group.id,
         });
 
-        location.href = "./profile_setup.html";
+        location.href = "/html/profile_setup.html";
     });
 }
 
@@ -97,7 +98,7 @@ function setupJoinGroupForm() {
             activeGroup: groupID,
         });
 
-        location.href = "./profile_setup.html";
+        location.href = "/html/profile_setup.html";
     });
 }
 

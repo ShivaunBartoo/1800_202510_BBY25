@@ -63,7 +63,7 @@ td {
     text-align: left;
     vertical-align: middle;
     overflow: hidden; /* Prevent content from overflowing */
-    white-space: nowrap; /* Prevent text from wrapping */
+    /* white-space: nowrap; Prevent text from wrapping */
 }
 
 td:nth-child(1) {

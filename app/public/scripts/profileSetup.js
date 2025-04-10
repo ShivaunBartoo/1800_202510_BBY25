@@ -98,6 +98,7 @@ function setupFormNavigation() {
 
     // Initial update of nav button states
     updateNavButtonsState();
+    document.querySelector(".nav-buttons").style.opacity = "1";
 }
 
 /**
@@ -240,7 +241,7 @@ function setupFormSubmission() {
                 const int2 = document.getElementById("interest2").value;
                 const int3 = document.getElementById("interest3").value;
                 const val1 = document.getElementById("value1").value;
-                
+
                 // Collect form data.
                 const formData = {
                     bio: document.getElementById("bio").value || "",
@@ -264,13 +265,13 @@ function setupFormSubmission() {
 
                 //Get generic interests and values from second form page.
 
-                getAllClicked('interest').forEach((interest) => {
+                getAllClicked("interest").forEach((interest) => {
                     formData.interests[interest.toLowerCase()] = 2;
                 });
 
-                getAllClicked('value').forEach((value) => {
+                getAllClicked("value").forEach((value) => {
                     formData.values[value.toLowerCase()] = 2;
-                })
+                });
 
                 // Save form data to Firestore.
                 try {
@@ -310,56 +311,55 @@ function addRequiredFieldIndicators() {
  * @param {String} interest - The name of the txt file
  * @returns {Object} - Array of all lines of the txt file
  */
-async function getInterestList(interest) { 
+async function getInterestList(interest) {
     return fetch(`../files/${interest}.txt`)
-    .then((file) => file.text())
-    .then((text) => {
-        return text.split('\r\n');
-    })
-    .catch((err) => console.log(err));
+        .then((file) => file.text())
+        .then((text) => {
+            return text.split("\r\n");
+        })
+        .catch((err) => console.log(err));
 }
-
 
 /**
  * Adds the generic interests to the page from their respective txt files
  */
 async function addInterests() {
     const games = await getInterestList("games");
-    const hobbies = await getInterestList('hobbies');
-    const music = await getInterestList('music');
-    const politics = await getInterestList('politics');
-    const socialval = await getInterestList('socialval');
+    const hobbies = await getInterestList("hobbies");
+    const music = await getInterestList("music");
+    const politics = await getInterestList("politics");
+    const socialval = await getInterestList("socialval");
     let gameList = document.querySelector(".game-container");
     for (let game in games) {
         gameList.innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='interest'>${games[game]}</span>`;
     }
-    for(let hobby in hobbies) {
-        document.querySelector('.hobby-container').innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='interest'>${hobbies[hobby]}</span>`;
+    for (let hobby in hobbies) {
+        document.querySelector(".hobby-container").innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='interest'>${hobbies[hobby]}</span>`;
     }
-    for(let i in music) {
-        document.querySelector('.music-container').innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='interest'>${music[i]}</span>`;
+    for (let i in music) {
+        document.querySelector(".music-container").innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='interest'>${music[i]}</span>`;
     }
-    for(let i in politics) {
-        document.querySelector('.politics-container').innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='value'>${politics[i]}</span>`;
+    for (let i in politics) {
+        document.querySelector(".politics-container").innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='value'>${politics[i]}</span>`;
     }
-    for(let i in socialval) {
-        document.querySelector('.social-container').innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='value'>${socialval[i]}</span>`;
+    for (let i in socialval) {
+        document.querySelector(".social-container").innerHTML += `<span class="noun-bubble" data-value='unclicked' data-noun='value'>${socialval[i]}</span>`;
     }
 
-    bubbleListeners()
+    bubbleListeners();
 }
 
 /**
  * Adds event listeners to all of the bubbles after they've been added to the page.
  */
 function bubbleListeners() {
-    document.querySelectorAll('.noun-bubble').forEach((bubble) => {
-        bubble.addEventListener('click', (event) => {
+    document.querySelectorAll(".noun-bubble").forEach((bubble) => {
+        bubble.addEventListener("click", (event) => {
             let value = event.target.dataset.value;
             if (value == "unclicked") {
                 event.target.setAttribute("data-value", "clicked");
             } else {
-                event.target.setAttribute('data-value', 'unclicked');
+                event.target.setAttribute("data-value", "unclicked");
             }
         });
     });
@@ -371,13 +371,13 @@ function bubbleListeners() {
  * @returns {Object} - Array of all the clicked bubbles.
  */
 function getAllClicked(type) {
-    let b = []
-    document.querySelectorAll('[data-value]').forEach((bubble) => {
+    let b = [];
+    document.querySelectorAll("[data-value]").forEach((bubble) => {
         let val = bubble.dataset.value;
         let noun = bubble.dataset.noun;
-        if (val == 'clicked' && noun == type) {
+        if (val == "clicked" && noun == type) {
             b.push(bubble.innerHTML);
         }
-    })
-    return b
+    });
+    return b;
 }

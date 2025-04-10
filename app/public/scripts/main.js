@@ -171,11 +171,13 @@ function setCardQuestion(container, question) {
  * @param {Object} userData - The current user's data.
  */
 function generateQuestions(nouns, userData) {
-    let interests = Object.keys(userData.data().interests);
-    let values = Object.keys(userData.data().values);
+    // Use empty objects as fallbacks if interests or values are undefined or null
+    let interests = Object.keys(userData.data().interests || {});
+    let values = Object.keys(userData.data().values || {});
+
     for (let noun of nouns) {
         let word = noun.word;
-        if (!(interests.includes(word) || values.includes(word) || questions.includes(word))) {
+        if (!(interests?.includes(word) || values?.includes(word) || questions.includes(word))) {
             questions.push(noun);
         }
     }
@@ -227,6 +229,7 @@ async function setProgressBar(percentage, userData = null) {
     bar.style.width = percentage + "%";
     db.collection("users").doc(userData.id).set({ matchProgress: percentage }, { merge: true }); // Update Firestore.
     if (percentage == 100 && nextMatch) {
+        console.log("new match");
         revealMatch(); // Reveal the next match when progress reaches 100%.
         setProgressBar(0, userData); // Reset the progress bar.
     }
@@ -242,7 +245,9 @@ async function revealMatch() {
     if (!nextMatch) {
         await getNextMatch();
     }
+    console.log("match assigned");
     let newCard = await updateMatchCard(nextMatch);
+    console.log("card updated");
     if (newCard) {
         animateMatchCard(newCard);
     }
@@ -270,6 +275,7 @@ async function updateMatchCard(match) {
         let content = document.querySelector(".match-card-content");
         content.style.opacity = 0;
         let card = await loadMatchCard(".match-card-container", match, matchCardHTML);
+        console.log("match card loaded");
         Array.from(document.querySelector(".match-card-container").children).forEach((child) => {
             if (child != card) {
                 child.remove();

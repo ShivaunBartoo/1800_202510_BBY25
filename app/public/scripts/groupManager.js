@@ -200,6 +200,10 @@ export function getCompatibility(userData1, userData2) {
 export async function getCommonInterests(userData1, userData2, minScore = 2) {
     let commonList = [];
     let addToList = (map1, map2, wordType) => {
+        // Ensure map1 and map2 are defined
+        map1 = map1 || {};
+        map2 = map2 || {};
+
         for (const key in map2) {
             if (key in map1) {
                 if (map1[key] >= minScore && map2[key] >= minScore) {
@@ -208,8 +212,16 @@ export async function getCommonInterests(userData1, userData2, minScore = 2) {
             }
         }
     };
-    addToList(userData1.interests, userData2.interests, "interest");
-    addToList(userData1.values, userData2.values, "value");
+
+    // Ensure interests and values are defined as empty objects if undefined
+    const interests1 = userData1.interests || {};
+    const interests2 = userData2.interests || {};
+    const values1 = userData1.values || {};
+    const values2 = userData2.values || {};
+
+    addToList(interests1, interests2, "interest");
+    addToList(values1, values2, "value");
+
     return commonList;
 }
 

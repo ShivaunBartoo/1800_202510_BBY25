@@ -143,9 +143,8 @@ export async function loadMatchCard(containerSelector, uid, matchCardHTML, calcu
         throw new Error(`Container does not exist`);
     }
 
-    await cacheCurrentUser(); // Cache the current user's data.
+    await cacheCurrentUser(true); // Cache the current user's data.
     await cacheGroupUsers(); // Cache the group users' data.
-    // container.innerHTML = "";
 
     let cardUser = usersCache[uid];
 
@@ -209,7 +208,7 @@ async function cacheGroupUsers(reload = false) {
  * @returns {Promise<void>}
  */
 async function cacheCurrentUser(reload = false) {
-    if (!currentUser) {
+    if (!currentUser || reload) {
         currentUser = await getUserData(); // Fetch the current user's data from Firestore.
     }
 }

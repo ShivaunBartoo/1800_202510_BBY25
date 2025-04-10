@@ -128,7 +128,8 @@ function setupSurveyCardEvents(userData) {
                 let dataType = surveyCard.dataset.type; // Get the data type (e.g., "interest" or "value").
 
                 // Update the Firestore map field with the user's response.
-                db.collection("users")
+                await db
+                    .collection("users")
                     .doc(userData.id)
                     .update({
                         [`${dataType}s.${surveyTopic}`]: parseInt(dataValue),
